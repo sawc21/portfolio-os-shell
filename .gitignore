@@ -3,6 +3,8 @@ obj/
 .vs/
 .vscode/
 TestResults/
+node_modules/
+npm-debug.log*
 *.user
 *.suo
 *.cache

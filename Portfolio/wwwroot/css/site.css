@@ -127,6 +127,7 @@ img {
 .meta-row,
 .tag-row,
 .branch-list,
+.hub-fallback-links,
 .log-row span,
 .log-row small,
 .log-card time,
@@ -166,14 +167,19 @@ h3 {
   font-size: clamp(2rem, 3.4vw, 3.6rem);
 }
 
-.hero-shell {
+.homepage-hub {
   display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
-  gap: 54px;
+  grid-template-columns: minmax(0, 0.92fr) minmax(360px, 1.08fr);
+  gap: 42px;
   align-items: center;
-  min-height: 58vh;
+  min-height: 64vh;
   padding: 14px 0 46px;
   border-bottom: 1px solid var(--graphite);
+}
+
+.hub-copy {
+  position: relative;
+  z-index: 2;
 }
 
 .hero-summary,
@@ -190,6 +196,35 @@ h3 {
   flex-wrap: wrap;
   gap: 12px;
   margin-top: 28px;
+}
+
+.hub-fallback-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 26px;
+}
+
+.hub-fallback-links a,
+.hub-fallback-links span {
+  display: inline-flex;
+  min-height: 36px;
+  align-items: center;
+  padding: 7px 11px;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+}
+
+.hub-fallback-links a:hover,
+.hub-fallback-links a:focus-visible {
+  border-color: var(--graphite);
+  outline: 0;
+}
+
+.hub-fallback-links span {
+  color: var(--muted);
 }
 
 .button {
@@ -222,6 +257,132 @@ h3 {
 .kernel-panel {
   padding: 24px;
   transform: rotate(1deg);
+}
+
+.hub-stage {
+  position: relative;
+  min-height: 520px;
+  overflow: hidden;
+  background:
+    linear-gradient(120deg, rgba(255, 255, 255, 0.62), rgba(255, 255, 255, 0.18)),
+    radial-gradient(circle at 72% 20%, rgba(169, 223, 231, 0.46), transparent 17rem),
+    radial-gradient(circle at 26% 74%, rgba(112, 215, 178, 0.38), transparent 15rem);
+  border: 1px solid var(--graphite);
+  box-shadow: var(--shadow);
+  isolation: isolate;
+}
+
+.hub-stage::before {
+  position: absolute;
+  inset: 24px;
+  content: "";
+  border: 1px solid rgba(17, 17, 17, 0.12);
+  pointer-events: none;
+}
+
+.hub-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.hub-static-map {
+  position: absolute;
+  inset: 42px 34px 138px;
+  z-index: 1;
+  transform: rotate(-7deg) skewX(-8deg);
+}
+
+.hub-static-map::before {
+  position: absolute;
+  inset: 19% 13%;
+  content: "";
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid var(--graphite);
+  clip-path: polygon(12% 18%, 68% 4%, 94% 38%, 78% 84%, 24% 94%, 4% 58%);
+}
+
+.hub-node {
+  position: absolute;
+  display: grid;
+  min-width: 88px;
+  min-height: 48px;
+  place-items: center;
+  padding: 8px 12px;
+  color: var(--graphite);
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: lowercase;
+  background: var(--white);
+  border: 1px solid var(--graphite);
+  box-shadow: 8px 8px 0 rgba(17, 17, 17, 0.1);
+}
+
+.hub-node-projects {
+  top: 41%;
+  left: 12%;
+  background: var(--mint);
+}
+
+.hub-node-blog {
+  top: 22%;
+  right: 18%;
+  background: var(--coral);
+  border-radius: 50%;
+}
+
+.hub-node-resume {
+  bottom: 16%;
+  left: 38%;
+  background: var(--blue);
+}
+
+.hub-node-contact {
+  right: 14%;
+  bottom: 17%;
+  background: var(--signal);
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.hub-node-lab {
+  top: 14%;
+  left: 26%;
+  color: var(--muted);
+  background: var(--clay);
+  border-style: dashed;
+}
+
+.hub-status-panel {
+  position: absolute;
+  right: 22px;
+  bottom: 22px;
+  z-index: 3;
+  width: min(390px, calc(100% - 44px));
+  padding: 18px;
+  transform: none;
+}
+
+.hub-status-panel p {
+  margin: 16px 0 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.hub-noscript {
+  position: absolute;
+  left: 22px;
+  bottom: 22px;
+  z-index: 4;
+  max-width: 330px;
+  margin: 0;
+  padding: 12px;
+  color: var(--muted);
+  background: var(--white);
+  border: 1px solid var(--line);
 }
 
 .panel-topline {
@@ -597,7 +758,7 @@ h3 {
     justify-content: flex-start;
   }
 
-  .hero-shell,
+  .homepage-hub,
   .section-heading,
   .split-header,
   .log-section,
@@ -608,13 +769,18 @@ h3 {
     grid-template-columns: 1fr;
   }
 
-  .hero-shell {
+  .homepage-hub {
     min-height: auto;
     padding-bottom: 52px;
   }
 
-  .kernel-panel {
+  .kernel-panel,
+  .hub-status-panel {
     transform: none;
+  }
+
+  .hub-stage {
+    min-height: 470px;
   }
 
   .branch-grid {
@@ -668,5 +834,26 @@ h3 {
   .hero-actions {
     flex-direction: column;
     align-items: stretch;
+  }
+
+  .hub-stage {
+    min-height: 420px;
+  }
+
+  .hub-static-map {
+    inset: 30px 20px 138px;
+  }
+
+  .hub-node {
+    min-width: 72px;
+    min-height: 42px;
+    padding: 7px 9px;
+    font-size: 0.62rem;
+  }
+
+  .hub-status-panel {
+    right: 14px;
+    bottom: 14px;
+    width: calc(100% - 28px);
   }
 }

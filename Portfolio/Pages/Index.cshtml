@@ -6,44 +6,46 @@
     ViewData["CanonicalPath"] = "/";
 }
 
-<section class="hero-shell">
-    <div class="hero-statement">
+<section class="homepage-hub" aria-labelledby="homepage-hub-title">
+    <div class="hub-copy">
         <p class="system-label">kernel.gallery / public interface</p>
-        <h1>Design instincts on the surface. C# systems in the kernel.</h1>
+        <h1 id="homepage-hub-title">A portfolio you can enter, not just scan.</h1>
         <p class="hero-summary">
-            I shape product ideas, build the Razor Pages and ASP.NET infrastructure behind them, and document the branches that make the work better.
+            I shape product ideas, build the Razor Pages and ASP.NET infrastructure behind them, and turn each project into an explorable branch of the system.
         </p>
         <div class="hero-actions">
-            <a class="button button-primary" asp-page="/Projects/Index">Explore branches</a>
+            <a class="button button-primary" asp-page="/Projects/Index">Explore projects</a>
             <a class="button button-secondary" asp-page="/Resume">System profile</a>
         </div>
+        <nav class="hub-fallback-links" aria-label="Homepage hub destinations">
+            <a asp-page="/Projects/Index" data-hub-link="projects">Projects</a>
+            <a asp-page="/Blog/Index" data-hub-link="blog">Blog</a>
+            <a asp-page="/Resume" data-hub-link="resume">Resume</a>
+            <a asp-page="/Contact" data-hub-link="contact">Contact</a>
+            <span aria-disabled="true" data-hub-link="lab">Lab planned</span>
+        </nav>
     </div>
-    <aside class="kernel-panel" aria-label="Kernel status panel">
-        <div class="panel-topline">
-            <span>kernel.status</span>
-            <strong>online</strong>
+    <aside class="hub-stage" data-home-hub aria-label="Interactive homepage hub">
+        <div class="hub-static-map" aria-hidden="true">
+            <span class="hub-node hub-node-projects">Projects</span>
+            <span class="hub-node hub-node-blog">Blog</span>
+            <span class="hub-node hub-node-resume">Resume</span>
+            <span class="hub-node hub-node-contact">Contact</span>
+            <span class="hub-node hub-node-lab">Lab</span>
         </div>
-        <dl class="status-grid">
-            <div>
-                <dt>interface</dt>
-                <dd>Product + design</dd>
+        <div class="kernel-panel hub-status-panel" aria-live="polite">
+            <div class="panel-topline">
+                <span>hub.status</span>
+                <strong>progressive</strong>
             </div>
-            <div>
-                <dt>runtime</dt>
-                <dd>ASP.NET / C#</dd>
+            <p data-hub-status>Projects: Creative branches, case studies, and shipped product thinking.</p>
+            <div class="signal-strip" aria-hidden="true">
+                <span></span><span></span><span></span><span></span>
             </div>
-            <div>
-                <dt>storage</dt>
-                <dd>Markdown content</dd>
-            </div>
-            <div>
-                <dt>edge</dt>
-                <dd>Self-hosting lab</dd>
-            </div>
-        </dl>
-        <div class="signal-strip" aria-hidden="true">
-            <span></span><span></span><span></span><span></span>
         </div>
+        <noscript>
+            <p class="hub-noscript">The visual hub needs JavaScript, but every destination is available through the native links.</p>
+        </noscript>
     </aside>
 </section>
 
@@ -78,6 +80,10 @@
         }
     </div>
 </section>
+
+@section Scripts {
+    <script type="module" src="~/dist/homeHub.js" asp-append-version="true"></script>
+}
 
 <section class="log-section">
     <div>

@@ -1,0 +1,11 @@
+{
+  "scripts": {
+    "build:client": "vite build --config frontend/vite.config.js"
+  },
+  "dependencies": {
+    "three": "^0.179.1"
+  },
+  "devDependencies": {
+    "vite": "^7.1.12"
+  }
+}

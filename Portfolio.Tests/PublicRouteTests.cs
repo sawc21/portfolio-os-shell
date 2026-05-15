@@ -30,6 +30,20 @@ public sealed class PublicRouteTests : IClassFixture<WebApplicationFactory<Progr
     }
 
     [Fact]
+    public async Task Homepage_IncludesNativeHubNavigationFallback()
+    {
+        var homepage = await _client.GetStringAsync("/");
+
+        Assert.Contains("data-home-hub", homepage);
+        Assert.Contains("href=\"/projects\"", homepage);
+        Assert.Contains("href=\"/blog\"", homepage);
+        Assert.Contains("href=\"/resume\"", homepage);
+        Assert.Contains("href=\"/contact\"", homepage);
+        Assert.Contains("Lab planned", homepage);
+        Assert.Contains("/dist/homeHub.js", homepage);
+    }
+
+    [Fact]
     public async Task Sitemap_IncludesPublicContentRoutes()
     {
         var sitemap = await _client.GetStringAsync("/sitemap.xml");
