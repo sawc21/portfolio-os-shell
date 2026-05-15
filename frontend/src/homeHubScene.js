@@ -54,8 +54,8 @@ export function initThreeHub({ container, statusText, hubNodes }) {
   const scene = new Scene();
   scene.background = null;
 
-  const camera = new PerspectiveCamera(42, 1, 0.1, 100);
-  camera.position.set(0, 3.15, 5.6);
+  const camera = new PerspectiveCamera(38, 1, 0.1, 100);
+  camera.position.set(0, 3.35, 4.7);
   camera.lookAt(0, 0, 0);
 
   const renderer = new WebGLRenderer({ antialias: true, alpha: true });
@@ -72,7 +72,7 @@ export function initThreeHub({ container, statusText, hubNodes }) {
   scene.add(world);
 
   const base = new Mesh(
-    new CylinderGeometry(2.65, 2.9, 0.28, 7),
+    new CylinderGeometry(3.05, 3.32, 0.3, 7),
     new MeshStandardMaterial({ color: 0xffffff, roughness: 0.72 })
   );
   base.position.y = -0.18;
@@ -80,7 +80,7 @@ export function initThreeHub({ container, statusText, hubNodes }) {
   world.add(base);
 
   const ring = new Mesh(
-    new TorusGeometry(1.92, 0.018, 8, 96),
+    new TorusGeometry(2.16, 0.02, 8, 96),
     new MeshBasicMaterial({ color: 0x111111 })
   );
   ring.rotation.x = Math.PI / 2;
@@ -164,7 +164,7 @@ export function initThreeHub({ container, statusText, hubNodes }) {
   const clock = new Clock();
   renderer.setAnimationLoop(() => {
     const elapsed = clock.getElapsedTime();
-    world.rotation.y = Math.sin(elapsed * 0.22) * 0.18 - 0.18;
+    world.rotation.y = Math.sin(elapsed * 0.18) * 0.15 - 0.08;
     meshes.forEach((mesh, index) => {
       mesh.position.y = hubNodes[index].position[1] + Math.sin(elapsed * 0.8 + index) * 0.035;
     });

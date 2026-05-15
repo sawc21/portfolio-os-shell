@@ -8,15 +8,17 @@
 
 <section class="homepage-hub" aria-labelledby="homepage-hub-title">
     <div class="hub-copy">
-        <p class="system-label">kernel.gallery / public interface</p>
-        <h1 id="homepage-hub-title">A portfolio you can enter, not just scan.</h1>
+        <p class="system-label">kernel.gallery</p>
+        <h1 id="homepage-hub-title">Navigate the kernel world.</h1>
         <p class="hero-summary">
-            I shape product ideas, build the Razor Pages and ASP.NET infrastructure behind them, and turn each project into an explorable branch of the system.
+            Explore projects, build logs, resume depth, contact paths, and the coming self-hosting lab from one central model.
         </p>
         <div class="hero-actions">
             <a class="button button-primary" asp-page="/Projects/Index">Explore projects</a>
-            <a class="button button-secondary" asp-page="/Resume">System profile</a>
+            <a class="button button-secondary" asp-page="/Blog/Index">Open logs</a>
         </div>
+    </div>
+    <aside class="hub-stage" data-home-hub aria-label="Interactive homepage hub">
         <nav class="hub-fallback-links" aria-label="Homepage hub destinations">
             <a asp-page="/Projects/Index" data-hub-link="projects">Projects</a>
             <a asp-page="/Blog/Index" data-hub-link="blog">Blog</a>
@@ -24,8 +26,6 @@
             <a asp-page="/Contact" data-hub-link="contact">Contact</a>
             <span aria-disabled="true" data-hub-link="lab">Lab planned</span>
         </nav>
-    </div>
-    <aside class="hub-stage" data-home-hub aria-label="Interactive homepage hub">
         <div class="hub-static-map" aria-hidden="true">
             <span class="hub-node hub-node-projects">Projects</span>
             <span class="hub-node hub-node-blog">Blog</span>

@@ -8,7 +8,7 @@ const hubNodes = [
     href: "/projects",
     description: "Creative branches, case studies, and shipped product thinking.",
     color: 0x70d7b2,
-    position: [-1.75, 0.18, 0.1],
+    position: [-1.95, 0.18, 0.12],
     shape: "box"
   },
   {
@@ -17,7 +17,7 @@ const hubNodes = [
     href: "/blog",
     description: "Build logs, decisions, and learning notes from the process.",
     color: 0xf1a084,
-    position: [1.35, 0.25, 0.25],
+    position: [1.62, 0.25, 0.28],
     shape: "sphere"
   },
   {
@@ -26,7 +26,7 @@ const hubNodes = [
     href: "/resume",
     description: "Technical credibility, stack depth, and professional profile.",
     color: 0xa9dfe7,
-    position: [-0.25, 0.3, -1.1],
+    position: [-0.18, 0.3, -1.36],
     shape: "cylinder"
   },
   {
@@ -35,7 +35,7 @@ const hubNodes = [
     href: "/contact",
     description: "The direct path for collaboration, interviews, and project notes.",
     color: 0xf6c35f,
-    position: [1.1, 0.18, -1.2],
+    position: [1.36, 0.18, -1.42],
     shape: "cone"
   },
   {
@@ -44,7 +44,7 @@ const hubNodes = [
     href: "",
     description: "Future self-hosting notes, deployment diagrams, and infrastructure experiments.",
     color: 0xe6d8c8,
-    position: [-1.15, 0.12, 1.1],
+    position: [-1.32, 0.12, 1.34],
     shape: "torus"
   }
 ];
@@ -95,19 +95,15 @@ function scheduleHubInit() {
       });
   };
 
-  const idleStart = () => {
-    if ("requestIdleCallback" in window) {
-      window.requestIdleCallback(start, { timeout: 1600 });
-    } else {
-      window.setTimeout(start, 350);
-    }
+  const deferredStart = () => {
+    window.setTimeout(start, 120);
   };
 
   if ("IntersectionObserver" in window) {
     const observer = new IntersectionObserver((entries) => {
       if (entries.some((entry) => entry.isIntersecting)) {
         observer.disconnect();
-        idleStart();
+        deferredStart();
       }
     }, { rootMargin: "220px" });
 
@@ -115,7 +111,7 @@ function scheduleHubInit() {
     return;
   }
 
-  idleStart();
+  deferredStart();
 }
 
 scheduleHubInit();
