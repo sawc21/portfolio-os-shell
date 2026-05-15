@@ -480,6 +480,68 @@ h3 {
   gap: 20px;
 }
 
+.featured-build {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 0.5fr);
+  gap: 28px;
+  align-items: stretch;
+  margin-bottom: 24px;
+  padding: 30px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(169, 223, 231, 0.28)),
+    var(--white);
+  border: 1px solid var(--graphite);
+  box-shadow: var(--shadow);
+}
+
+.featured-build h2 {
+  max-width: 12ch;
+}
+
+.featured-build p {
+  max-width: 680px;
+  color: var(--muted);
+}
+
+.showcase-stats {
+  display: grid;
+  gap: 1px;
+  margin: 0;
+  background: var(--graphite);
+}
+
+.showcase-stats div {
+  display: grid;
+  align-content: center;
+  min-height: 118px;
+  padding: 18px;
+  background: var(--paper);
+}
+
+.showcase-stats dt,
+.showcase-stats dd,
+.showcase-proof,
+.branch-count,
+.project-timeline time,
+.project-timeline span,
+.case-proof-grid span {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: lowercase;
+}
+
+.showcase-stats dt {
+  color: var(--muted);
+}
+
+.showcase-stats dd {
+  margin: 6px 0 0;
+  font-size: 1.2rem;
+  color: var(--graphite);
+}
+
 .branch-grid-wide {
   grid-template-columns: 1fr;
 }
@@ -498,13 +560,31 @@ h3 {
   box-shadow: 0 36px 90px rgba(17, 17, 17, 0.16);
 }
 
+.branch-visual-link {
+  position: relative;
+  display: block;
+  min-height: 100%;
+  color: inherit;
+  text-decoration: none;
+  background: var(--clay);
+  border-right: 1px solid var(--graphite);
+}
+
 .branch-card img {
   width: 100%;
   height: 100%;
   min-height: 260px;
   object-fit: cover;
   background: var(--clay);
-  border-right: 1px solid var(--graphite);
+}
+
+.branch-count {
+  position: absolute;
+  left: 14px;
+  bottom: 14px;
+  padding: 8px 10px;
+  background: rgba(255, 255, 255, 0.86);
+  border: 1px solid var(--graphite);
 }
 
 .branch-body {
@@ -522,6 +602,21 @@ h3 {
 .log-card p,
 .profile-card span {
   color: var(--muted);
+}
+
+.showcase-proof {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  margin: 4px 0 20px;
+  background: var(--line);
+}
+
+.showcase-proof span {
+  min-height: 54px;
+  padding: 10px;
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.68);
 }
 
 .meta-row {
@@ -546,6 +641,36 @@ h3 {
   gap: 8px;
   margin-top: auto;
   padding-top: 18px;
+}
+
+.project-timeline {
+  display: grid;
+  grid-template-columns: minmax(0, 0.65fr) minmax(0, 1fr);
+  gap: 44px;
+  padding: 76px 0 0;
+}
+
+.project-timeline ol {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--graphite);
+}
+
+.project-timeline li {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr) auto;
+  gap: 16px;
+  align-items: center;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.project-timeline time,
+.project-timeline span {
+  color: var(--muted);
 }
 
 .branch-list span {
@@ -603,13 +728,25 @@ h3 {
   box-shadow: var(--shadow);
 }
 
+.case-branch-system {
+  display: grid;
+  grid-template-columns: minmax(0, 0.6fr) minmax(0, 1fr);
+  gap: 34px;
+  padding: 34px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.case-branch-system h2 {
+  max-width: 10ch;
+  font-size: clamp(2.2rem, 4vw, 4rem);
+}
+
 .branch-map {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  padding: 22px 0 38px;
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
+  align-content: start;
 }
 
 .branch-map span {
@@ -618,6 +755,32 @@ h3 {
   font-size: 0.78rem;
   background: var(--white);
   border: 1px solid var(--graphite);
+}
+
+.case-proof-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  margin: 38px 0;
+  background: var(--graphite);
+}
+
+.case-proof-grid div {
+  min-height: 190px;
+  padding: 22px;
+  background: var(--white);
+}
+
+.case-proof-grid span {
+  display: block;
+  margin-bottom: 22px;
+  color: var(--muted);
+}
+
+.case-proof-grid strong {
+  display: block;
+  font-size: 1.35rem;
+  line-height: 1.12;
 }
 
 .article-layout {
@@ -763,6 +926,9 @@ h3 {
   .split-header,
   .log-section,
   .case-hero,
+  .featured-build,
+  .project-timeline,
+  .case-branch-system,
   .article-layout,
   .profile-grid,
   .contact-grid {
@@ -784,6 +950,22 @@ h3 {
   }
 
   .branch-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .showcase-stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .project-timeline li {
+    grid-template-columns: 84px minmax(0, 1fr);
+  }
+
+  .project-timeline span {
+    grid-column: 2;
+  }
+
+  .case-proof-grid {
     grid-template-columns: 1fr;
   }
 
@@ -825,6 +1007,16 @@ h3 {
   .branch-card img {
     border-right: 0;
     border-bottom: 1px solid var(--graphite);
+  }
+
+  .branch-visual-link {
+    border-right: 0;
+    border-bottom: 1px solid var(--graphite);
+  }
+
+  .showcase-proof,
+  .showcase-stats {
+    grid-template-columns: 1fr;
   }
 
   .log-row {

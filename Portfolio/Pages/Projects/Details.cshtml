@@ -28,13 +28,34 @@
 
     @if ((Model.Project.Branches ?? []).Count > 0)
     {
-        <section class="branch-map" aria-label="Explored branches">
-            @foreach (var branch in Model.Project.Branches ?? [])
-            {
-                <span>@branch</span>
-            }
+        <section class="case-branch-system" aria-labelledby="case-branch-title">
+            <div>
+                <p class="system-label">branch.system</p>
+                <h2 id="case-branch-title">Explored paths before the current shape.</h2>
+            </div>
+            <div class="branch-map" aria-label="Explored branches">
+                @foreach (var branch in Model.Project.Branches ?? [])
+                {
+                    <span>@branch</span>
+                }
+            </div>
         </section>
     }
+
+    <section class="case-proof-grid" aria-label="Case study proof points">
+        <div>
+            <span>problem framing</span>
+            <strong>Define what the visitor should understand in the first ten seconds.</strong>
+        </div>
+        <div>
+            <span>product decision</span>
+            <strong>Keep the experience explorable without hiding the practical navigation.</strong>
+        </div>
+        <div>
+            <span>technical kernel</span>
+            <strong>@Model.Project.Role work in a @Model.Project.Phase phase.</strong>
+        </div>
+    </section>
 
     <div class="prose case-prose">
         @Html.Raw(Model.Project.Html)
