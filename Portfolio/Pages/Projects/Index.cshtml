@@ -1,0 +1,41 @@
+@page "/projects"
+@model Portfolio.Pages.Projects.IndexModel
+@{
+    ViewData["Title"] = "Projects | Kernel Gallery";
+    ViewData["Description"] = "Exploratory project branches covering product thinking, ASP.NET, C#, and infrastructure.";
+    ViewData["CanonicalPath"] = "/projects";
+}
+
+<section class="page-header split-header">
+    <div>
+        <p class="system-label">branch.index</p>
+        <h1>Projects as branching systems, not static thumbnails.</h1>
+    </div>
+    <p>Each case study shows the role, phase, explored branches, and the technical kernel behind the product surface.</p>
+</section>
+
+<section class="branch-grid branch-grid-wide">
+    @foreach (var project in Model.Projects)
+    {
+        <article class="branch-card">
+            @if (!string.IsNullOrWhiteSpace(project.Visual))
+            {
+                <img src="@project.Visual" alt="@project.VisualAlt" />
+            }
+            <div class="branch-body">
+                <div class="meta-row">
+                    <span>@project.Phase</span>
+                    <span>@project.Role</span>
+                </div>
+                <h2><a asp-page="/Projects/Details" asp-route-slug="@project.Slug">@project.Title</a></h2>
+                <p>@project.Summary</p>
+                <div class="branch-list" aria-label="Project branches">
+                    @foreach (var branch in project.Branches ?? [])
+                    {
+                        <span>@branch</span>
+                    }
+                </div>
+            </div>
+        </article>
+    }
+</section>

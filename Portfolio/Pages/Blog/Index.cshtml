@@ -1,0 +1,33 @@
+@page "/blog"
+@model Portfolio.Pages.Blog.IndexModel
+@{
+    ViewData["Title"] = "Blog | Thinking Log";
+    ViewData["Description"] = "Build notes on product thinking, C#, ASP.NET Core, hosting, and implementation tradeoffs.";
+    ViewData["CanonicalPath"] = "/blog";
+}
+
+<section class="page-header split-header">
+    <div>
+        <p class="system-label">thinking.log</p>
+        <h1>Notes that show the work behind the interface.</h1>
+    </div>
+    <p>Short, concrete entries about decisions, constraints, experiments, and what changed as the system evolved.</p>
+</section>
+
+<section class="log-list log-list-large">
+    @foreach (var post in Model.Posts)
+    {
+        <article class="log-card">
+            <time datetime="@post.Date.ToString("yyyy-MM-dd")">@post.Date.ToString("yyyy.MM.dd")</time>
+            <h2><a asp-page="/Blog/Details" asp-route-slug="@post.Slug">@post.Title</a></h2>
+            <p>@post.Summary</p>
+            <div class="meta-row">
+                <span>@post.ReadingTime min read</span>
+                @foreach (var tag in post.Tags)
+                {
+                    <span>@tag</span>
+                }
+            </div>
+        </article>
+    }
+</section>

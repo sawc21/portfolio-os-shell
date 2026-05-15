@@ -1,0 +1,26 @@
+@page "/blog/{slug}"
+@model Portfolio.Pages.Blog.DetailsModel
+@{
+    ViewData["Title"] = $"{Model.Post.Title} | Thinking Log";
+    ViewData["Description"] = Model.Post.Summary;
+    ViewData["CanonicalPath"] = $"/blog/{Model.Post.Slug}";
+    ViewData["OgType"] = "article";
+}
+
+<article class="article-layout">
+    <header class="article-header">
+        <a class="back-link" asp-page="/Blog/Index">thinking.log</a>
+        <p class="system-label">@Model.Post.Date.ToString("yyyy.MM.dd") / @Model.Post.ReadingTime min read</p>
+        <h1>@Model.Post.Title</h1>
+        <p>@Model.Post.Summary</p>
+        <div class="tag-row">
+            @foreach (var tag in Model.Post.Tags)
+            {
+                <span>@tag</span>
+            }
+        </div>
+    </header>
+    <div class="prose">
+        @Html.Raw(Model.Post.Html)
+    </div>
+</article>

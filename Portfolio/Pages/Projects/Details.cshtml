@@ -1,0 +1,42 @@
+@page "/projects/{slug}"
+@model Portfolio.Pages.Projects.DetailsModel
+@{
+    ViewData["Title"] = $"{Model.Project.Title} | Project Branch";
+    ViewData["Description"] = Model.Project.Summary;
+    ViewData["CanonicalPath"] = $"/projects/{Model.Project.Slug}";
+}
+
+<article class="case-study">
+    <header class="case-hero">
+        <div>
+            <a class="back-link" asp-page="/Projects/Index">branch.index</a>
+            <p class="system-label">@Model.Project.Phase / @Model.Project.Role</p>
+            <h1>@Model.Project.Title</h1>
+            <p>@Model.Project.Summary</p>
+            <div class="tag-row">
+                @foreach (var tag in Model.Project.Tags)
+                {
+                    <span>@tag</span>
+                }
+            </div>
+        </div>
+        @if (!string.IsNullOrWhiteSpace(Model.Project.Visual))
+        {
+            <img class="case-visual" src="@Model.Project.Visual" alt="@Model.Project.VisualAlt" />
+        }
+    </header>
+
+    @if ((Model.Project.Branches ?? []).Count > 0)
+    {
+        <section class="branch-map" aria-label="Explored branches">
+            @foreach (var branch in Model.Project.Branches ?? [])
+            {
+                <span>@branch</span>
+            }
+        </section>
+    }
+
+    <div class="prose case-prose">
+        @Html.Raw(Model.Project.Html)
+    </div>
+</article>

@@ -1,0 +1,28 @@
+@page "/resume"
+@model Portfolio.Pages.ResumeModel
+@{
+    ViewData["Title"] = "Resume | System Profile";
+    ViewData["Description"] = "System profile for Sawyer Cawthon: design-minded full-stack ASP.NET and C# developer.";
+    ViewData["CanonicalPath"] = "/resume";
+}
+
+<article class="resume-shell">
+    <header class="page-header split-header">
+        <div>
+            <p class="system-label">system.profile</p>
+            <h1>Technical credibility with product judgment.</h1>
+        </div>
+        <p>Resume content is kept in Markdown now, with room to evolve into structured JSON and PDF generation later.</p>
+    </header>
+
+    <section class="profile-grid">
+        <aside class="profile-card">
+            <p class="system-label">current stack</p>
+            <strong>ASP.NET Core / C# / Razor Pages</strong>
+            <span>Markdown content, tests, self-hosting path, and production basics.</span>
+        </aside>
+        <div class="prose">
+            @Html.Raw(Model.Resume?.Html ?? "<p>Resume content is not available yet.</p>")
+        </div>
+    </section>
+</article>

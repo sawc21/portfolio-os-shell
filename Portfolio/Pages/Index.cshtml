@@ -1,0 +1,97 @@
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Sawyer Cawthon | Kernel Gallery";
+    ViewData["Description"] = "A graphic-minimalist ASP.NET portfolio for product thinking, full-stack C# work, and self-hosting experiments.";
+    ViewData["CanonicalPath"] = "/";
+}
+
+<section class="hero-shell">
+    <div class="hero-statement">
+        <p class="system-label">kernel.gallery / public interface</p>
+        <h1>Design instincts on the surface. C# systems in the kernel.</h1>
+        <p class="hero-summary">
+            I shape product ideas, build the Razor Pages and ASP.NET infrastructure behind them, and document the branches that make the work better.
+        </p>
+        <div class="hero-actions">
+            <a class="button button-primary" asp-page="/Projects/Index">Explore branches</a>
+            <a class="button button-secondary" asp-page="/Resume">System profile</a>
+        </div>
+    </div>
+    <aside class="kernel-panel" aria-label="Kernel status panel">
+        <div class="panel-topline">
+            <span>kernel.status</span>
+            <strong>online</strong>
+        </div>
+        <dl class="status-grid">
+            <div>
+                <dt>interface</dt>
+                <dd>Product + design</dd>
+            </div>
+            <div>
+                <dt>runtime</dt>
+                <dd>ASP.NET / C#</dd>
+            </div>
+            <div>
+                <dt>storage</dt>
+                <dd>Markdown content</dd>
+            </div>
+            <div>
+                <dt>edge</dt>
+                <dd>Self-hosting lab</dd>
+            </div>
+        </dl>
+        <div class="signal-strip" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+        </div>
+    </aside>
+</section>
+
+<section class="branch-section">
+    <div class="section-heading">
+        <p class="system-label">featured.branches</p>
+        <h2>Project branches worth opening.</h2>
+    </div>
+    <div class="branch-grid">
+        @foreach (var project in Model.FeaturedProjects)
+        {
+            <article class="branch-card">
+                @if (!string.IsNullOrWhiteSpace(project.Visual))
+                {
+                    <img src="@project.Visual" alt="@project.VisualAlt" />
+                }
+                <div class="branch-body">
+                    <div class="meta-row">
+                        <span>@project.Phase</span>
+                        <span>@project.Role</span>
+                    </div>
+                    <h3><a asp-page="/Projects/Details" asp-route-slug="@project.Slug">@project.Title</a></h3>
+                    <p>@project.Summary</p>
+                    <div class="branch-list" aria-label="Project branches">
+                        @foreach (var branch in project.Branches ?? [])
+                        {
+                            <span>@branch</span>
+                        }
+                    </div>
+                </div>
+            </article>
+        }
+    </div>
+</section>
+
+<section class="log-section">
+    <div>
+        <p class="system-label">thinking.log</p>
+        <h2>Notes from the build process.</h2>
+    </div>
+    <div class="log-list">
+        @foreach (var post in Model.LatestPosts)
+        {
+            <a class="log-row" asp-page="/Blog/Details" asp-route-slug="@post.Slug">
+                <span>@post.Date.ToString("yyyy.MM.dd")</span>
+                <strong>@post.Title</strong>
+                <small>@post.ReadingTime min read</small>
+            </a>
+        }
+    </div>
+</section>

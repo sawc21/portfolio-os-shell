@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 640" role="img" aria-labelledby="title desc">
+  <title id="title">Kernel Gallery branch preview</title>
+  <desc id="desc">Graphic minimalist isometric islands connected by system lines.</desc>
+  <rect width="960" height="640" fill="#f5f5f0"/>
+  <path d="M84 92h792v456H84z" fill="#101010"/>
+  <path d="M112 120h736v400H112z" fill="#f5f5f0"/>
+  <path d="M224 393 420 280l196 113-196 113z" fill="#dcebe4" stroke="#101010" stroke-width="6"/>
+  <path d="M420 280v226M224 393v78l196 113 196-113v-78" fill="none" stroke="#101010" stroke-width="6"/>
+  <path d="M498 237 642 154l144 83-144 83z" fill="#bfe5e5" stroke="#101010" stroke-width="5"/>
+  <path d="M498 237v58l144 83 144-83v-58" fill="none" stroke="#101010" stroke-width="5"/>
+  <path d="M130 260 248 192l118 68-118 68z" fill="#f1b29c" stroke="#101010" stroke-width="5"/>
+  <path d="M130 260v56l118 68 118-68v-56" fill="none" stroke="#101010" stroke-width="5"/>
+  <path d="M420 280 248 260M420 280l222-43" stroke="#101010" stroke-width="5" stroke-dasharray="12 14"/>
+  <circle cx="420" cy="280" r="44" fill="#70d7b2" stroke="#101010" stroke-width="6"/>
+  <path d="M420 201v-44M385 217l-31-31M455 217l31-31" stroke="#101010" stroke-width="6" stroke-linecap="round"/>
+  <rect x="174" y="122" width="190" height="28" fill="#101010"/>
+  <rect x="174" y="164" width="132" height="16" fill="#c8c8be"/>
+  <rect x="650" y="458" width="160" height="14" fill="#101010"/>
+  <rect x="650" y="484" width="112" height="14" fill="#c8c8be"/>
+  <circle cx="802" cy="142" r="16" fill="#f5a36c"/>
+  <circle cx="760" cy="142" r="16" fill="#70d7b2"/>
+  <circle cx="718" cy="142" r="16" fill="#9fd6e2"/>
+</svg>

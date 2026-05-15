@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 640" role="img" aria-labelledby="title desc">
+  <title id="title">Homelab atlas preview</title>
+  <desc id="desc">Minimal isometric infrastructure islands with signal lines.</desc>
+  <rect width="960" height="640" fill="#f7f7f2"/>
+  <rect x="82" y="78" width="796" height="484" rx="0" fill="#ffffff" stroke="#111111" stroke-width="6"/>
+  <path d="M162 426 318 336l156 90-156 90z" fill="#bfe5e5" stroke="#111111" stroke-width="5"/>
+  <path d="M162 426v54l156 90 156-90v-54" fill="none" stroke="#111111" stroke-width="5"/>
+  <path d="M496 350 642 266l146 84-146 84z" fill="#dcebe4" stroke="#111111" stroke-width="5"/>
+  <path d="M496 350v54l146 84 146-84v-54" fill="none" stroke="#111111" stroke-width="5"/>
+  <path d="M298 220 430 144l132 76-132 76z" fill="#f1b29c" stroke="#111111" stroke-width="5"/>
+  <path d="M298 220v54l132 76 132-76v-54" fill="none" stroke="#111111" stroke-width="5"/>
+  <path d="M318 336 430 220M430 220l212 130M318 426l324-76" stroke="#111111" stroke-width="5" stroke-dasharray="10 12"/>
+  <rect x="284" y="390" width="70" height="62" fill="#111111"/>
+  <rect x="612" y="315" width="60" height="86" fill="#111111"/>
+  <circle cx="430" cy="220" r="34" fill="#70d7b2" stroke="#111111" stroke-width="5"/>
+  <path d="M710 210c-18-18-42-28-68-28s-50 10-68 28M742 176c-27-27-62-42-100-42s-73 15-100 42" fill="none" stroke="#111111" stroke-width="8" stroke-linecap="round"/>
+  <rect x="130" y="126" width="158" height="18" fill="#111111"/>
+  <rect x="130" y="160" width="238" height="12" fill="#bebeb5"/>
+  <rect x="130" y="188" width="180" height="12" fill="#bebeb5"/>
+</svg>

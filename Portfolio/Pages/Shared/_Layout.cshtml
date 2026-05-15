@@ -1,0 +1,60 @@
+@{
+    var title = ViewData["Title"] as string ?? "Sawyer Cawthon | Kernel Gallery";
+    var description = ViewData["Description"] as string ?? "Graphic-minimalist ASP.NET portfolio for product thinking, full-stack C# work, and self-hosting experiments.";
+    var canonicalPath = ViewData["CanonicalPath"] as string ?? Context.Request.Path.ToString();
+    var ogType = ViewData["OgType"] as string ?? "website";
+    var canonicalUrl = $"{Context.Request.Scheme}://{Context.Request.Host}{canonicalPath}";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@title</title>
+    <meta name="description" content="@description" />
+    <meta property="og:title" content="@title" />
+    <meta property="og:description" content="@description" />
+    <meta property="og:type" content="@ogType" />
+    <meta property="og:url" content="@canonicalUrl" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="canonical" href="@canonicalUrl" />
+    <link rel="alternate" type="application/rss+xml" title="Sawyer Cawthon Kernel Gallery" href="/feed.xml" />
+    <script type="importmap"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <header class="site-header">
+        <a class="brand" asp-page="/Index" aria-label="Sawyer Cawthon Kernel Gallery home">
+            <span>kg</span>
+            <strong>Kernel Gallery</strong>
+        </a>
+        <nav class="site-nav" aria-label="Primary navigation">
+            <a asp-page="/Projects/Index">Projects</a>
+            <a asp-page="/Blog/Index">Blog</a>
+            <a asp-page="/Resume">Resume</a>
+            <a asp-page="/Contact">Contact</a>
+        </nav>
+    </header>
+
+    <main class="site-main">
+        @RenderBody()
+    </main>
+
+    <footer class="site-footer">
+        <div>
+            <strong>Sawyer Cawthon</strong>
+            <p>Product-minded ASP.NET portfolio with a self-hosting kernel.</p>
+        </div>
+        <div class="footer-links">
+            <a href="/feed.xml">RSS</a>
+            <a href="/sitemap.xml">Sitemap</a>
+        </div>
+    </footer>
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
