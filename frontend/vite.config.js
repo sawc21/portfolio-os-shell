@@ -10,7 +10,7 @@ export default defineConfig({
       input: resolve(__dirname, "src/homeHub.js"),
       output: {
         entryFileNames: "homeHub.js",
-        chunkFileNames: "homeHub-[hash].js",
+        chunkFileNames: "homeHub-three.js",
         assetFileNames: "homeHub-[name][extname]"
       }
     }
