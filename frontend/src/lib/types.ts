@@ -2,6 +2,8 @@ import type { LucideIcon } from "lucide-react";
 
 export type AppId =
   | "about"
+  | "recruiter"
+  | "search"
   | "projects"
   | "skills"
   | "case-studies"
@@ -62,6 +64,29 @@ export type ProjectItem = {
   branches: string[];
 };
 
+export type ContactLink = {
+  label: string;
+  value: string;
+  href: string;
+};
+
+export type RecruiterProfile = {
+  name: string;
+  targetRoles: string[];
+  shortPitch: string;
+  valueProposition: string;
+  skills: string[];
+  projectHighlights: string[];
+  contactLinks: ContactLink[];
+  resumeLink: string;
+};
+
+export type PortfolioSignal = {
+  title: string;
+  description: string;
+  keywords: string[];
+};
+
 export type SkillGroup = {
   title: string;
   items: string[];
@@ -82,19 +107,68 @@ export type NoteItem = {
 };
 
 export type PlannerTask = {
+  id: string;
   title: string;
   status: "queued" | "active" | "done";
-  app: string;
+  area: string;
+  tags: string[];
 };
 
-export type BudgetSlice = {
+export type SprintPlannerData = {
+  currentSprint: string;
+  sprintGoal: string;
+  tasks: PlannerTask[];
+  roadmap: string[];
+};
+
+export type ScopeBudgetItem = {
+  id: string;
   label: string;
-  amount: number;
+  value: number;
+  unit: string;
+  risk: "low" | "medium" | "high";
+  recruiterValue: number;
   color: string;
+  tradeoff: string;
+};
+
+export type ScopeScenarioInput = {
+  polishBias: number;
+  threeDBias: number;
+};
+
+export type ScopeBudgetData = {
+  items: ScopeBudgetItem[];
+  scenario: ScopeScenarioInput;
 };
 
 export type HabitItem = {
+  id: string;
   title: string;
   streak: number;
   cadence: string;
+  category: "coding" | "documentation" | "git" | "practice" | "testing" | "polish";
+  checkedToday: boolean;
+};
+
+export type DeveloperHabitsData = {
+  habits: HabitItem[];
+};
+
+export type SystemAction =
+  | { type: "open-app"; appId: AppId }
+  | { type: "open-search"; query: string }
+  | { type: "launch-world" }
+  | { type: "reset-os" }
+  | { type: "clear" }
+  | { type: "print"; lines: string[] };
+
+export type SearchResult = {
+  id: string;
+  title: string;
+  description: string;
+  category: string;
+  keywords: string[];
+  action: SystemAction;
+  score: number;
 };

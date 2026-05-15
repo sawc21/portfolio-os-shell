@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useMemo, useState } from "react";
-import { appRegistry, getAppDefinition } from "../../lib/appRegistry";
 import type { AppId, DesktopIconPosition, WindowInstance } from "../../lib/types";
+import { portfolioKernel } from "../../os/kernel/kernel";
 import { DesktopIcon } from "./DesktopIcon";
 import { StartMenu } from "./StartMenu";
 import { Taskbar } from "./Taskbar";
@@ -10,8 +10,9 @@ import { WorldPreview } from "./WorldPreview";
 
 type WorldMode = "desktop" | "booting" | "world";
 type IconPositionMap = Partial<Record<AppId, DesktopIconPosition>>;
+type AppParamsMap = Partial<Record<AppId, unknown>>;
 
-const initialApps: AppId[] = ["about", "projects", "terminal"];
+const initialApps: AppId[] = ["recruiter", "search", "terminal"];
 const windowsStorageKey = "portfolio-os:windows:v1";
 const iconsStorageKey = "portfolio-os:desktop-icons:v1";
 
@@ -21,10 +22,11 @@ export function Desktop() {
   const [startOpen, setStartOpen] = useState(false);
   const [selectedIconId, setSelectedIconId] = useState<AppId | null>(null);
   const [iconPositions, setIconPositions] = useState<IconPositionMap>(readIconPositions);
+  const [appParams, setAppParams] = useState<AppParamsMap>({});
   const [worldMode, setWorldMode] = useState<WorldMode>("desktop");
   const [zCursor, setZCursor] = useState(30);
 
-  const desktopApps = useMemo(() => appRegistry.filter((app) => app.desktop), []);
+  const desktopApps = useMemo(() => portfolioKernel.getDesktopApps(), []);
 
   useEffect(() => {
     window.localStorage.setItem(windowsStorageKey, JSON.stringify(windows));
@@ -76,9 +78,12 @@ export function Desktop() {
     );
   }
 
-  function openApp(appId: AppId) {
+  function openApp(appId: AppId, params?: unknown) {
     setStartOpen(false);
     setSelectedIconId(appId);
+    if (params !== undefined) {
+      setAppParams((current) => ({ ...current, [appId]: params }));
+    }
     setWindows((current) => {
       if (current.some((window) => window.appId === appId)) {
         return current;
@@ -138,10 +143,12 @@ export function Desktop() {
   }
 
   function resetWorkspace() {
+    portfolioKernel.resetDemoState();
     setIconPositions({});
     setWindows(initialApps.map(createWindow));
     setFocusedAppId("terminal");
     setSelectedIconId(null);
+    setAppParams({});
   }
 
   function launchWorld() {
@@ -196,6 +203,8 @@ export function Desktop() {
           focusedAppId={focusedAppId}
           openApp={openApp}
           launchWorld={launchWorld}
+          resetWorkspace={resetWorkspace}
+          appParams={appParams}
           onFocus={focusWindow}
           onClose={closeWindow}
           onMinimize={minimizeWindow}
@@ -236,7 +245,7 @@ export function Desktop() {
 }
 
 function createWindow(appId: AppId): WindowInstance {
-  const definition = getAppDefinition(appId);
+  const definition = portfolioKernel.getAppById(appId);
 
   return {
     appId,
@@ -270,7 +279,7 @@ function readWindowSession(): WindowInstance[] {
 
   try {
     const parsed = JSON.parse(stored) as WindowInstance[];
-    const knownIds = new Set(appRegistry.map((app) => app.id));
+    const knownIds = new Set(portfolioKernel.getApps().map((app) => app.id));
     const restored = parsed.filter((window) => knownIds.has(window.appId));
     return restored.length > 0 ? restored.map((window) => ({ ...createWindow(window.appId), ...window })) : fallback;
   } catch (error) {

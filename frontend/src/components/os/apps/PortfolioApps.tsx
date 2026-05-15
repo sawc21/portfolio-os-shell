@@ -4,57 +4,142 @@ import {
   Circle,
   RadioTower,
   Rocket,
+  Search,
   Send,
+  SlidersHorizontal,
   TerminalSquare
 } from "lucide-react";
 import type { FormEvent, KeyboardEvent } from "react";
-import { useMemo, useState } from "react";
-import {
-  aboutProfile,
-  budgetSlices,
-  caseStudies,
-  habits,
-  notes,
-  operatingModes,
-  plannerTasks,
-  projects,
-  resumeHighlights,
-  skillGroups,
-  worldRoadmap
-} from "../../../lib/mockData";
-import { runTerminalCommand } from "../../../lib/terminalCommands";
-import type { AppId } from "../../../lib/types";
+import { useEffect, useMemo, useState } from "react";
+import { portfolioKernel } from "../../../os/kernel/kernel";
+import type { AppId, ScopeScenarioInput, SystemAction } from "../../../lib/types";
 
 export type OsAppComponentProps = {
-  openApp: (appId: AppId) => void;
+  openApp: (appId: AppId, params?: unknown) => void;
   launchWorld: () => void;
+  resetWorkspace: () => void;
+  params?: unknown;
 };
 
 export function AboutApp() {
+  const profile = portfolioKernel.getRecruiterProfile();
+  const signals = portfolioKernel.getPortfolioSignals();
+
   return (
     <div className="app-view app-view--about">
       <header className="app-hero">
         <span className="os-label">profile.boot</span>
-        <h2>{aboutProfile.headline}</h2>
-        <p>{aboutProfile.summary}</p>
+        <h2>{profile.name} builds portfolio software like a product.</h2>
+        <p>{profile.shortPitch}</p>
       </header>
       <div className="signal-grid">
-        {aboutProfile.signals.map((signal) => (
+        {profile.targetRoles.map((signal) => (
           <span key={signal}>{signal}</span>
         ))}
       </div>
       <section className="case-note">
         <strong>Interview angle</strong>
-        <p>
-          Recruiters can inspect the portfolio as a product: the OS shell demonstrates UI state,
-          interaction design, frontend architecture, and a backend that still serves durable routes.
-        </p>
+        <p>{signals[0]?.description}</p>
       </section>
     </div>
   );
 }
 
+export function RecruiterApp({ openApp }: OsAppComponentProps) {
+  const profile = portfolioKernel.getRecruiterProfile();
+  const signals = portfolioKernel.getPortfolioSignals();
+
+  return (
+    <div className="app-view app-view--recruiter">
+      <header className="app-hero">
+        <span className="os-label">hire.signal</span>
+        <h2>Hire Sawyer Cawthon.</h2>
+        <p>{profile.valueProposition}</p>
+      </header>
+      <div className="signal-grid">
+        {profile.targetRoles.map((role) => (
+          <span key={role}>{role}</span>
+        ))}
+      </div>
+      <div className="project-stack">
+        {signals.map((signal) => (
+          <article className="project-card" key={signal.title}>
+            <div>
+              <span>proof</span>
+              <strong>portfolio signal</strong>
+            </div>
+            <h3>{signal.title}</h3>
+            <p>{signal.description}</p>
+            <div className="token-row">
+              {signal.keywords.slice(0, 5).map((keyword) => (
+                <span key={keyword}>{keyword}</span>
+              ))}
+            </div>
+          </article>
+        ))}
+      </div>
+      <div className="app-actions">
+        <button type="button" className="app-action" onClick={() => openApp("resume")}>Open Resume</button>
+        <button type="button" className="app-action" onClick={() => openApp("projects")}>View Project Proof</button>
+        <button type="button" className="app-action" onClick={() => openApp("contact")}>Contact Sawyer</button>
+      </div>
+    </div>
+  );
+}
+
+export function SearchApp({ openApp, params }: OsAppComponentProps) {
+  const initialQuery = typeof params === "object" && params !== null && "query" in params
+    ? String((params as { query?: string }).query ?? "")
+    : "hire sawyer";
+  const [query, setQuery] = useState(initialQuery);
+  const results = useMemo(() => portfolioKernel.search(query), [query]);
+
+  useEffect(() => {
+    setQuery(initialQuery);
+  }, [initialQuery]);
+
+  function runAction(action: SystemAction) {
+    if (action.type === "open-app") {
+      openApp(action.appId);
+    }
+    if (action.type === "open-search") {
+      setQuery(action.query);
+    }
+  }
+
+  return (
+    <div className="app-view app-view--search">
+      <header className="app-hero">
+        <span className="os-label">kernel.search</span>
+        <h2>Sawyer Search</h2>
+        <p>Search apps, projects, skills, commands, case studies, and hiring signals.</p>
+      </header>
+      <label className="search-box">
+        <Search aria-hidden="true" size={17} />
+        <input
+          value={query}
+          onChange={(event) => setQuery(event.target.value)}
+          aria-label="Search the Portfolio OS"
+          placeholder="try hire sawyer, react, testing, 3d"
+        />
+      </label>
+      <div className="search-results">
+        {results.map((result) => (
+          <button key={result.id} type="button" onClick={() => runAction(result.action)}>
+            <span>{result.category}</span>
+            <strong>{result.title}</strong>
+            <p>{result.description}</p>
+            <small>{result.keywords.slice(0, 5).join(" / ")}</small>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export function ProjectsApp() {
+  const projects = portfolioKernel.getProjects();
+
   return (
     <div className="app-view app-view--projects">
       <header className="app-hero">
@@ -88,6 +173,8 @@ export function ProjectsApp() {
 }
 
 export function SkillsApp() {
+  const skillGroups = portfolioKernel.getSkillGroups();
+
   return (
     <div className="app-view app-view--skills">
       <header className="app-hero">
@@ -111,7 +198,9 @@ export function SkillsApp() {
   );
 }
 
-export function CaseStudiesApp() {
+export function CaseStudiesApp({ openApp }: OsAppComponentProps) {
+  const caseStudies = portfolioKernel.getCaseStudies();
+
   return (
     <div className="app-view app-view--cases">
       <header className="app-hero">
@@ -136,11 +225,16 @@ export function CaseStudiesApp() {
           </article>
         ))}
       </div>
+      <button type="button" className="app-action" onClick={() => openApp("recruiter")}>
+        Open Recruiter Quick View
+      </button>
     </div>
   );
 }
 
 export function NotesApp() {
+  const notes = portfolioKernel.getNotes();
+
   return (
     <div className="app-view">
       <header className="app-hero">
@@ -161,13 +255,17 @@ export function NotesApp() {
   );
 }
 
-export function ResumeApp() {
+export function ResumeApp({ openApp }: OsAppComponentProps) {
+  const profile = portfolioKernel.getRecruiterProfile();
+  const resumeHighlights = portfolioKernel.getResumeHighlights();
+  const operatingModes = portfolioKernel.getOperatingModes();
+
   return (
     <div className="app-view app-view--resume">
       <header className="app-hero">
         <span className="os-label">system.profile</span>
         <h2>Technical credibility with product judgment.</h2>
-        <p>Design-minded full-stack developer focused on practical ASP.NET applications and maintainable architecture.</p>
+        <p>{profile.shortPitch}</p>
       </header>
       <section className="resume-grid">
         <div>
@@ -188,40 +286,40 @@ export function ResumeApp() {
         </div>
       </section>
       <a className="app-link" href="/resume">Open server resume route</a>
+      <button className="app-action" type="button" onClick={() => openApp("recruiter")}>
+        Hire Sawyer Cawthon
+      </button>
     </div>
   );
 }
 
-export function ContactApp() {
+export function ContactApp({ openApp }: OsAppComponentProps) {
+  const profile = portfolioKernel.getRecruiterProfile();
+
   return (
     <div className="app-view app-view--contact">
       <header className="app-hero">
         <span className="os-label">network.request</span>
         <h2>Send a clear signal.</h2>
-        <p>Placeholder-safe contact routes for the first portfolio OS build. Replace these before publishing.</p>
+        <p>{profile.valueProposition}</p>
       </header>
       <div className="contact-stack">
-        <a href="mailto:hello@example.com">
-          <Send aria-hidden="true" size={18} />
-          <span>Email</span>
-          <strong>hello@example.com</strong>
-        </a>
-        <a href="https://github.com/" rel="me">
-          <RadioTower aria-hidden="true" size={18} />
-          <span>GitHub</span>
-          <strong>github.com/your-handle</strong>
-        </a>
-        <a href="https://www.linkedin.com/" rel="me">
-          <RadioTower aria-hidden="true" size={18} />
-          <span>LinkedIn</span>
-          <strong>linkedin.com/in/your-handle</strong>
-        </a>
+        {profile.contactLinks.map((link) => (
+          <a key={link.label} href={link.href} rel={link.href.startsWith("http") ? "me" : undefined}>
+            {link.label === "Email" ? <Send aria-hidden="true" size={18} /> : <RadioTower aria-hidden="true" size={18} />}
+            <span>{link.label}</span>
+            <strong>{link.value}</strong>
+          </a>
+        ))}
       </div>
+      <button type="button" className="app-action" onClick={() => openApp("recruiter")}>
+        Hire Sawyer Cawthon
+      </button>
     </div>
   );
 }
 
-export function TerminalApp({ openApp, launchWorld }: OsAppComponentProps) {
+export function TerminalApp({ openApp, launchWorld, resetWorkspace }: OsAppComponentProps) {
   const [lines, setLines] = useState<string[]>([
     "Portfolio OS terminal online.",
     "Type help to list commands."
@@ -230,7 +328,7 @@ export function TerminalApp({ openApp, launchWorld }: OsAppComponentProps) {
 
   function executeCommand() {
     const promptLine = `> ${command || "help"}`;
-    const action = runTerminalCommand(command);
+    const action = portfolioKernel.runCommand(command);
 
     if (action.type === "clear") {
       setLines([]);
@@ -238,9 +336,22 @@ export function TerminalApp({ openApp, launchWorld }: OsAppComponentProps) {
       return;
     }
 
-    if (action.type === "open") {
+    if (action.type === "open-app") {
       openApp(action.appId);
       setLines((current) => [...current, promptLine, `Opening ${action.appId}...`]);
+      setCommand("");
+      return;
+    }
+
+    if (action.type === "open-search") {
+      openApp("search", { query: action.query });
+      const results = portfolioKernel.search(action.query);
+      setLines((current) => [
+        ...current,
+        promptLine,
+        `Searching for ${action.query}...`,
+        ...results.slice(0, 4).map((result) => `${result.category}: ${result.title}`)
+      ]);
       setCommand("");
       return;
     }
@@ -248,6 +359,13 @@ export function TerminalApp({ openApp, launchWorld }: OsAppComponentProps) {
     if (action.type === "launch-world") {
       launchWorld();
       setLines((current) => [...current, promptLine, "Launching world interface..."]);
+      setCommand("");
+      return;
+    }
+
+    if (action.type === "reset-os") {
+      resetWorkspace();
+      setLines((current) => [...current, promptLine, "Portfolio OS workspace and demo state reset."]);
       setCommand("");
       return;
     }
@@ -293,20 +411,35 @@ export function TerminalApp({ openApp, launchWorld }: OsAppComponentProps) {
 }
 
 export function PlannerApp() {
+  const [planner, setPlanner] = useState(() => portfolioKernel.getSprintPlannerData());
+
   return (
-    <div className="app-view">
+    <div className="app-view app-view--planner">
       <header className="app-hero">
-        <span className="os-label">roadmap.queue</span>
-        <h2>Build plan as a board.</h2>
+        <span className="os-label">sprint.planner</span>
+        <h2>{planner.currentSprint}</h2>
+        <p>{planner.sprintGoal}</p>
       </header>
+      <div className="token-row">
+        {planner.roadmap.map((phase) => (
+          <span key={phase}>{phase}</span>
+        ))}
+      </div>
       <div className="task-list">
-        {plannerTasks.map((task) => (
+        {planner.tasks.map((task) => (
           <article key={task.title} data-status={task.status}>
             {task.status === "done" ? <CheckCircle2 aria-hidden="true" size={18} /> : <Circle aria-hidden="true" size={18} />}
             <div>
               <strong>{task.title}</strong>
-              <span>{task.app} / {task.status}</span>
+              <span>{task.area} / {task.status} / {task.tags.join(", ")}</span>
             </div>
+            <button
+              type="button"
+              className="inline-action"
+              onClick={() => setPlanner(portfolioKernel.updateSprintTaskStatus(task.id, nextTaskStatus(task.status)))}
+            >
+              Move to {nextTaskStatus(task.status)}
+            </button>
           </article>
         ))}
       </div>
@@ -315,30 +448,71 @@ export function PlannerApp() {
 }
 
 export function BudgetApp() {
-  const total = useMemo(() => budgetSlices.reduce((sum, slice) => sum + slice.amount, 0), []);
+  const [scope, setScope] = useState(() => portfolioKernel.getScopeBudgetData());
+  const total = useMemo(() => scope.items.reduce((sum, item) => sum + item.value, 0), [scope.items]);
+  const averageRecruiterValue = Math.round(
+    scope.items.reduce((sum, item) => sum + item.recruiterValue, 0) / scope.items.length
+  );
+
+  function updateScenario(input: ScopeScenarioInput) {
+    setScope(portfolioKernel.updateScopeScenario(input));
+  }
 
   return (
-    <div className="app-view">
+    <div className="app-view app-view--budget">
       <header className="app-hero">
-        <span className="os-label">demo.spend</span>
-        <h2>Fake portfolio ops budget.</h2>
-        <p>Demo data only. No real personal finance is stored or requested.</p>
+        <span className="os-label">scope.budget</span>
+        <h2>Time, complexity, and recruiter value.</h2>
+        <p>Mock planning data for portfolio tradeoffs. No personal finance is stored or requested.</p>
       </header>
+      <div className="scope-controls">
+        <label>
+          Polish bias
+          <input
+            type="range"
+            min="0"
+            max="100"
+            value={scope.scenario.polishBias}
+            onChange={(event) => updateScenario({ ...scope.scenario, polishBias: Number(event.target.value) })}
+          />
+          <span>{scope.scenario.polishBias}%</span>
+        </label>
+        <label>
+          3D bias
+          <input
+            type="range"
+            min="0"
+            max="100"
+            value={scope.scenario.threeDBias}
+            onChange={(event) => updateScenario({ ...scope.scenario, threeDBias: Number(event.target.value) })}
+          />
+          <span>{scope.scenario.threeDBias}%</span>
+        </label>
+      </div>
       <div className="budget-meter" aria-label={`Demo budget total ${total} dollars`}>
-        {budgetSlices.map((slice) => (
+        {scope.items.map((slice) => (
           <span
             key={slice.label}
-            style={{ width: `${(slice.amount / total) * 100}%`, background: slice.color }}
+            style={{ width: `${(slice.value / total) * 100}%`, background: slice.color }}
           />
         ))}
       </div>
+      <p className="app-metric">Average recruiter value: {averageRecruiterValue}/100</p>
       <div className="budget-list">
-        {budgetSlices.map((slice) => (
+        {scope.items.map((slice) => (
           <div key={slice.label}>
             <span style={{ background: slice.color }} />
             <strong>{slice.label}</strong>
-            <em>${slice.amount}</em>
+            <em>{slice.value} {slice.unit} / {slice.risk} risk</em>
           </div>
+        ))}
+      </div>
+      <div className="roadmap-list">
+        {scope.items.map((item) => (
+          <article key={item.id}>
+            <SlidersHorizontal aria-hidden="true" size={18} />
+            <span>{item.tradeoff}</span>
+          </article>
         ))}
       </div>
     </div>
@@ -346,18 +520,23 @@ export function BudgetApp() {
 }
 
 export function HabitsApp() {
+  const [habitData, setHabitData] = useState(() => portfolioKernel.getDeveloperHabitsData());
+
   return (
-    <div className="app-view">
+    <div className="app-view app-view--habits">
       <header className="app-hero">
-        <span className="os-label">consistency.loop</span>
-        <h2>Demo streaks for portfolio growth.</h2>
+        <span className="os-label">developer.habits</span>
+        <h2>Consistency loops that support internship readiness.</h2>
       </header>
       <div className="habit-grid">
-        {habits.map((habit) => (
+        {habitData.habits.map((habit) => (
           <article key={habit.title}>
             <strong>{habit.streak}</strong>
             <span>{habit.title}</span>
-            <small>{habit.cadence}</small>
+            <small>{habit.category} / {habit.cadence}</small>
+            <button type="button" className="inline-action" onClick={() => setHabitData(portfolioKernel.toggleHabitCheckIn(habit.id))}>
+              {habit.checkedToday ? "Checked in" : "Check in"}
+            </button>
           </article>
         ))}
       </div>
@@ -366,6 +545,8 @@ export function HabitsApp() {
 }
 
 export function WorldApp({ launchWorld }: OsAppComponentProps) {
+  const worldRoadmap = portfolioKernel.getWorldRoadmap();
+
   return (
     <div className="app-view app-view--world">
       <header className="app-hero">
@@ -390,4 +571,16 @@ export function WorldApp({ launchWorld }: OsAppComponentProps) {
       </button>
     </div>
   );
+}
+
+function nextTaskStatus(status: "queued" | "active" | "done") {
+  if (status === "queued") {
+    return "active";
+  }
+
+  if (status === "active") {
+    return "done";
+  }
+
+  return "queued";
 }

@@ -1,10 +1,10 @@
 import type {
-  BudgetSlice,
   CaseStudyItem,
   HabitItem,
   NoteItem,
   PlannerTask,
   ProjectItem,
+  ScopeBudgetData,
   SkillGroup
 } from "./types";
 
@@ -105,26 +105,158 @@ export const notes: NoteItem[] = [
 ];
 
 export const plannerTasks: PlannerTask[] = [
-  { title: "Ship OS shell MVP", status: "active", app: "Desktop" },
-  { title: "Replace placeholder contact links", status: "queued", app: "Contact" },
-  { title: "Write portfolio case study", status: "queued", app: "Projects" },
-  { title: "Prototype 3D command room", status: "queued", app: "World" },
-  { title: "Keep public routes tested", status: "done", app: "ASP.NET" }
+  {
+    id: "kernel-search",
+    title: "Build Portfolio Kernel and Sawyer Search",
+    status: "active",
+    area: "Frontend architecture",
+    tags: ["Frontend", "TypeScript", "Search"]
+  },
+  {
+    id: "recruiter-flow",
+    title: "Connect recruiter CTAs across Resume, Contact, and Search",
+    status: "queued",
+    area: "Career",
+    tags: ["Career", "UX", "Portfolio"]
+  },
+  {
+    id: "route-tests",
+    title: "Keep public ASP.NET routes and fallback links tested",
+    status: "done",
+    area: "Backend",
+    tags: ["Backend", "Testing", "ASP.NET"]
+  },
+  {
+    id: "world-prototype",
+    title: "Prototype compact 3D command room",
+    status: "queued",
+    area: "Creative tech",
+    tags: ["3D", "Design", "Frontend"]
+  },
+  {
+    id: "interview-polish",
+    title: "Polish portfolio case-study copy for internship reviewers",
+    status: "active",
+    area: "Interview prep",
+    tags: ["Career", "Documentation", "Design"]
+  }
 ];
 
-export const budgetSlices: BudgetSlice[] = [
-  { label: "Hosting", amount: 18, color: "#55f0c2" },
-  { label: "Domains", amount: 14, color: "#8be7ff" },
-  { label: "Learning", amount: 32, color: "#ffd166" },
-  { label: "Tools", amount: 21, color: "#ff8fab" }
-];
+export const sprintPlannerData = {
+  currentSprint: "Portfolio Kernel Sprint",
+  sprintGoal:
+    "Make the OS feel connected, searchable, and clearly aimed at software internship conversion.",
+  tasks: plannerTasks,
+  roadmap: [
+    "Kernel/search architecture",
+    "Recruiter Quick View",
+    "Functional evidence apps",
+    "Browser interaction tests",
+    "React Three Fiber world prototype"
+  ]
+};
+
+export const scopeBudgetData: ScopeBudgetData = {
+  scenario: {
+    polishBias: 62,
+    threeDBias: 28
+  },
+  items: [
+    {
+      id: "kernel",
+      label: "Kernel + search",
+      value: 36,
+      unit: "hours",
+      risk: "medium",
+      recruiterValue: 94,
+      color: "#55f0c2",
+      tradeoff: "Adds architecture credibility and makes every app feel connected."
+    },
+    {
+      id: "polish",
+      label: "Interaction polish",
+      value: 24,
+      unit: "hours",
+      risk: "low",
+      recruiterValue: 88,
+      color: "#8be7ff",
+      tradeoff: "Improves first impression without increasing technical scope too much."
+    },
+    {
+      id: "content",
+      label: "Case-study content",
+      value: 18,
+      unit: "hours",
+      risk: "low",
+      recruiterValue: 84,
+      color: "#ffd166",
+      tradeoff: "Turns the project into interview evidence instead of a visual gimmick."
+    },
+    {
+      id: "world",
+      label: "3D prototype",
+      value: 16,
+      unit: "hours",
+      risk: "high",
+      recruiterValue: 76,
+      color: "#ff8fab",
+      tradeoff: "Memorable, but only worth expanding after the OS shell is stable."
+    }
+  ]
+};
 
 export const habits: HabitItem[] = [
-  { title: "Build log", streak: 6, cadence: "weekly" },
-  { title: "Ship small demo", streak: 4, cadence: "biweekly" },
-  { title: "Refactor notes", streak: 9, cadence: "weekly" },
-  { title: "Interview prep", streak: 5, cadence: "weekly" }
+  {
+    id: "daily-coding",
+    title: "Daily coding",
+    streak: 11,
+    cadence: "daily",
+    category: "coding",
+    checkedToday: true
+  },
+  {
+    id: "docs",
+    title: "Documentation",
+    streak: 7,
+    cadence: "weekly",
+    category: "documentation",
+    checkedToday: false
+  },
+  {
+    id: "commits",
+    title: "Git commits",
+    streak: 9,
+    cadence: "weekly",
+    category: "git",
+    checkedToday: true
+  },
+  {
+    id: "dsa",
+    title: "Data structures practice",
+    streak: 5,
+    cadence: "weekly",
+    category: "practice",
+    checkedToday: false
+  },
+  {
+    id: "tests",
+    title: "Testing",
+    streak: 8,
+    cadence: "per feature",
+    category: "testing",
+    checkedToday: true
+  },
+  {
+    id: "portfolio-polish",
+    title: "Portfolio polish",
+    streak: 6,
+    cadence: "weekly",
+    category: "polish",
+    checkedToday: false
+  }
 ];
+
+export const developerHabitsData = { habits };
 
 export const bootLines = [
   "Initializing portfolio world...",

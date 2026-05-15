@@ -356,6 +356,9 @@
 .skill-grid,
 .notes-list,
 .signal-grid,
+.search-results,
+.scope-controls,
+.app-actions,
 .roadmap-list,
 .task-list,
 .contact-stack,
@@ -437,6 +440,8 @@
 .skill-grid article,
 .case-note,
 .notes-list a,
+.search-results button,
+.scope-controls label,
 .roadmap-list article,
 .signal-grid span,
 .contact-stack a,
@@ -446,6 +451,15 @@
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid var(--os-line);
   border-radius: 15px;
+}
+
+.app-actions {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.app-actions .app-action {
+  justify-content: center;
+  width: 100%;
 }
 
 .skill-grid {
@@ -499,6 +513,60 @@
   align-items: flex-start;
 }
 
+.search-box {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 12px;
+  color: var(--os-muted);
+  background: rgba(0, 0, 0, 0.24);
+  border: 1px solid var(--os-line);
+  border-radius: 14px;
+}
+
+.search-box input {
+  width: 100%;
+  color: var(--os-ink);
+  font: inherit;
+  background: transparent;
+  border: 0;
+  outline: 0;
+}
+
+.search-results button {
+  display: grid;
+  gap: 6px;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.search-results button:hover,
+.search-results button:focus-visible {
+  border-color: color-mix(in srgb, var(--app-accent), white 12%);
+  background: rgba(255, 255, 255, 0.09);
+}
+
+.search-results span,
+.search-results small,
+.app-metric {
+  color: var(--os-muted);
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  text-transform: lowercase;
+}
+
+.search-results strong {
+  font-size: 1.08rem;
+}
+
+.search-results p {
+  margin: 0;
+  color: var(--os-muted);
+}
+
 .app-action {
   display: inline-flex;
   width: fit-content;
@@ -506,6 +574,37 @@
   gap: 8px;
   background: rgba(85, 240, 194, 0.13);
   border-color: rgba(85, 240, 194, 0.28);
+}
+
+.inline-action {
+  min-height: 30px;
+  margin-left: auto;
+  padding: 0 9px;
+  color: var(--os-ink);
+  font-family: var(--mono);
+  font-size: 0.64rem;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid var(--os-line);
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.scope-controls {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.scope-controls label {
+  display: grid;
+  gap: 8px;
+  color: var(--os-muted);
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  text-transform: lowercase;
+}
+
+.scope-controls input {
+  width: 100%;
+  accent-color: #55f0c2;
 }
 
 .resume-grid h3 {
@@ -1003,6 +1102,8 @@
   .resume-grid,
   .skill-grid,
   .signal-grid,
+  .scope-controls,
+  .app-actions,
   .habit-grid,
   .start-menu__grid {
     grid-template-columns: 1fr;

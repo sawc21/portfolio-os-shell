@@ -1,7 +1,7 @@
 import { Search, Sparkles } from "lucide-react";
 import { useMemo, useState } from "react";
-import { appRegistry } from "../../lib/appRegistry";
 import type { AppDefinition } from "../../lib/types";
+import { portfolioKernel } from "../../os/kernel/kernel";
 
 type StartMenuProps = {
   open: boolean;
@@ -15,15 +15,20 @@ export function StartMenu({ open, onOpenApp, onLaunchWorld, onResetWorkspace }: 
   const visibleApps = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
 
-    return appRegistry
-      .filter((app) => app.launcher)
-      .filter((app) => {
-        if (!normalizedQuery) {
-          return true;
-        }
+    if (!normalizedQuery) {
+      return portfolioKernel.getLauncherApps();
+    }
 
-        return [app.title, app.shortTitle, app.category, ...app.tags, ...app.commands]
-          .some((value) => value.toLowerCase().includes(normalizedQuery));
+    const seen = new Set<string>();
+    return portfolioKernel.search(query)
+      .map((result) => result.action.type === "open-app" ? portfolioKernel.getAppById(result.action.appId) : null)
+      .filter((app): app is AppDefinition => Boolean(app))
+      .filter((app) => {
+        if (seen.has(app.id)) {
+          return false;
+        }
+        seen.add(app.id);
+        return app.launcher;
       });
   }, [query]);
 

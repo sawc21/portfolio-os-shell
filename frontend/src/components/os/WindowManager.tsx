@@ -5,8 +5,10 @@ import type { AppId, WindowInstance } from "../../lib/types";
 type WindowManagerProps = {
   windows: WindowInstance[];
   focusedAppId: AppId | null;
-  openApp: (appId: AppId) => void;
+  openApp: (appId: AppId, params?: unknown) => void;
   launchWorld: () => void;
+  resetWorkspace: () => void;
+  appParams: Partial<Record<AppId, unknown>>;
   onFocus: (appId: AppId) => void;
   onClose: (appId: AppId) => void;
   onMinimize: (appId: AppId) => void;
@@ -20,6 +22,8 @@ export function WindowManager({
   focusedAppId,
   openApp,
   launchWorld,
+  resetWorkspace,
+  appParams,
   onFocus,
   onClose,
   onMinimize,
@@ -44,7 +48,12 @@ export function WindowManager({
             onResize={onResize}
             onToggleMaximize={onToggleMaximize}
           >
-            <AppComponent openApp={openApp} launchWorld={launchWorld} />
+            <AppComponent
+              openApp={openApp}
+              launchWorld={launchWorld}
+              resetWorkspace={resetWorkspace}
+              params={appParams[window.appId]}
+            />
           </Window>
         );
       })}

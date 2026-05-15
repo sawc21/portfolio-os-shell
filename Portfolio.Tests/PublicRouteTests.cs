@@ -46,6 +46,9 @@ public sealed class PublicRouteTests : IClassFixture<WebApplicationFactory<Progr
         Assert.Contains("About", homepage);
         Assert.Contains("Skills", homepage);
         Assert.Contains("Case Studies", homepage);
+        Assert.Contains("Sawyer Search", homepage);
+        Assert.Contains("Recruiter Quick View", homepage);
+        Assert.Contains("Hire Sawyer Cawthon", homepage);
         Assert.Contains("Launch World", homepage);
         Assert.Contains("/dist/portfolio-os.js", homepage);
         Assert.DoesNotContain("site-header", homepage);

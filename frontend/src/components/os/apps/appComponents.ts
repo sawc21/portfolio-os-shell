@@ -10,7 +10,9 @@ import {
   NotesApp,
   PlannerApp,
   ProjectsApp,
+  RecruiterApp,
   ResumeApp,
+  SearchApp,
   SkillsApp,
   TerminalApp,
   WorldApp
@@ -18,6 +20,8 @@ import {
 
 export const appComponents: Record<AppId, ComponentType<OsAppComponentProps>> = {
   about: AboutApp,
+  recruiter: RecruiterApp,
+  search: SearchApp,
   projects: ProjectsApp,
   skills: SkillsApp,
   "case-studies": CaseStudiesApp,
