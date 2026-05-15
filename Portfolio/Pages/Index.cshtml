@@ -60,7 +60,7 @@
             <article class="branch-card">
                 @if (!string.IsNullOrWhiteSpace(project.Visual))
                 {
-                    <img src="@project.Visual" alt="@project.VisualAlt" />
+                    <img src="@project.Visual" alt="@project.VisualAlt" loading="lazy" decoding="async" />
                 }
                 <div class="branch-body">
                     <div class="meta-row">

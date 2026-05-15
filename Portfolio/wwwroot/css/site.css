@@ -183,6 +183,7 @@ h3 {
   font-weight: 600;
   line-height: 0.94;
   letter-spacing: -0.04em;
+  text-wrap: balance;
 }
 
 h1 {
@@ -221,6 +222,7 @@ h3 {
   max-width: 650px;
   color: var(--muted);
   font-size: 1.08rem;
+  text-wrap: pretty;
 }
 
 .hero-actions {
@@ -634,6 +636,7 @@ h3 {
 .log-card p,
 .profile-card span {
   color: var(--muted);
+  text-wrap: pretty;
 }
 
 .showcase-proof {

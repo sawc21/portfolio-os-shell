@@ -22,7 +22,7 @@
         </div>
         @if (!string.IsNullOrWhiteSpace(Model.Project.Visual))
         {
-            <img class="case-visual" src="@Model.Project.Visual" alt="@Model.Project.VisualAlt" />
+            <img class="case-visual" src="@Model.Project.Visual" alt="@Model.Project.VisualAlt" loading="eager" decoding="async" />
         }
     </header>
 

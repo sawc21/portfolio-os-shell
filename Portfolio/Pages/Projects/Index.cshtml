@@ -48,7 +48,7 @@
             <a class="branch-visual-link" asp-page="/Projects/Details" asp-route-slug="@project.Slug" aria-label="Open @project.Title case study">
                 @if (!string.IsNullOrWhiteSpace(project.Visual))
                 {
-                    <img src="@project.Visual" alt="@project.VisualAlt" />
+                    <img src="@project.Visual" alt="@project.VisualAlt" loading="lazy" decoding="async" />
                 }
                 <span class="branch-count">@((project.Branches ?? []).Count) branches</span>
             </a>
