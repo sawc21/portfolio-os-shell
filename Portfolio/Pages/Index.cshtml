@@ -2,51 +2,27 @@
 @model IndexModel
 @{
     ViewData["Title"] = "Sawyer Cawthon | Kernel Gallery";
-    ViewData["Description"] = "A graphic-minimalist ASP.NET portfolio for product thinking, full-stack C# work, and self-hosting experiments.";
+    ViewData["Description"] = "An interactive portfolio operating system for product thinking, full-stack C# work, frontend architecture, and creative development.";
     ViewData["CanonicalPath"] = "/";
 }
 
-<section class="homepage-hub" aria-labelledby="homepage-hub-title">
-    <div class="hub-copy">
-        <p class="system-label">kernel.gallery</p>
-        <h1 id="homepage-hub-title">Navigate the kernel world.</h1>
-        <p class="hero-summary">
-            Explore projects, build logs, resume depth, contact paths, and the coming self-hosting lab from one central model.
-        </p>
-        <div class="hero-actions">
-            <a class="button button-primary" asp-page="/Projects/Index">Explore projects</a>
-            <a class="button button-secondary" asp-page="/Blog/Index">Open logs</a>
+<section data-portfolio-os aria-label="Portfolio operating system">
+    <div class="portfolio-os-fallback">
+        <div>
+            <p class="system-label">kernel.gallery</p>
+            <h1>Portfolio operating system</h1>
+            <p class="hero-summary">
+                Open projects, resume, terminal, contact, planner, budget, and habits from one interactive desktop.
+            </p>
+            <nav aria-label="Portfolio operating system fallback navigation">
+                <a asp-page="/Projects/Index">Projects</a>
+                <a asp-page="/Blog/Index">Blog</a>
+                <a asp-page="/Resume">Resume</a>
+                <a asp-page="/Contact">Contact</a>
+                <span aria-disabled="true">Launch World</span>
+            </nav>
         </div>
     </div>
-    <aside class="hub-stage" data-home-hub aria-label="Interactive homepage hub">
-        <nav class="hub-fallback-links" aria-label="Homepage hub destinations">
-            <a asp-page="/Projects/Index" data-hub-link="projects">Projects</a>
-            <a asp-page="/Blog/Index" data-hub-link="blog">Blog</a>
-            <a asp-page="/Resume" data-hub-link="resume">Resume</a>
-            <a asp-page="/Contact" data-hub-link="contact">Contact</a>
-            <span aria-disabled="true" data-hub-link="lab">Lab planned</span>
-        </nav>
-        <div class="hub-static-map" aria-hidden="true">
-            <span class="hub-node hub-node-projects">Projects</span>
-            <span class="hub-node hub-node-blog">Blog</span>
-            <span class="hub-node hub-node-resume">Resume</span>
-            <span class="hub-node hub-node-contact">Contact</span>
-            <span class="hub-node hub-node-lab">Lab</span>
-        </div>
-        <div class="kernel-panel hub-status-panel" aria-live="polite">
-            <div class="panel-topline">
-                <span>hub.status</span>
-                <strong>progressive</strong>
-            </div>
-            <p data-hub-status>Projects: Creative branches, case studies, and shipped product thinking.</p>
-            <div class="signal-strip" aria-hidden="true">
-                <span></span><span></span><span></span><span></span>
-            </div>
-        </div>
-        <noscript>
-            <p class="hub-noscript">The visual hub needs JavaScript, but every destination is available through the native links.</p>
-        </noscript>
-    </aside>
 </section>
 
 <section class="branch-section">
@@ -82,7 +58,11 @@
 </section>
 
 @section Scripts {
-    <script type="module" src="~/dist/homeHub.js" asp-append-version="true"></script>
+    <script type="module" src="~/dist/portfolio-os.js" asp-append-version="true"></script>
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/dist/portfolio-os.css" asp-append-version="true" />
 }
 
 <section class="log-section">
