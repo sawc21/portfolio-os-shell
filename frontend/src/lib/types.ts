@@ -1,15 +1,20 @@
 import type { LucideIcon } from "lucide-react";
 
 export type AppId =
+  | "about"
   | "projects"
+  | "skills"
+  | "case-studies"
+  | "notes"
   | "resume"
   | "terminal"
   | "contact"
   | "planner"
   | "budget"
-  | "habits";
+  | "habits"
+  | "world";
 
-export type AppCategory = "portfolio" | "productivity" | "system";
+export type AppCategory = "portfolio" | "content" | "productivity" | "system";
 
 export type AppDefinition = {
   id: AppId;
@@ -19,11 +24,13 @@ export type AppDefinition = {
   category: AppCategory;
   icon: LucideIcon;
   accent: string;
-  defaultSize: {
+  tags: string[];
+  desktop: boolean;
+  launcher: boolean;
+  commands: string[];
+  defaultWindow: {
     width: number;
     height: number;
-  };
-  defaultPosition: {
     x: number;
     y: number;
   };
@@ -37,6 +44,12 @@ export type WindowInstance = {
   height: number;
   zIndex: number;
   minimized: boolean;
+  maximized: boolean;
+};
+
+export type DesktopIconPosition = {
+  x: number;
+  y: number;
 };
 
 export type ProjectItem = {
@@ -47,6 +60,25 @@ export type ProjectItem = {
   summary: string;
   tags: string[];
   branches: string[];
+};
+
+export type SkillGroup = {
+  title: string;
+  items: string[];
+};
+
+export type CaseStudyItem = {
+  title: string;
+  status: string;
+  summary: string;
+  proof: string[];
+};
+
+export type NoteItem = {
+  title: string;
+  date: string;
+  summary: string;
+  slug: string;
 };
 
 export type PlannerTask = {

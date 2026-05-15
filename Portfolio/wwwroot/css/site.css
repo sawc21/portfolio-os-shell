@@ -41,6 +41,18 @@ body {
   background-size: 44px 44px, 44px 44px, auto, auto, auto;
 }
 
+body.portfolio-os-page {
+  overflow: hidden;
+  color: #f7fbff;
+  background: #070912;
+}
+
+body.portfolio-os-page .site-main {
+  width: 100%;
+  min-height: 100vh;
+  padding: 0;
+}
+
 a {
   color: inherit;
   text-decoration-color: rgba(17, 17, 17, 0.25);

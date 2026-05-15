@@ -1,21 +1,58 @@
-import { ArrowUpRight, CheckCircle2, Circle, RadioTower, Send } from "lucide-react";
+import {
+  ArrowUpRight,
+  CheckCircle2,
+  Circle,
+  RadioTower,
+  Rocket,
+  Send,
+  TerminalSquare
+} from "lucide-react";
 import type { FormEvent, KeyboardEvent } from "react";
 import { useMemo, useState } from "react";
 import {
+  aboutProfile,
   budgetSlices,
+  caseStudies,
   habits,
+  notes,
   operatingModes,
   plannerTasks,
   projects,
-  resumeHighlights
+  resumeHighlights,
+  skillGroups,
+  worldRoadmap
 } from "../../../lib/mockData";
 import { runTerminalCommand } from "../../../lib/terminalCommands";
 import type { AppId } from "../../../lib/types";
 
-type AppProps = {
+export type OsAppComponentProps = {
   openApp: (appId: AppId) => void;
   launchWorld: () => void;
 };
+
+export function AboutApp() {
+  return (
+    <div className="app-view app-view--about">
+      <header className="app-hero">
+        <span className="os-label">profile.boot</span>
+        <h2>{aboutProfile.headline}</h2>
+        <p>{aboutProfile.summary}</p>
+      </header>
+      <div className="signal-grid">
+        {aboutProfile.signals.map((signal) => (
+          <span key={signal}>{signal}</span>
+        ))}
+      </div>
+      <section className="case-note">
+        <strong>Interview angle</strong>
+        <p>
+          Recruiters can inspect the portfolio as a product: the OS shell demonstrates UI state,
+          interaction design, frontend architecture, and a backend that still serves durable routes.
+        </p>
+      </section>
+    </div>
+  );
+}
 
 export function ProjectsApp() {
   return (
@@ -40,10 +77,84 @@ export function ProjectsApp() {
               ))}
             </div>
             <a href={`/projects/${project.slug}`}>
-              Open case study
+              Open server route
               <ArrowUpRight aria-hidden="true" size={15} />
             </a>
           </article>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export function SkillsApp() {
+  return (
+    <div className="app-view app-view--skills">
+      <header className="app-hero">
+        <span className="os-label">capability.map</span>
+        <h2>Skills grouped by how the portfolio is built.</h2>
+        <p>Practical full-stack capabilities, UI architecture, and creative technology direction.</p>
+      </header>
+      <div className="skill-grid">
+        {skillGroups.map((group) => (
+          <article key={group.title}>
+            <h3>{group.title}</h3>
+            <div className="token-row">
+              {group.items.map((item) => (
+                <span key={item}>{item}</span>
+              ))}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export function CaseStudiesApp() {
+  return (
+    <div className="app-view app-view--cases">
+      <header className="app-hero">
+        <span className="os-label">case.study</span>
+        <h2>Architecture decisions written for interviews.</h2>
+        <p>The OS includes its own case study so the interface explains the engineering choices behind it.</p>
+      </header>
+      <div className="project-stack">
+        {caseStudies.map((study) => (
+          <article className="project-card" key={study.title}>
+            <div>
+              <span>{study.status}</span>
+              <strong>portfolio proof</strong>
+            </div>
+            <h3>{study.title}</h3>
+            <p>{study.summary}</p>
+            <div className="token-row">
+              {study.proof.map((proof) => (
+                <span key={proof}>{proof}</span>
+              ))}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export function NotesApp() {
+  return (
+    <div className="app-view">
+      <header className="app-hero">
+        <span className="os-label">thinking.log</span>
+        <h2>Notes stay available inside the OS.</h2>
+        <p>Server-rendered blog routes remain stable, while the desktop presents the same content as files.</p>
+      </header>
+      <div className="notes-list">
+        {notes.map((note) => (
+          <a key={note.slug} href={`/blog/${note.slug}`}>
+            <span>{note.date}</span>
+            <strong>{note.title}</strong>
+            <p>{note.summary}</p>
+          </a>
         ))}
       </div>
     </div>
@@ -76,7 +187,7 @@ export function ResumeApp() {
           </ul>
         </div>
       </section>
-      <a className="app-link" href="/resume">Open full resume</a>
+      <a className="app-link" href="/resume">Open server resume route</a>
     </div>
   );
 }
@@ -110,7 +221,7 @@ export function ContactApp() {
   );
 }
 
-export function TerminalApp({ openApp, launchWorld }: AppProps) {
+export function TerminalApp({ openApp, launchWorld }: OsAppComponentProps) {
   const [lines, setLines] = useState<string[]>([
     "Portfolio OS terminal online.",
     "Type help to list commands."
@@ -250,6 +361,33 @@ export function HabitsApp() {
           </article>
         ))}
       </div>
+    </div>
+  );
+}
+
+export function WorldApp({ launchWorld }: OsAppComponentProps) {
+  return (
+    <div className="app-view app-view--world">
+      <header className="app-hero">
+        <span className="os-label">world.prototype</span>
+        <h2>3D mode stays focused and small.</h2>
+        <p>
+          The current launch flow is a CSS spatial prototype. The next technical branch can replace
+          it with React Three Fiber and Drei without disturbing the OS shell.
+        </p>
+      </header>
+      <div className="roadmap-list">
+        {worldRoadmap.map((item) => (
+          <article key={item}>
+            <TerminalSquare aria-hidden="true" size={18} />
+            <span>{item}</span>
+          </article>
+        ))}
+      </div>
+      <button className="app-action" type="button" onClick={launchWorld}>
+        <Rocket aria-hidden="true" size={17} />
+        Run boot sequence
+      </button>
     </div>
   );
 }

@@ -12,15 +12,15 @@
 
 .portfolio-os-fallback {
   display: grid;
-  min-height: 720px;
+  min-height: 100vh;
   padding: 22px;
   color: var(--os-ink);
   background:
     radial-gradient(circle at 12% 10%, rgba(85, 240, 194, 0.22), transparent 28rem),
     radial-gradient(circle at 80% 20%, rgba(139, 231, 255, 0.18), transparent 24rem),
     linear-gradient(135deg, #070912, #11182b 56%, #090c15);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 26px;
+  border: 0;
+  border-radius: 0;
   box-shadow: var(--os-shadow);
 }
 
@@ -48,7 +48,8 @@
 
 .portfolio-os {
   position: relative;
-  min-height: min(860px, calc(100vh - 132px));
+  min-height: 100vh;
+  height: 100vh;
   overflow: hidden;
   color: var(--os-ink);
   background:
@@ -58,8 +59,8 @@
     radial-gradient(circle at 78% 14%, rgba(255, 143, 171, 0.2), transparent 22rem),
     linear-gradient(145deg, #070912, #10182d 52%, #06070d);
   background-size: 42px 42px, 42px 42px, auto, auto, auto;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 28px;
+  border: 0;
+  border-radius: 0;
   box-shadow: var(--os-shadow);
   isolation: isolate;
 }
@@ -132,7 +133,7 @@
 
 .desktop-surface {
   position: relative;
-  min-height: 690px;
+  min-height: calc(100vh - 154px);
   margin: 0 14px 76px;
   overflow: hidden;
   background:
@@ -145,18 +146,42 @@
 
 .desktop-icons {
   position: absolute;
-  top: 24px;
-  left: 24px;
+  inset: 0;
   z-index: 3;
-  display: grid;
-  grid-template-columns: repeat(2, 92px);
-  gap: 18px 14px;
+  pointer-events: none;
+}
+
+.desktop-controls {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 4;
+  display: flex;
+  gap: 8px;
+}
+
+.desktop-controls button,
+.start-menu__reset,
+.app-action {
+  min-height: 34px;
+  padding: 0 10px;
+  color: var(--os-ink);
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: lowercase;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid var(--os-line);
+  border-radius: 999px;
+  cursor: pointer;
 }
 
 .desktop-icon {
+  position: absolute;
   display: grid;
   gap: 7px;
   justify-items: center;
+  width: 92px;
   min-height: 90px;
   padding: 10px 8px;
   color: var(--os-ink);
@@ -168,10 +193,13 @@
   border: 1px solid transparent;
   border-radius: 14px;
   cursor: pointer;
+  pointer-events: auto;
+  touch-action: none;
 }
 
 .desktop-icon:hover,
-.desktop-icon:focus-visible {
+.desktop-icon:focus-visible,
+.desktop-icon[data-selected="true"] {
   background: rgba(255, 255, 255, 0.08);
   border-color: var(--os-line);
 }
@@ -217,6 +245,11 @@
 
 .os-window[data-focused="true"] {
   border-color: color-mix(in srgb, var(--app-accent), white 18%);
+}
+
+.os-window[data-maximized="true"] {
+  max-width: none;
+  max-height: none;
 }
 
 .os-window__titlebar {
@@ -280,6 +313,24 @@
   padding: 18px;
 }
 
+.os-window__resize {
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  background:
+    linear-gradient(135deg, transparent 50%, rgba(255, 255, 255, 0.34) 51%),
+    transparent;
+  border: 0;
+  cursor: nwse-resize;
+}
+
+.os-window[data-maximized="true"] .os-window__resize {
+  display: none;
+}
+
 .app-view {
   display: grid;
   gap: 18px;
@@ -302,6 +353,10 @@
 }
 
 .project-stack,
+.skill-grid,
+.notes-list,
+.signal-grid,
+.roadmap-list,
 .task-list,
 .contact-stack,
 .budget-list {
@@ -379,6 +434,11 @@
 }
 
 .resume-grid div,
+.skill-grid article,
+.case-note,
+.notes-list a,
+.roadmap-list article,
+.signal-grid span,
 .contact-stack a,
 .task-list article,
 .habit-grid article {
@@ -386,6 +446,66 @@
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid var(--os-line);
   border-radius: 15px;
+}
+
+.skill-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.skill-grid h3,
+.case-note strong {
+  margin: 0 0 10px;
+  font-size: 1.05rem;
+}
+
+.signal-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.signal-grid span {
+  color: #c8fff0;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  text-transform: lowercase;
+}
+
+.case-note p {
+  margin: 8px 0 0;
+  color: var(--os-muted);
+}
+
+.notes-list a {
+  display: grid;
+  gap: 5px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.notes-list span,
+.notes-list p,
+.roadmap-list span {
+  margin: 0;
+  color: var(--os-muted);
+}
+
+.notes-list span {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+}
+
+.roadmap-list article {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.app-action {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  gap: 8px;
+  background: rgba(85, 240, 194, 0.13);
+  border-color: rgba(85, 240, 194, 0.28);
 }
 
 .resume-grid h3 {
@@ -582,6 +702,19 @@
   border-radius: 13px;
 }
 
+.start-menu__search input {
+  width: 100%;
+  color: var(--os-ink);
+  font: inherit;
+  background: transparent;
+  border: 0;
+  outline: 0;
+}
+
+.start-menu__search input::placeholder {
+  color: var(--os-muted);
+}
+
 .start-menu__grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -607,6 +740,11 @@
   font-family: var(--mono);
   font-size: 0.64rem;
   text-transform: lowercase;
+}
+
+.start-menu__reset {
+  width: 100%;
+  margin-top: 12px;
 }
 
 .os-taskbar {
@@ -652,6 +790,10 @@
 .os-taskbar__windows button.is-active {
   color: var(--os-ink);
   background: rgba(255, 255, 255, 0.12);
+}
+
+.os-taskbar__windows button.is-minimized {
+  border-style: dashed !important;
 }
 
 .os-taskbar__clock {
@@ -806,19 +948,16 @@
 
 @media (max-width: 900px) {
   .portfolio-os {
-    min-height: 820px;
+    min-height: 100vh;
+    height: 100vh;
   }
 
   .desktop-surface {
-    min-height: 680px;
+    min-height: calc(100vh - 166px);
   }
 
   .desktop-icons {
-    position: relative;
-    top: auto;
-    left: auto;
-    grid-template-columns: repeat(4, minmax(74px, 1fr));
-    padding: 14px;
+    inset: 0;
   }
 
   .os-window {
@@ -847,8 +986,8 @@
   }
 
   .desktop-icons {
-    grid-template-columns: repeat(3, minmax(72px, 1fr));
-    gap: 8px;
+    transform: scale(0.86);
+    transform-origin: top left;
   }
 
   .desktop-icon {
@@ -862,6 +1001,8 @@
   }
 
   .resume-grid,
+  .skill-grid,
+  .signal-grid,
   .habit-grid,
   .start-menu__grid {
     grid-template-columns: 1fr;

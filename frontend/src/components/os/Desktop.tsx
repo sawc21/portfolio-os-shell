@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useMemo, useState } from "react";
 import { appRegistry, getAppDefinition } from "../../lib/appRegistry";
-import type { AppId, WindowInstance } from "../../lib/types";
+import type { AppId, DesktopIconPosition, WindowInstance } from "../../lib/types";
 import { DesktopIcon } from "./DesktopIcon";
 import { StartMenu } from "./StartMenu";
 import { Taskbar } from "./Taskbar";
@@ -9,20 +9,50 @@ import { WindowManager } from "./WindowManager";
 import { WorldPreview } from "./WorldPreview";
 
 type WorldMode = "desktop" | "booting" | "world";
+type IconPositionMap = Partial<Record<AppId, DesktopIconPosition>>;
 
-const initialApps: AppId[] = ["projects", "terminal"];
+const initialApps: AppId[] = ["about", "projects", "terminal"];
+const windowsStorageKey = "portfolio-os:windows:v1";
+const iconsStorageKey = "portfolio-os:desktop-icons:v1";
 
 export function Desktop() {
-  const [windows, setWindows] = useState<WindowInstance[]>(() => initialApps.map(createWindow));
+  const [windows, setWindows] = useState<WindowInstance[]>(readWindowSession);
   const [focusedAppId, setFocusedAppId] = useState<AppId | null>("terminal");
   const [startOpen, setStartOpen] = useState(false);
+  const [selectedIconId, setSelectedIconId] = useState<AppId | null>(null);
+  const [iconPositions, setIconPositions] = useState<IconPositionMap>(readIconPositions);
   const [worldMode, setWorldMode] = useState<WorldMode>("desktop");
-  const [zCursor, setZCursor] = useState(20);
+  const [zCursor, setZCursor] = useState(30);
 
-  const visibleDesktopApps = useMemo(() => appRegistry.filter((app) => app.category !== "system"), []);
+  const desktopApps = useMemo(() => appRegistry.filter((app) => app.desktop), []);
+
+  useEffect(() => {
+    window.localStorage.setItem(windowsStorageKey, JSON.stringify(windows));
+  }, [windows]);
+
+  useEffect(() => {
+    window.localStorage.setItem(iconsStorageKey, JSON.stringify(iconPositions));
+  }, [iconPositions]);
+
+  useEffect(() => {
+    function handleResize() {
+      setWindows((current) =>
+        current.map((window) => ({ ...window, ...clampWindow(window) }))
+      );
+    }
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") {
+        event.preventDefault();
+        setStartOpen(true);
+        return;
+      }
+
       if (event.key === "Escape") {
         setStartOpen(false);
         if (worldMode === "world") {
@@ -48,6 +78,7 @@ export function Desktop() {
 
   function openApp(appId: AppId) {
     setStartOpen(false);
+    setSelectedIconId(appId);
     setWindows((current) => {
       if (current.some((window) => window.appId === appId)) {
         return current;
@@ -73,12 +104,55 @@ export function Desktop() {
 
   function moveWindow(appId: AppId, x: number, y: number) {
     setWindows((current) =>
-      current.map((window) => (window.appId === appId ? { ...window, x, y } : window))
+      current.map((window) =>
+        window.appId === appId ? { ...window, ...clampWindow({ ...window, x, y }) } : window
+      )
     );
+  }
+
+  function resizeWindow(appId: AppId, width: number, height: number) {
+    setWindows((current) =>
+      current.map((window) =>
+        window.appId === appId
+          ? { ...window, width: Math.max(360, width), height: Math.max(300, height), maximized: false }
+          : window
+      )
+    );
+  }
+
+  function toggleMaximize(appId: AppId) {
+    setWindows((current) =>
+      current.map((window) =>
+        window.appId === appId ? { ...window, maximized: !window.maximized, minimized: false } : window
+      )
+    );
+  }
+
+  function moveIcon(appId: AppId, position: DesktopIconPosition) {
+    setIconPositions((current) => ({ ...current, [appId]: position }));
+  }
+
+  function sortIcons() {
+    setIconPositions({});
+    setSelectedIconId(null);
+  }
+
+  function resetWorkspace() {
+    setIconPositions({});
+    setWindows(initialApps.map(createWindow));
+    setFocusedAppId("terminal");
+    setSelectedIconId(null);
   }
 
   function launchWorld() {
     setStartOpen(false);
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (reduceMotion) {
+      setWorldMode("world");
+      return;
+    }
+
     setWorldMode("booting");
     window.setTimeout(() => setWorldMode("world"), 2500);
   }
@@ -97,12 +171,21 @@ export function Desktop() {
         </div>
         <p>Interactive internship portfolio / ASP.NET shell / React desktop</p>
       </header>
-      <main className="desktop-surface" data-world-mode={worldMode}>
+      <main className="desktop-surface" data-world-mode={worldMode} onPointerDown={() => setSelectedIconId(null)}>
+        <div className="desktop-controls" aria-label="Desktop layout controls">
+          <button type="button" onClick={sortIcons}>Sort</button>
+          <button type="button" onClick={resetWorkspace}>Reset OS</button>
+        </div>
         <div className="desktop-icons" aria-label="Desktop apps">
-          {visibleDesktopApps.map((app) => (
+          {desktopApps.map((app, index) => (
             <DesktopIcon
               key={app.id}
               app={app}
+              index={index}
+              position={iconPositions[app.id]}
+              selected={selectedIconId === app.id}
+              onSelect={setSelectedIconId}
+              onMove={moveIcon}
               onOpen={openApp}
               launchingWorld={worldMode === "booting"}
             />
@@ -117,6 +200,8 @@ export function Desktop() {
           onClose={closeWindow}
           onMinimize={minimizeWindow}
           onMove={moveWindow}
+          onResize={resizeWindow}
+          onToggleMaximize={toggleMaximize}
         />
         <AnimatePresence>
           {startOpen ? (
@@ -127,7 +212,12 @@ export function Desktop() {
               exit={{ opacity: 0, y: 18, scale: 0.98 }}
               transition={{ duration: 0.18 }}
             >
-              <StartMenu open={startOpen} onOpenApp={openApp} onLaunchWorld={launchWorld} />
+              <StartMenu
+                open={startOpen}
+                onOpenApp={openApp}
+                onLaunchWorld={launchWorld}
+                onResetWorkspace={resetWorkspace}
+              />
             </motion.div>
           ) : null}
         </AnimatePresence>
@@ -150,11 +240,56 @@ function createWindow(appId: AppId): WindowInstance {
 
   return {
     appId,
-    x: definition.defaultPosition.x,
-    y: definition.defaultPosition.y,
-    width: definition.defaultSize.width,
-    height: definition.defaultSize.height,
-    zIndex: appId === "terminal" ? 12 : 10,
-    minimized: false
+    x: definition.defaultWindow.x,
+    y: definition.defaultWindow.y,
+    width: definition.defaultWindow.width,
+    height: definition.defaultWindow.height,
+    zIndex: appId === "terminal" ? 14 : 10,
+    minimized: false,
+    maximized: false
   };
+}
+
+function clampWindow(window: WindowInstance) {
+  const maxX = Math.max(12, globalThis.window.innerWidth - 120);
+  const maxY = Math.max(12, globalThis.window.innerHeight - 120);
+
+  return {
+    x: Math.min(Math.max(12, window.x), maxX),
+    y: Math.min(Math.max(12, window.y), maxY)
+  };
+}
+
+function readWindowSession(): WindowInstance[] {
+  const fallback = initialApps.map(createWindow);
+  const stored = window.localStorage.getItem(windowsStorageKey);
+
+  if (!stored) {
+    return fallback;
+  }
+
+  try {
+    const parsed = JSON.parse(stored) as WindowInstance[];
+    const knownIds = new Set(appRegistry.map((app) => app.id));
+    const restored = parsed.filter((window) => knownIds.has(window.appId));
+    return restored.length > 0 ? restored.map((window) => ({ ...createWindow(window.appId), ...window })) : fallback;
+  } catch (error) {
+    console.warn("Unable to restore Portfolio OS window session.", error);
+    return fallback;
+  }
+}
+
+function readIconPositions(): IconPositionMap {
+  const stored = window.localStorage.getItem(iconsStorageKey);
+
+  if (!stored) {
+    return {};
+  }
+
+  try {
+    return JSON.parse(stored) as IconPositionMap;
+  } catch (error) {
+    console.warn("Unable to restore Portfolio OS icon layout.", error);
+    return {};
+  }
 }

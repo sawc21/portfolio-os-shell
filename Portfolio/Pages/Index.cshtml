@@ -4,6 +4,7 @@
     ViewData["Title"] = "Sawyer Cawthon | Kernel Gallery";
     ViewData["Description"] = "An interactive portfolio operating system for product thinking, full-stack C# work, frontend architecture, and creative development.";
     ViewData["CanonicalPath"] = "/";
+    ViewData["Chrome"] = "os";
 }
 
 <section data-portfolio-os aria-label="Portfolio operating system">
@@ -15,45 +16,16 @@
                 Open projects, resume, terminal, contact, planner, budget, and habits from one interactive desktop.
             </p>
             <nav aria-label="Portfolio operating system fallback navigation">
+                <a href="#about">About</a>
                 <a asp-page="/Projects/Index">Projects</a>
+                <a href="#skills">Skills</a>
+                <a href="#case-studies">Case Studies</a>
                 <a asp-page="/Blog/Index">Blog</a>
                 <a asp-page="/Resume">Resume</a>
                 <a asp-page="/Contact">Contact</a>
                 <span aria-disabled="true">Launch World</span>
             </nav>
         </div>
-    </div>
-</section>
-
-<section class="branch-section">
-    <div class="section-heading">
-        <p class="system-label">featured.branches</p>
-        <h2>Project branches worth opening.</h2>
-    </div>
-    <div class="branch-grid">
-        @foreach (var project in Model.FeaturedProjects)
-        {
-            <article class="branch-card">
-                @if (!string.IsNullOrWhiteSpace(project.Visual))
-                {
-                    <img src="@project.Visual" alt="@project.VisualAlt" loading="lazy" decoding="async" />
-                }
-                <div class="branch-body">
-                    <div class="meta-row">
-                        <span>@project.Phase</span>
-                        <span>@project.Role</span>
-                    </div>
-                    <h3><a asp-page="/Projects/Details" asp-route-slug="@project.Slug">@project.Title</a></h3>
-                    <p>@project.Summary</p>
-                    <div class="branch-list" aria-label="Project branches">
-                        @foreach (var branch in project.Branches ?? [])
-                        {
-                            <span>@branch</span>
-                        }
-                    </div>
-                </div>
-            </article>
-        }
     </div>
 </section>
 
@@ -64,20 +36,3 @@
 @section Styles {
     <link rel="stylesheet" href="~/dist/portfolio-os.css" asp-append-version="true" />
 }
-
-<section class="log-section">
-    <div>
-        <p class="system-label">thinking.log</p>
-        <h2>Notes from the build process.</h2>
-    </div>
-    <div class="log-list">
-        @foreach (var post in Model.LatestPosts)
-        {
-            <a class="log-row" asp-page="/Blog/Details" asp-route-slug="@post.Slug">
-                <span>@post.Date.ToString("yyyy.MM.dd")</span>
-                <strong>@post.Title</strong>
-                <small>@post.ReadingTime min read</small>
-            </a>
-        }
-    </div>
-</section>

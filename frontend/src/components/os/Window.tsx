@@ -11,6 +11,8 @@ type WindowProps = {
   onClose: (appId: AppId) => void;
   onMinimize: (appId: AppId) => void;
   onMove: (appId: AppId, x: number, y: number) => void;
+  onResize: (appId: AppId, width: number, height: number) => void;
+  onToggleMaximize: (appId: AppId) => void;
 };
 
 export function Window({
@@ -20,13 +22,18 @@ export function Window({
   onFocus,
   onClose,
   onMinimize,
-  onMove
+  onMove,
+  onResize,
+  onToggleMaximize
 }: WindowProps) {
   const app = getAppDefinition(window.appId);
   const Icon = app.icon;
 
   function handlePointerDown(event: ReactPointerEvent<HTMLDivElement>) {
     if ((event.target as HTMLElement).closest("button")) {
+      return;
+    }
+    if (window.maximized) {
       return;
     }
 
@@ -54,6 +61,32 @@ export function Window({
     globalThis.window.addEventListener("pointerup", handlePointerUp);
   }
 
+  function handleResizePointerDown(event: ReactPointerEvent<HTMLButtonElement>) {
+    event.stopPropagation();
+    onFocus(window.appId);
+    const originX = event.clientX;
+    const originY = event.clientY;
+    const startWidth = window.width;
+    const startHeight = window.height;
+    event.currentTarget.setPointerCapture(event.pointerId);
+
+    const handlePointerMove = (moveEvent: PointerEvent) => {
+      onResize(
+        window.appId,
+        startWidth + moveEvent.clientX - originX,
+        startHeight + moveEvent.clientY - originY
+      );
+    };
+
+    const handlePointerUp = () => {
+      globalThis.window.removeEventListener("pointermove", handlePointerMove);
+      globalThis.window.removeEventListener("pointerup", handlePointerUp);
+    };
+
+    globalThis.window.addEventListener("pointermove", handlePointerMove);
+    globalThis.window.addEventListener("pointerup", handlePointerUp);
+  }
+
   if (window.minimized) {
     return null;
   }
@@ -62,13 +95,14 @@ export function Window({
     <section
       className="os-window"
       data-focused={focused ? "true" : "false"}
+      data-maximized={window.maximized ? "true" : "false"}
       style={
         {
           "--app-accent": app.accent,
-          left: window.x,
-          top: window.y,
-          width: window.width,
-          height: window.height,
+          left: window.maximized ? 12 : window.x,
+          top: window.maximized ? 12 : window.y,
+          width: window.maximized ? "calc(100% - 24px)" : window.width,
+          height: window.maximized ? "calc(100% - 24px)" : window.height,
           zIndex: window.zIndex
         } as React.CSSProperties
       }
@@ -84,7 +118,7 @@ export function Window({
           <button type="button" onClick={() => onMinimize(window.appId)} aria-label={`Minimize ${app.title}`}>
             <Minus aria-hidden="true" size={15} />
           </button>
-          <button type="button" aria-label={`${app.title} stays windowed`}>
+          <button type="button" onClick={() => onToggleMaximize(window.appId)} aria-label={`${window.maximized ? "Restore" : "Maximize"} ${app.title}`}>
             <Maximize2 aria-hidden="true" size={14} />
           </button>
           <button type="button" onClick={() => onClose(window.appId)} aria-label={`Close ${app.title}`}>
@@ -93,6 +127,12 @@ export function Window({
         </div>
       </div>
       <div className="os-window__content">{children}</div>
+      <button
+        className="os-window__resize"
+        type="button"
+        onPointerDown={handleResizePointerDown}
+        aria-label={`Resize ${app.title}`}
+      />
     </section>
   );
 }

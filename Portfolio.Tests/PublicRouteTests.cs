@@ -36,14 +36,21 @@ public sealed class PublicRouteTests : IClassFixture<WebApplicationFactory<Progr
 
         Assert.Contains("Skip to content", homepage);
         Assert.Contains("property=\"og:image\"", homepage);
+        Assert.Contains("portfolio-os-page", homepage);
         Assert.Contains("data-portfolio-os", homepage);
         Assert.Contains("Portfolio operating system", homepage);
         Assert.Contains("href=\"/projects\"", homepage);
         Assert.Contains("href=\"/blog\"", homepage);
         Assert.Contains("href=\"/resume\"", homepage);
         Assert.Contains("href=\"/contact\"", homepage);
+        Assert.Contains("About", homepage);
+        Assert.Contains("Skills", homepage);
+        Assert.Contains("Case Studies", homepage);
         Assert.Contains("Launch World", homepage);
         Assert.Contains("/dist/portfolio-os.js", homepage);
+        Assert.DoesNotContain("site-header", homepage);
+        Assert.DoesNotContain("branch-section", homepage);
+        Assert.DoesNotContain("log-section", homepage);
     }
 
     [Fact]

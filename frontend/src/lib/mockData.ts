@@ -1,4 +1,12 @@
-import type { BudgetSlice, HabitItem, PlannerTask, ProjectItem } from "./types";
+import type {
+  BudgetSlice,
+  CaseStudyItem,
+  HabitItem,
+  NoteItem,
+  PlannerTask,
+  ProjectItem,
+  SkillGroup
+} from "./types";
 
 export const projects: ProjectItem[] = [
   {
@@ -30,11 +38,70 @@ export const resumeHighlights = [
   "Accessibility, responsive UI, testing, and release flow fundamentals."
 ];
 
+export const aboutProfile = {
+  headline: "A full-stack developer building portfolio software like a product.",
+  summary:
+    "This operating system turns the portfolio itself into a working interface: apps, windows, commands, demo data, and a roadmap toward a small 3D world. It is built to show product thinking, frontend architecture, ASP.NET ownership, and disciplined iteration.",
+  signals: ["Software developer internships", "ASP.NET + React", "Creative tools", "Readable architecture"]
+};
+
 export const operatingModes = [
   "Product designer: shape identity, flows, copy, and visual hierarchy.",
   "C# developer: build durable server-rendered features with tests.",
   "Infrastructure learner: use self-hosting as a real operating context.",
   "Technical writer: document decisions so the work is inspectable."
+];
+
+export const skillGroups: SkillGroup[] = [
+  {
+    title: "Frontend systems",
+    items: ["React", "TypeScript", "Vite", "Motion", "Responsive UI", "Accessibility"]
+  },
+  {
+    title: "Backend foundation",
+    items: ["ASP.NET Core", "Razor Pages", "C#", "xUnit", "RSS", "Sitemap generation"]
+  },
+  {
+    title: "Creative technology",
+    items: ["Interactive UI", "Window managers", "Animation sequencing", "3D roadmap", "Design systems"]
+  },
+  {
+    title: "Delivery habits",
+    items: ["Feature branches", "Test checkpoints", "Mock data first", "Documentation", "Case-study writing"]
+  }
+];
+
+export const caseStudies: CaseStudyItem[] = [
+  {
+    title: "Portfolio OS architecture",
+    status: "active case study",
+    summary:
+      "A Razor Pages site keeps stable public content routes while a React/TypeScript desktop owns the main portfolio experience.",
+    proof: ["Hybrid ASP.NET + Vite build", "App registry model", "Window state and terminal commands"]
+  },
+  {
+    title: "Markdown content platform",
+    status: "existing foundation",
+    summary:
+      "Project and blog routes remain server-rendered for direct links, SEO, and tests while their content is mirrored into OS apps.",
+    proof: ["Public route tests", "RSS feed", "Sitemap", "Markdown-backed content"]
+  },
+  {
+    title: "Desktop-to-world roadmap",
+    status: "future branch",
+    summary:
+      "The Launch World flow starts as a CSS spatial prototype and can later graduate to React Three Fiber and Drei.",
+    proof: ["Boot overlay", "Reduced-motion path", "Small scene scope", "Clickable stations"]
+  }
+];
+
+export const notes: NoteItem[] = [
+  {
+    title: "Starting the Portfolio",
+    date: "2026.01.06",
+    summary: "Why the first version focused on a durable ASP.NET content foundation before the OS interface.",
+    slug: "starting-the-portfolio"
+  }
 ];
 
 export const plannerTasks: PlannerTask[] = [
@@ -64,4 +131,11 @@ export const bootLines = [
   "Loading project environment...",
   "Mapping apps to stations...",
   "Opening 3D interface..."
+];
+
+export const worldRoadmap = [
+  "Replace the CSS prototype with React Three Fiber and Drei.",
+  "Map desktop icons into clickable stations: projects gallery, resume terminal, contact tower.",
+  "Animate a desktop split/fold transition into a compact floating island.",
+  "Keep the scene small, readable, and performance-friendly for internship reviewers."
 ];

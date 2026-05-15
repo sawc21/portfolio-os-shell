@@ -1,3 +1,4 @@
+import { appRegistry } from "./appRegistry";
 import type { AppId } from "./types";
 
 export type TerminalAction =
@@ -6,11 +7,13 @@ export type TerminalAction =
   | { type: "clear" }
   | { type: "print"; lines: string[] };
 
-const commandHelp = [
+const commandSummaries = [
   "help              Show available commands",
-  "projects          Open the Projects app",
-  "resume            Open the Resume app",
-  "contact           Open the Contact app",
+  "apps              List registered OS apps",
+  "open <app>        Open an app by id, title, or command alias",
+  "whoami            Open About Me",
+  "stack             Open Skills",
+  "experience        Open Resume",
   "launch-world      Start the desktop-to-world transition",
   "clear             Clear terminal output"
 ];
@@ -19,31 +22,44 @@ export function runTerminalCommand(rawCommand: string): TerminalAction {
   const command = rawCommand.trim().toLowerCase();
 
   if (command === "help" || command === "") {
-    return { type: "print", lines: commandHelp };
-  }
-
-  if (command === "projects" || command === "open projects") {
-    return { type: "open", appId: "projects" };
-  }
-
-  if (command === "resume" || command === "open resume") {
-    return { type: "open", appId: "resume" };
-  }
-
-  if (command === "contact" || command === "open contact") {
-    return { type: "open", appId: "contact" };
-  }
-
-  if (command === "launch-world" || command === "world") {
-    return { type: "launch-world" };
+    return { type: "print", lines: commandSummaries };
   }
 
   if (command === "clear") {
     return { type: "clear" };
   }
 
+  if (command === "apps" || command === "list apps" || command === "ls") {
+    return {
+      type: "print",
+      lines: appRegistry
+        .filter((app) => app.launcher)
+        .map((app) => `${app.id.padEnd(13)} ${app.title} / ${app.category}`)
+    };
+  }
+
+  if (command === "launch-world" || command === "world") {
+    return { type: "launch-world" };
+  }
+
+  const appCommand = command.startsWith("open ") ? command.slice(5).trim() : command;
+  const app = appRegistry.find((candidate) => {
+    const aliases = [
+      candidate.id,
+      candidate.title.toLowerCase(),
+      candidate.shortTitle.toLowerCase(),
+      ...candidate.commands
+    ];
+
+    return aliases.includes(appCommand);
+  });
+
+  if (app) {
+    return app.id === "world" ? { type: "launch-world" } : { type: "open", appId: app.id };
+  }
+
   return {
     type: "print",
-    lines: [`Unknown command: ${rawCommand}`, "Type help to list supported commands."]
+    lines: [`Unknown command: ${rawCommand}`, "Type help or apps to list supported commands."]
   };
 }

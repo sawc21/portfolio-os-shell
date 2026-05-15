@@ -1,4 +1,5 @@
 import { Search, Sparkles } from "lucide-react";
+import { useMemo, useState } from "react";
 import { appRegistry } from "../../lib/appRegistry";
 import type { AppDefinition } from "../../lib/types";
 
@@ -6,9 +7,26 @@ type StartMenuProps = {
   open: boolean;
   onOpenApp: (appId: AppDefinition["id"]) => void;
   onLaunchWorld: () => void;
+  onResetWorkspace: () => void;
 };
 
-export function StartMenu({ open, onOpenApp, onLaunchWorld }: StartMenuProps) {
+export function StartMenu({ open, onOpenApp, onLaunchWorld, onResetWorkspace }: StartMenuProps) {
+  const [query, setQuery] = useState("");
+  const visibleApps = useMemo(() => {
+    const normalizedQuery = query.trim().toLowerCase();
+
+    return appRegistry
+      .filter((app) => app.launcher)
+      .filter((app) => {
+        if (!normalizedQuery) {
+          return true;
+        }
+
+        return [app.title, app.shortTitle, app.category, ...app.tags, ...app.commands]
+          .some((value) => value.toLowerCase().includes(normalizedQuery));
+      });
+  }, [query]);
+
   if (!open) {
     return null;
   }
@@ -27,10 +45,16 @@ export function StartMenu({ open, onOpenApp, onLaunchWorld }: StartMenuProps) {
       </div>
       <label className="start-menu__search">
         <Search aria-hidden="true" size={16} />
-        <span>Search apps</span>
+        <input
+          value={query}
+          onChange={(event) => setQuery(event.target.value)}
+          placeholder="Search apps or commands"
+          aria-label="Search Portfolio OS apps"
+          autoFocus
+        />
       </label>
       <div className="start-menu__grid">
-        {appRegistry.map((app) => {
+        {visibleApps.map((app) => {
           const Icon = app.icon;
           return (
             <button key={app.id} type="button" onClick={() => onOpenApp(app.id)}>
@@ -41,6 +65,9 @@ export function StartMenu({ open, onOpenApp, onLaunchWorld }: StartMenuProps) {
           );
         })}
       </div>
+      <button className="start-menu__reset" type="button" onClick={onResetWorkspace}>
+        Reset workspace layout
+      </button>
     </section>
   );
 }

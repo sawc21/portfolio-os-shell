@@ -8,6 +8,7 @@
     var canonicalUrl = $"{Context.Request.Scheme}://{Context.Request.Host}{canonicalPath}";
     var ogImageUrl = $"{Context.Request.Scheme}://{Context.Request.Host}{ogImagePath}";
     var currentPath = Context.Request.Path.ToString();
+    var isOsChrome = string.Equals(ViewData["Chrome"] as string, "os", StringComparison.OrdinalIgnoreCase);
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -37,35 +38,41 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     @await RenderSectionAsync("Styles", required: false)
 </head>
-<body>
+<body class="@(isOsChrome ? "portfolio-os-page" : null)">
     <a class="skip-link" href="#main-content">Skip to content</a>
-    <header class="site-header">
-        <a class="brand" asp-page="/Index" aria-label="Sawyer Cawthon Kernel Gallery home">
-            <span>kg</span>
-            <strong>Kernel Gallery</strong>
-        </a>
-        <nav class="site-nav" aria-label="Primary navigation">
-            <a asp-page="/Projects/Index" aria-current="@(currentPath.StartsWith("/projects", StringComparison.OrdinalIgnoreCase) ? "page" : null)">Projects</a>
-            <a asp-page="/Blog/Index" aria-current="@(currentPath.StartsWith("/blog", StringComparison.OrdinalIgnoreCase) ? "page" : null)">Blog</a>
-            <a asp-page="/Resume" aria-current="@(currentPath.Equals("/resume", StringComparison.OrdinalIgnoreCase) ? "page" : null)">Resume</a>
-            <a asp-page="/Contact" aria-current="@(currentPath.Equals("/contact", StringComparison.OrdinalIgnoreCase) ? "page" : null)">Contact</a>
-        </nav>
-    </header>
+    @if (!isOsChrome)
+    {
+        <header class="site-header">
+            <a class="brand" asp-page="/Index" aria-label="Sawyer Cawthon Kernel Gallery home">
+                <span>kg</span>
+                <strong>Kernel Gallery</strong>
+            </a>
+            <nav class="site-nav" aria-label="Primary navigation">
+                <a asp-page="/Projects/Index" aria-current="@(currentPath.StartsWith("/projects", StringComparison.OrdinalIgnoreCase) ? "page" : null)">Projects</a>
+                <a asp-page="/Blog/Index" aria-current="@(currentPath.StartsWith("/blog", StringComparison.OrdinalIgnoreCase) ? "page" : null)">Blog</a>
+                <a asp-page="/Resume" aria-current="@(currentPath.Equals("/resume", StringComparison.OrdinalIgnoreCase) ? "page" : null)">Resume</a>
+                <a asp-page="/Contact" aria-current="@(currentPath.Equals("/contact", StringComparison.OrdinalIgnoreCase) ? "page" : null)">Contact</a>
+            </nav>
+        </header>
+    }
 
     <main class="site-main" id="main-content" tabindex="-1">
         @RenderBody()
     </main>
 
-    <footer class="site-footer">
-        <div>
-            <strong>Sawyer Cawthon</strong>
-            <p>Product-minded ASP.NET portfolio with a self-hosting kernel.</p>
-        </div>
-        <div class="footer-links">
-            <a href="/feed.xml">RSS</a>
-            <a href="/sitemap.xml">Sitemap</a>
-        </div>
-    </footer>
+    @if (!isOsChrome)
+    {
+        <footer class="site-footer">
+            <div>
+                <strong>Sawyer Cawthon</strong>
+                <p>Product-minded ASP.NET portfolio with a self-hosting kernel.</p>
+            </div>
+            <div class="footer-links">
+                <a href="/feed.xml">RSS</a>
+                <a href="/sitemap.xml">Sitemap</a>
+            </div>
+        </footer>
+    }
 
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
