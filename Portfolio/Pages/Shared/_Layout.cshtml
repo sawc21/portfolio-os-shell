@@ -3,7 +3,11 @@
     var description = ViewData["Description"] as string ?? "Graphic-minimalist ASP.NET portfolio for product thinking, full-stack C# work, and self-hosting experiments.";
     var canonicalPath = ViewData["CanonicalPath"] as string ?? Context.Request.Path.ToString();
     var ogType = ViewData["OgType"] as string ?? "website";
+    var ogImagePath = ViewData["OgImage"] as string ?? "/images/og-kernel-gallery.svg";
+    var publishedTime = ViewData["PublishedTime"] as string;
     var canonicalUrl = $"{Context.Request.Scheme}://{Context.Request.Host}{canonicalPath}";
+    var ogImageUrl = $"{Context.Request.Scheme}://{Context.Request.Host}{ogImagePath}";
+    var currentPath = Context.Request.Path.ToString();
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -16,7 +20,14 @@
     <meta property="og:description" content="@description" />
     <meta property="og:type" content="@ogType" />
     <meta property="og:url" content="@canonicalUrl" />
+    <meta property="og:image" content="@ogImageUrl" />
+    @if (!string.IsNullOrWhiteSpace(publishedTime))
+    {
+        <meta property="article:published_time" content="@publishedTime" />
+    }
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="@ogImageUrl" />
+    <meta name="theme-color" content="#f7f7f2" />
     <link rel="canonical" href="@canonicalUrl" />
     <link rel="alternate" type="application/rss+xml" title="Sawyer Cawthon Kernel Gallery" href="/feed.xml" />
     <script type="importmap"></script>
@@ -26,20 +37,21 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
     <header class="site-header">
         <a class="brand" asp-page="/Index" aria-label="Sawyer Cawthon Kernel Gallery home">
             <span>kg</span>
             <strong>Kernel Gallery</strong>
         </a>
         <nav class="site-nav" aria-label="Primary navigation">
-            <a asp-page="/Projects/Index">Projects</a>
-            <a asp-page="/Blog/Index">Blog</a>
-            <a asp-page="/Resume">Resume</a>
-            <a asp-page="/Contact">Contact</a>
+            <a asp-page="/Projects/Index" aria-current="@(currentPath.StartsWith("/projects", StringComparison.OrdinalIgnoreCase) ? "page" : null)">Projects</a>
+            <a asp-page="/Blog/Index" aria-current="@(currentPath.StartsWith("/blog", StringComparison.OrdinalIgnoreCase) ? "page" : null)">Blog</a>
+            <a asp-page="/Resume" aria-current="@(currentPath.Equals("/resume", StringComparison.OrdinalIgnoreCase) ? "page" : null)">Resume</a>
+            <a asp-page="/Contact" aria-current="@(currentPath.Equals("/contact", StringComparison.OrdinalIgnoreCase) ? "page" : null)">Contact</a>
         </nav>
     </header>
 
-    <main class="site-main">
+    <main class="site-main" id="main-content" tabindex="-1">
         @RenderBody()
     </main>
 

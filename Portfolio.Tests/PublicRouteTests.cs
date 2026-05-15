@@ -34,6 +34,8 @@ public sealed class PublicRouteTests : IClassFixture<WebApplicationFactory<Progr
     {
         var homepage = await _client.GetStringAsync("/");
 
+        Assert.Contains("Skip to content", homepage);
+        Assert.Contains("property=\"og:image\"", homepage);
         Assert.Contains("data-home-hub", homepage);
         Assert.Contains("href=\"/projects\"", homepage);
         Assert.Contains("href=\"/blog\"", homepage);
@@ -44,12 +46,31 @@ public sealed class PublicRouteTests : IClassFixture<WebApplicationFactory<Progr
     }
 
     [Fact]
+    public async Task BlogArticle_IncludesArticleMetadata()
+    {
+        var article = await _client.GetStringAsync("/blog/starting-the-portfolio");
+
+        Assert.Contains("property=\"og:type\" content=\"article\"", article);
+        Assert.Contains("property=\"article:published_time\"", article);
+        Assert.Contains("aria-current=\"page\"", article);
+    }
+
+    [Fact]
     public async Task Sitemap_IncludesPublicContentRoutes()
     {
         var sitemap = await _client.GetStringAsync("/sitemap.xml");
 
         Assert.Contains("/projects/portfolio-platform", sitemap);
         Assert.Contains("/blog/starting-the-portfolio", sitemap);
+    }
+
+    [Fact]
+    public async Task RobotsTxt_PointsToSitemap()
+    {
+        var robots = await _client.GetStringAsync("/robots.txt");
+
+        Assert.Contains("User-agent: *", robots);
+        Assert.Contains("Sitemap: /sitemap.xml", robots);
     }
 
     [Fact]

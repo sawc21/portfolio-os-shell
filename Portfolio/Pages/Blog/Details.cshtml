@@ -5,6 +5,7 @@
     ViewData["Description"] = Model.Post.Summary;
     ViewData["CanonicalPath"] = $"/blog/{Model.Post.Slug}";
     ViewData["OgType"] = "article";
+    ViewData["PublishedTime"] = Model.Post.Date.ToString("yyyy-MM-dd");
 }
 
 <article class="article-layout">

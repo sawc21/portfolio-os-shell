@@ -52,6 +52,13 @@ a:hover {
   text-decoration-color: var(--mint);
 }
 
+a:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid var(--signal);
+  outline-offset: 4px;
+}
+
 img {
   display: block;
   max-width: 100%;
@@ -70,6 +77,26 @@ img {
   justify-content: space-between;
   gap: 24px;
   padding: 26px 0;
+}
+
+.skip-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 20;
+  padding: 10px 14px;
+  color: var(--white);
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-decoration: none;
+  background: var(--graphite);
+  transform: translateY(-140%);
+  transition: transform 160ms ease;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
 }
 
 .brand {
@@ -117,6 +144,11 @@ img {
 .site-nav a:hover {
   border-color: var(--line);
   background: rgba(255, 255, 255, 0.7);
+}
+
+.site-nav a[aria-current="page"] {
+  border-color: var(--graphite);
+  background: var(--white);
 }
 
 .site-main {

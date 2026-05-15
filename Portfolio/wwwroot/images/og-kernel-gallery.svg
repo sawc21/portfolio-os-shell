@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Kernel Gallery social preview</title>
+  <desc id="desc">Graphic-minimal portfolio preview with a central kernel world and pastel branch nodes.</desc>
+  <rect width="1200" height="630" fill="#f7f7f2"/>
+  <path d="M0 0h1200v630H0z" fill="url(#grid)"/>
+  <defs>
+    <pattern id="grid" width="44" height="44" patternUnits="userSpaceOnUse">
+      <path d="M44 0H0v44" fill="none" stroke="#111" stroke-opacity=".06"/>
+    </pattern>
+  </defs>
+  <rect x="84" y="78" width="1032" height="474" fill="#fff" stroke="#111" stroke-width="3"/>
+  <path d="M696 184 981 314 682 484 386 346z" fill="#fff" stroke="#111" stroke-width="3"/>
+  <path d="M434 330c137-61 330-57 452 13" fill="none" stroke="#111" stroke-width="7"/>
+  <rect x="418" y="280" width="150" height="74" fill="#70d7b2" stroke="#111" stroke-width="3" transform="rotate(-6 493 317)"/>
+  <circle cx="802" cy="283" r="57" fill="#f1a084" stroke="#111" stroke-width="3"/>
+  <path d="M660 260h94l-18 82h-92z" fill="#a9dfe7" stroke="#111" stroke-width="3"/>
+  <path d="m861 359 47-90 52 92z" fill="#f6c35f" stroke="#111" stroke-width="3"/>
+  <rect x="520" y="174" width="142" height="64" fill="#e6d8c8" stroke="#111" stroke-width="3" stroke-dasharray="7 6" transform="rotate(-6 591 206)"/>
+  <text x="124" y="184" fill="#111" font-family="Space Grotesk, Arial, sans-serif" font-size="74" font-weight="700">Kernel Gallery</text>
+  <text x="124" y="256" fill="#111" font-family="Space Grotesk, Arial, sans-serif" font-size="38" font-weight="500">Design surface. C# systems kernel.</text>
+  <text x="126" y="486" fill="#6f716e" font-family="IBM Plex Mono, Consolas, monospace" font-size="24" font-weight="600">projects / blog / resume / contact / lab</text>
+</svg>
