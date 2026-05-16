@@ -1,6 +1,7 @@
 import type {
   CaseStudyItem,
   DeveloperHabitsData,
+  FileSystemEntry,
   HabitItem,
   NoteItem,
   PlannerTask,
@@ -20,6 +21,7 @@ export type PortfolioDataProvider = {
   getSkillGroups(): SkillGroup[];
   getCaseStudies(): CaseStudyItem[];
   getNotes(): NoteItem[];
+  getFileSystemEntries(): FileSystemEntry[];
   getResumeHighlights(): string[];
   getOperatingModes(): string[];
   getWorldRoadmap(): string[];

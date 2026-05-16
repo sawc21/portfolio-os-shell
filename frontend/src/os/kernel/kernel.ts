@@ -19,6 +19,7 @@ export const portfolioKernel = {
   getSkillGroups: () => provider.getSkillGroups(),
   getCaseStudies: () => provider.getCaseStudies(),
   getNotes: () => provider.getNotes(),
+  getFileSystemEntries: () => provider.getFileSystemEntries(),
   getResumeHighlights: () => provider.getResumeHighlights(),
   getOperatingModes: () => provider.getOperatingModes(),
   getWorldRoadmap: () => provider.getWorldRoadmap(),

@@ -12,13 +12,13 @@ type WorldMode = "desktop" | "booting" | "world";
 type IconPositionMap = Partial<Record<AppId, DesktopIconPosition>>;
 type AppParamsMap = Partial<Record<AppId, unknown>>;
 
-const initialApps: AppId[] = ["recruiter", "search", "terminal"];
-const windowsStorageKey = "portfolio-os:windows:v1";
-const iconsStorageKey = "portfolio-os:desktop-icons:v1";
+const initialApps: AppId[] = ["files"];
+const windowsStorageKey = "portfolio-os:windows:v2";
+const iconsStorageKey = "portfolio-os:desktop-icons:v2";
 
 export function Desktop() {
   const [windows, setWindows] = useState<WindowInstance[]>(readWindowSession);
-  const [focusedAppId, setFocusedAppId] = useState<AppId | null>("terminal");
+  const [focusedAppId, setFocusedAppId] = useState<AppId | null>("files");
   const [startOpen, setStartOpen] = useState(false);
   const [selectedIconId, setSelectedIconId] = useState<AppId | null>(null);
   const [iconPositions, setIconPositions] = useState<IconPositionMap>(readIconPositions);
@@ -146,7 +146,7 @@ export function Desktop() {
     portfolioKernel.resetDemoState();
     setIconPositions({});
     setWindows(initialApps.map(createWindow));
-    setFocusedAppId("terminal");
+    setFocusedAppId("files");
     setSelectedIconId(null);
     setAppParams({});
   }

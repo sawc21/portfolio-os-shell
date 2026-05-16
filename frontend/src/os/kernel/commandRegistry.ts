@@ -13,6 +13,7 @@ export const commandDefinitions: CommandDefinition[] = [
   { name: "help", description: "Show available commands", aliases: ["help"] },
   { name: "apps", description: "List registered OS apps", aliases: ["apps", "list apps", "ls"] },
   { name: "search <query>", description: "Open Sawyer Search with a query", aliases: ["search"] },
+  { name: "files", description: "Open File Explorer", aliases: ["files", "explorer", "dir"], targetAppId: "files" },
   { name: "open recruiter", description: "Open Recruiter Quick View", aliases: ["open recruiter", "recruiter"], targetAppId: "recruiter" },
   { name: "hire sawyer", description: "Open the hiring-focused recruiter view", aliases: ["hire sawyer", "why hire sawyer"], targetAppId: "recruiter" },
   { name: "skills", description: "Open Skills", aliases: ["skills", "stack"], targetAppId: "skills" },

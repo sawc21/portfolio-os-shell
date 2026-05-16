@@ -1,6 +1,7 @@
 import {
   caseStudies,
   developerHabitsData,
+  fileSystemEntries,
   notes,
   operatingModes,
   projects,
@@ -46,6 +47,7 @@ export const mockPortfolioDataProvider: PortfolioDataProvider = {
   getSkillGroups: () => skillGroups,
   getCaseStudies: () => caseStudies,
   getNotes: () => notes,
+  getFileSystemEntries: () => fileSystemEntries,
   getResumeHighlights: () => resumeHighlights,
   getOperatingModes: () => operatingModes,
   getWorldRoadmap: () => worldRoadmap,

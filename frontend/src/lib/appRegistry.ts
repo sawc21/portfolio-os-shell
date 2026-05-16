@@ -3,6 +3,7 @@ import {
   CalendarCheck,
   FileText,
   Flame,
+  FolderOpen,
   FolderKanban,
   GalleryVerticalEnd,
   Handshake,
@@ -58,6 +59,20 @@ export const appRegistry: AppDefinition[] = [
     launcher: true,
     commands: ["search", "find"],
     defaultWindow: { width: 700, height: 500, x: 148, y: 106 }
+  },
+  {
+    id: "files",
+    title: "File Explorer",
+    shortTitle: "Files",
+    description: "Windows-style directory browser for apps, routes, and source files.",
+    category: "system",
+    icon: FolderOpen,
+    accent: "#1f5fbf",
+    tags: ["files", "explorer", "directory", "routes", "source"],
+    desktop: true,
+    launcher: true,
+    commands: ["files", "explorer", "dir"],
+    defaultWindow: { width: 760, height: 500, x: 90, y: 80 }
   },
   {
     id: "projects",

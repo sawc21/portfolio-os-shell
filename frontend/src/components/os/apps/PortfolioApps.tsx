@@ -2,6 +2,9 @@ import {
   ArrowUpRight,
   CheckCircle2,
   Circle,
+  Copy,
+  FileCode2,
+  Folder,
   RadioTower,
   Rocket,
   Search,
@@ -12,7 +15,7 @@ import {
 import type { FormEvent, KeyboardEvent } from "react";
 import { useEffect, useMemo, useState } from "react";
 import { portfolioKernel } from "../../../os/kernel/kernel";
-import type { AppId, ScopeScenarioInput, SystemAction } from "../../../lib/types";
+import type { AppId, FileSystemEntry, ScopeScenarioInput, SystemAction } from "../../../lib/types";
 
 export type OsAppComponentProps = {
   openApp: (appId: AppId, params?: unknown) => void;
@@ -133,6 +136,99 @@ export function SearchApp({ openApp, params }: OsAppComponentProps) {
           </button>
         ))}
       </div>
+    </div>
+  );
+}
+
+export function FileExplorerApp({ openApp }: OsAppComponentProps) {
+  const entries = portfolioKernel.getFileSystemEntries();
+  const directories = Array.from(new Set(entries.map((entry) => entry.directory)));
+  const [activeDirectory, setActiveDirectory] = useState(directories[0] ?? "");
+  const [selectedEntry, setSelectedEntry] = useState<FileSystemEntry | null>(entries[0] ?? null);
+  const visibleEntries = entries.filter((entry) => entry.directory === activeDirectory);
+
+  function openEntry(entry: FileSystemEntry) {
+    setSelectedEntry(entry);
+
+    if (entry.appId) {
+      openApp(entry.appId);
+      return;
+    }
+
+    if (entry.href) {
+      window.open(entry.href, "_blank", "noopener,noreferrer");
+      return;
+    }
+
+    if (entry.sourcePath) {
+      void navigator.clipboard?.writeText(entry.sourcePath);
+    }
+  }
+
+  return (
+    <div className="file-explorer">
+      <header className="file-explorer__toolbar">
+        <button type="button" aria-label="Back">Back</button>
+        <button type="button" aria-label="Forward">Forward</button>
+        <label>
+          Address
+          <input value={activeDirectory} onChange={(event) => setActiveDirectory(event.target.value)} />
+        </label>
+      </header>
+      <div className="file-explorer__body">
+        <aside className="file-explorer__tree" aria-label="Portfolio directories">
+          {directories.map((directory) => (
+            <button
+              key={directory}
+              type="button"
+              className={directory === activeDirectory ? "is-active" : undefined}
+              onClick={() => setActiveDirectory(directory)}
+            >
+              <Folder aria-hidden="true" size={16} />
+              <span>{directory}</span>
+            </button>
+          ))}
+        </aside>
+        <section className="file-explorer__files" aria-label="Directory contents">
+          <div className="file-explorer__head">
+            <span>Name</span>
+            <span>Type</span>
+            <span>Directory</span>
+          </div>
+          {visibleEntries.map((entry) => (
+            <button
+              key={entry.id}
+              type="button"
+              className={selectedEntry?.id === entry.id ? "is-selected" : undefined}
+              onClick={() => openEntry(entry)}
+            >
+              <span className="file-explorer__name">
+                {entry.kind === "source" ? <FileCode2 aria-hidden="true" size={18} /> : <Folder aria-hidden="true" size={18} />}
+                <strong>{entry.name}</strong>
+              </span>
+              <span>{entry.kind}</span>
+              <small>{entry.directory}</small>
+            </button>
+          ))}
+        </section>
+      </div>
+      <footer className="file-explorer__details">
+        {selectedEntry ? (
+          <>
+            <strong>{selectedEntry.name}</strong>
+            <span>{selectedEntry.description}</span>
+            <code>{selectedEntry.sourcePath ?? selectedEntry.href ?? selectedEntry.directory}</code>
+            {selectedEntry.sourcePath ? (
+              <button type="button" onClick={() => void navigator.clipboard?.writeText(selectedEntry.sourcePath ?? "")}>
+                <Copy aria-hidden="true" size={14} />
+                Copy source path
+              </button>
+            ) : null}
+          </>
+        ) : (
+          <span>Select a file to inspect its path and action.</span>
+        )}
+      </footer>
     </div>
   );
 }

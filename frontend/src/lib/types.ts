@@ -4,6 +4,7 @@ export type AppId =
   | "about"
   | "recruiter"
   | "search"
+  | "files"
   | "projects"
   | "skills"
   | "case-studies"
@@ -104,6 +105,18 @@ export type NoteItem = {
   date: string;
   summary: string;
   slug: string;
+};
+
+export type FileSystemEntry = {
+  id: string;
+  name: string;
+  kind: "folder" | "app" | "route" | "source";
+  directory: string;
+  description: string;
+  tags: string[];
+  appId?: AppId;
+  href?: string;
+  sourcePath?: string;
 };
 
 export type PlannerTask = {

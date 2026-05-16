@@ -20,6 +20,9 @@ const priorityMatches: Record<string, AppId[]> = {
   "asp.net": ["projects", "resume", "case-studies"],
   testing: ["habits", "projects", "case-studies"],
   "3d": ["world", "projects", "case-studies"],
+  files: ["files"],
+  explorer: ["files"],
+  directory: ["files"],
   planner: ["planner"],
   budget: ["budget"],
   habits: ["habits"],
@@ -129,7 +132,16 @@ function buildSearchDocuments(provider: PortfolioDataProvider): SearchDocument[]
     appId: "recruiter" as AppId
   }));
 
-  return [...appDocs, ...projectDocs, ...skillDocs, ...profileDocs, ...resumeDocs, ...caseDocs, ...commandDocs, ...signalDocs];
+  const fileDocs = provider.getFileSystemEntries().map((entry) => ({
+    id: `file:${entry.id}`,
+    title: entry.name,
+    description: `${entry.directory} - ${entry.description}`,
+    category: `file-${entry.kind}`,
+    keywords: [entry.directory, entry.sourcePath ?? "", entry.href ?? "", ...entry.tags],
+    appId: entry.appId ?? "files" as AppId
+  }));
+
+  return [...appDocs, ...projectDocs, ...skillDocs, ...profileDocs, ...resumeDocs, ...caseDocs, ...commandDocs, ...signalDocs, ...fileDocs];
 }
 
 function scoreDocument(document: SearchDocument, terms: string[], normalizedQuery: string) {

@@ -1,5 +1,6 @@
 import type {
   CaseStudyItem,
+  FileSystemEntry,
   HabitItem,
   NoteItem,
   PlannerTask,
@@ -101,6 +102,108 @@ export const notes: NoteItem[] = [
     date: "2026.01.06",
     summary: "Why the first version focused on a durable ASP.NET content foundation before the OS interface.",
     slug: "starting-the-portfolio"
+  }
+];
+
+export const fileSystemEntries: FileSystemEntry[] = [
+  {
+    id: "desktop-recruiter",
+    name: "Recruiter Quick View.app",
+    kind: "app",
+    directory: "C:\\PortfolioOS\\Desktop",
+    description: "Hiring-focused dashboard for Sawyer Cawthon.",
+    tags: ["hire", "recruiter", "internship"],
+    appId: "recruiter"
+  },
+  {
+    id: "desktop-search",
+    name: "Sawyer Search.app",
+    kind: "app",
+    directory: "C:\\PortfolioOS\\Desktop",
+    description: "Internal search across apps, skills, projects, and commands.",
+    tags: ["search", "kernel"],
+    appId: "search"
+  },
+  {
+    id: "desktop-terminal",
+    name: "Terminal.exe",
+    kind: "app",
+    directory: "C:\\PortfolioOS\\System32",
+    description: "Command-line interface for opening apps and searching the portfolio.",
+    tags: ["terminal", "commands"],
+    appId: "terminal"
+  },
+  {
+    id: "routes-projects",
+    name: "Projects.url",
+    kind: "route",
+    directory: "C:\\PortfolioOS\\PublicRoutes",
+    description: "Server-rendered projects fallback route.",
+    tags: ["projects", "asp.net", "route"],
+    href: "/projects"
+  },
+  {
+    id: "routes-resume",
+    name: "Resume.url",
+    kind: "route",
+    directory: "C:\\PortfolioOS\\PublicRoutes",
+    description: "Server-rendered resume fallback route.",
+    tags: ["resume", "route"],
+    href: "/resume"
+  },
+  {
+    id: "routes-contact",
+    name: "Contact.url",
+    kind: "route",
+    directory: "C:\\PortfolioOS\\PublicRoutes",
+    description: "Server-rendered contact fallback route.",
+    tags: ["contact", "route"],
+    href: "/contact"
+  },
+  {
+    id: "routes-blog",
+    name: "Blog.url",
+    kind: "route",
+    directory: "C:\\PortfolioOS\\PublicRoutes",
+    description: "Markdown-backed blog and notes route.",
+    tags: ["blog", "markdown", "route"],
+    href: "/blog"
+  },
+  {
+    id: "source-kernel",
+    name: "kernel.ts",
+    kind: "source",
+    directory: "C:\\PortfolioOS\\Source\\frontend\\src\\os\\kernel",
+    description: "Public facade that connects apps, commands, search, profile, and data providers.",
+    tags: ["typescript", "kernel", "architecture"],
+    sourcePath: "frontend/src/os/kernel/kernel.ts"
+  },
+  {
+    id: "source-search",
+    name: "searchIndex.ts",
+    kind: "source",
+    directory: "C:\\PortfolioOS\\Source\\frontend\\src\\os\\kernel",
+    description: "Fake internal search engine and ranking rules.",
+    tags: ["typescript", "search"],
+    sourcePath: "frontend/src/os/kernel/searchIndex.ts"
+  },
+  {
+    id: "source-provider",
+    name: "portfolioDataProvider.ts",
+    kind: "source",
+    directory: "C:\\PortfolioOS\\Source\\frontend\\src\\os\\services",
+    description: "API-ready provider interface for replacing mock data later.",
+    tags: ["api-ready", "interface"],
+    sourcePath: "frontend/src/os/services/portfolioDataProvider.ts"
+  },
+  {
+    id: "source-apps",
+    name: "PortfolioApps.tsx",
+    kind: "source",
+    directory: "C:\\PortfolioOS\\Source\\frontend\\src\\components\\os\\apps",
+    description: "React app views rendered inside draggable OS windows.",
+    tags: ["react", "tsx", "apps"],
+    sourcePath: "frontend/src/components/os/apps/PortfolioApps.tsx"
   }
 ];
 
