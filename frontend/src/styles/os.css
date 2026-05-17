@@ -1150,8 +1150,8 @@
 .portfolio-os {
   color: #ffffff;
   background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.16), transparent 28%),
-    linear-gradient(160deg, #1880c7 0%, #0b5fa5 48%, #06417b 100%);
+    linear-gradient(180deg, #64b7ff 0 18%, #2f8fe6 18% 42%, transparent 42%),
+    linear-gradient(180deg, transparent 0 58%, #75c858 58% 64%, #4da438 64% 72%, #2c7f2d 72% 100%);
   box-shadow: none;
 }
 
@@ -1165,8 +1165,15 @@
   margin: 0 0 42px;
   overflow: hidden;
   background:
-    radial-gradient(circle at 75% 18%, rgba(255, 255, 255, 0.17), transparent 16rem),
-    transparent;
+    linear-gradient(90deg, transparent 0 3.125%, rgba(255, 255, 255, 0.08) 3.125% 6.25%, transparent 6.25% 100%),
+    linear-gradient(180deg, transparent 0 5.55%, rgba(255, 255, 255, 0.07) 5.55% 11.1%, transparent 11.1% 100%),
+    radial-gradient(circle at 13% 18%, #fff9b8 0 2.8rem, #ffd95c 2.9rem 3.7rem, transparent 3.8rem),
+    linear-gradient(135deg, transparent 0 64%, #58af3a 64% 70%, transparent 70%),
+    linear-gradient(25deg, transparent 0 59%, #6bc34a 59% 68%, transparent 68%),
+    linear-gradient(155deg, transparent 0 56%, #7bd957 56% 65%, transparent 65%),
+    linear-gradient(180deg, transparent 0 50%, #8ddf58 50% 58%, #5eb33d 58% 70%, #2f842e 70% 100%),
+    linear-gradient(180deg, #67bfff 0 48%, #3aa0ed 48% 50%, transparent 50%);
+  background-size: 32px 32px, 32px 32px, auto, auto, auto, auto, auto, auto;
   border: 0;
   border-radius: 0;
   backdrop-filter: none;
@@ -1181,6 +1188,19 @@
   font-weight: 700;
   letter-spacing: 0;
   content: "Portfolio OS";
+  pointer-events: none;
+}
+
+.desktop-surface::after {
+  position: absolute;
+  inset: auto 0 0;
+  height: 132px;
+  content: "";
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.08) 0 3px, transparent 3px 32px),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0 3px, transparent 3px 32px),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.16), transparent 18px);
+  background-size: 32px 32px, 32px 32px, auto;
   pointer-events: none;
 }
 
@@ -1511,13 +1531,53 @@
   background: linear-gradient(180deg, #1b4f9f, #123f84);
 }
 
+.os-taskbar__quick-launch,
+.os-taskbar__tray {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  min-height: 32px;
+}
+
+.os-taskbar__quick-launch {
+  padding: 0 7px;
+  border-left: 1px solid rgba(255, 255, 255, 0.42);
+  border-right: 1px solid rgba(0, 0, 0, 0.36);
+}
+
+.os-taskbar__quick-launch button {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.28) !important;
+  border-right-color: rgba(0, 0, 0, 0.35) !important;
+  border-bottom-color: rgba(0, 0, 0, 0.35) !important;
+  border-radius: 2px;
+}
+
+.os-taskbar__quick-launch button:hover,
+.os-taskbar__quick-launch button:focus-visible {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.os-taskbar__tray {
+  min-width: 148px;
+  justify-content: end;
+  padding: 0 6px;
+  color: #ffffff;
+  background: rgba(0, 0, 0, 0.14);
+  border-left: 1px solid rgba(255, 255, 255, 0.38);
+  box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.22);
+}
+
 .os-taskbar__clock {
-  min-width: 76px;
-  padding: 8px 9px;
+  min-width: 72px;
+  padding: 0 4px;
   color: #ffffff;
   text-align: center;
-  background: rgba(0, 0, 0, 0.18);
-  border-left: 1px solid rgba(255, 255, 255, 0.38);
 }
 
 .file-explorer {
@@ -1528,10 +1588,37 @@
   background: #ece9d8;
 }
 
+.file-explorer__menubar,
 .file-explorer__toolbar {
   display: flex;
   gap: 6px;
   align-items: center;
+}
+
+.file-explorer__menubar {
+  min-height: 28px;
+  padding: 3px 6px;
+  background: #ece9d8;
+  border-bottom: 1px solid #aca899;
+}
+
+.file-explorer__menubar button {
+  min-height: 22px;
+  padding: 0 8px;
+  color: #111111;
+  text-decoration: underline;
+  background: transparent;
+  border: 1px solid transparent;
+}
+
+.file-explorer__menubar button:hover,
+.file-explorer__menubar button:focus-visible {
+  color: #ffffff;
+  background: #316ac5;
+  border-color: #0a246a;
+}
+
+.file-explorer__toolbar {
   padding: 6px;
   background: #d4d0c8;
   border-bottom: 1px solid #808080;

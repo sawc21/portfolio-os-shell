@@ -1,4 +1,4 @@
-import { Grid2X2, Rocket } from "lucide-react";
+import { BatteryCharging, Grid2X2, Rocket, ShieldCheck, Volume2, Wifi } from "lucide-react";
 import { useEffect, useState } from "react";
 import { getAppDefinition } from "../../lib/appRegistry";
 import type { AppId, WindowInstance } from "../../lib/types";
@@ -8,6 +8,7 @@ type TaskbarProps = {
   focusedAppId: AppId | null;
   startOpen: boolean;
   onToggleStart: () => void;
+  onOpenApp: (appId: AppId) => void;
   onFocusWindow: (appId: AppId) => void;
   onLaunchWorld: () => void;
 };
@@ -17,10 +18,12 @@ export function Taskbar({
   focusedAppId,
   startOpen,
   onToggleStart,
+  onOpenApp,
   onFocusWindow,
   onLaunchWorld
 }: TaskbarProps) {
   const [clock, setClock] = useState(() => formatClock());
+  const quickLaunchApps: AppId[] = ["files", "search", "terminal"];
 
   useEffect(() => {
     const interval = window.setInterval(() => setClock(formatClock()), 30_000);
@@ -38,6 +41,17 @@ export function Taskbar({
         <Grid2X2 aria-hidden="true" size={18} />
         Start
       </button>
+      <div className="os-taskbar__quick-launch" aria-label="Quick launch">
+        {quickLaunchApps.map((appId) => {
+          const app = getAppDefinition(appId);
+          const Icon = app.icon;
+          return (
+            <button key={appId} type="button" onClick={() => onOpenApp(appId)} aria-label={`Open ${app.title}`}>
+              <Icon aria-hidden="true" size={15} />
+            </button>
+          );
+        })}
+      </div>
       <div className="os-taskbar__windows" aria-label="Open windows">
         {windows.map((window) => {
           const app = getAppDefinition(window.appId);
@@ -63,7 +77,13 @@ export function Taskbar({
         <Rocket aria-hidden="true" size={17} />
         Launch World
       </button>
-      <time className="os-taskbar__clock">{clock}</time>
+      <div className="os-taskbar__tray" aria-label="System tray">
+        <ShieldCheck aria-hidden="true" size={15} />
+        <Wifi aria-hidden="true" size={15} />
+        <Volume2 aria-hidden="true" size={15} />
+        <BatteryCharging aria-hidden="true" size={15} />
+        <time className="os-taskbar__clock">{clock}</time>
+      </div>
     </footer>
   );
 }

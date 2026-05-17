@@ -167,9 +167,19 @@ export function FileExplorerApp({ openApp }: OsAppComponentProps) {
 
   return (
     <div className="file-explorer">
+      <nav className="file-explorer__menubar" aria-label="File Explorer menu">
+        <button type="button">File</button>
+        <button type="button">Edit</button>
+        <button type="button">View</button>
+        <button type="button">Favorites</button>
+        <button type="button">Tools</button>
+        <button type="button">Help</button>
+      </nav>
       <header className="file-explorer__toolbar">
         <button type="button" aria-label="Back">Back</button>
         <button type="button" aria-label="Forward">Forward</button>
+        <button type="button" onClick={() => openApp("search")}>Search</button>
+        <button type="button" onClick={() => openApp("files")}>Folders</button>
         <label>
           Address
           <input value={activeDirectory} onChange={(event) => setActiveDirectory(event.target.value)} />

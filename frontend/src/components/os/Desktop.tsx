@@ -237,6 +237,7 @@ export function Desktop() {
         focusedAppId={focusedAppId}
         startOpen={startOpen}
         onToggleStart={() => setStartOpen((open) => !open)}
+        onOpenApp={openApp}
         onFocusWindow={focusWindow}
         onLaunchWorld={launchWorld}
       />
