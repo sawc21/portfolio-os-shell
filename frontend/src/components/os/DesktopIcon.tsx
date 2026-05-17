@@ -49,6 +49,7 @@ export function DesktopIcon({
       window.removeEventListener("pointerup", handlePointerUp);
       if (!moved) {
         onSelect(app.id);
+        onOpen(app.id);
       }
     };
 
@@ -70,13 +71,13 @@ export function DesktopIcon({
       }
       type="button"
       onPointerDown={handlePointerDown}
-      onDoubleClick={() => onOpen(app.id)}
       onKeyDown={(event) => {
-        if (event.key === "Enter") {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
           onOpen(app.id);
         }
       }}
-      aria-label={`${selected ? "Selected" : "Select"} ${app.title}. Press Enter or double-click to open.`}
+      aria-label={`${selected ? "Selected" : "Open"} ${app.title}. Click, press Enter, or press Space to open.`}
     >
       <span className="desktop-icon__glyph">
         <Icon aria-hidden="true" size={28} strokeWidth={1.8} />
