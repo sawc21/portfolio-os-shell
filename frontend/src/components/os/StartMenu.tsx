@@ -2,6 +2,7 @@ import { Search, Sparkles } from "lucide-react";
 import { useMemo, useState } from "react";
 import type { AppDefinition } from "../../lib/types";
 import { portfolioKernel } from "../../os/kernel/kernel";
+import { AppPixelIcon } from "./AppPixelIcon";
 
 type StartMenuProps = {
   open: boolean;
@@ -65,10 +66,9 @@ export function StartMenu({ open, onOpenApp, onLaunchWorld, onResetWorkspace }: 
         </label>
         <div className="start-menu__grid">
           {visibleApps.map((app) => {
-            const Icon = app.icon;
             return (
               <button key={app.id} type="button" onClick={() => onOpenApp(app.id)}>
-                <Icon aria-hidden="true" size={20} />
+                <AppPixelIcon app={app} className="start-menu__app-icon" fallbackSize={20} />
                 <span>{app.title}</span>
                 <small>{app.category}</small>
               </button>

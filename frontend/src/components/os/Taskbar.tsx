@@ -2,6 +2,7 @@ import { BatteryCharging, Grid2X2, Rocket, ShieldCheck, Volume2, Wifi } from "lu
 import { useEffect, useState } from "react";
 import { getAppDefinition } from "../../lib/appRegistry";
 import type { AppId, WindowInstance } from "../../lib/types";
+import { AppPixelIcon } from "./AppPixelIcon";
 
 type TaskbarProps = {
   windows: WindowInstance[];
@@ -44,10 +45,9 @@ export function Taskbar({
       <div className="os-taskbar__quick-launch" aria-label="Quick launch">
         {quickLaunchApps.map((appId) => {
           const app = getAppDefinition(appId);
-          const Icon = app.icon;
           return (
             <button key={appId} type="button" onClick={() => onOpenApp(appId)} aria-label={`Open ${app.title}`}>
-              <Icon aria-hidden="true" size={15} />
+              <AppPixelIcon app={app} className="os-taskbar__icon" fallbackSize={15} />
             </button>
           );
         })}
@@ -55,7 +55,6 @@ export function Taskbar({
       <div className="os-taskbar__windows" aria-label="Open windows">
         {windows.map((window) => {
           const app = getAppDefinition(window.appId);
-          const Icon = app.icon;
           return (
             <button
               key={window.appId}
@@ -67,7 +66,7 @@ export function Taskbar({
               onClick={() => onFocusWindow(window.appId)}
               aria-pressed={focusedAppId === window.appId && !window.minimized}
             >
-              <Icon aria-hidden="true" size={16} />
+              <AppPixelIcon app={app} className="os-taskbar__icon" fallbackSize={16} />
               {app.shortTitle}
             </button>
           );

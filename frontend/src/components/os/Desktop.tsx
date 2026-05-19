@@ -12,13 +12,13 @@ import { WorldPreview } from "./WorldPreview";
 type WorldMode = "desktop" | "booting" | "world";
 type AppParamsMap = Partial<Record<AppId, unknown>>;
 
-const initialApps: AppId[] = ["files"];
+const initialApps: AppId[] = [];
 const windowsStorageKey = "portfolio-os:windows:v2";
 const iconOrderStorageKey = "portfolio-os:desktop-icon-order:v1";
 
 export function Desktop() {
   const [windows, setWindows] = useState<WindowInstance[]>(readWindowSession);
-  const [focusedAppId, setFocusedAppId] = useState<AppId | null>("files");
+  const [focusedAppId, setFocusedAppId] = useState<AppId | null>(null);
   const [startOpen, setStartOpen] = useState(false);
   const [selectedIconId, setSelectedIconId] = useState<AppId | null>(null);
   const [iconOrder, setIconOrder] = useState<AppId[]>(readDesktopIconOrder);
@@ -158,7 +158,7 @@ export function Desktop() {
     portfolioKernel.resetDemoState();
     setIconOrder(defaultIconOrder);
     setWindows(initialApps.map(createWindow));
-    setFocusedAppId("files");
+    setFocusedAppId(null);
     setSelectedIconId(null);
     setAppParams({});
   }

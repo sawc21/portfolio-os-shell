@@ -2,6 +2,7 @@ import { Maximize2, Minus, X } from "lucide-react";
 import type { PointerEvent as ReactPointerEvent, ReactNode } from "react";
 import { getAppDefinition } from "../../lib/appRegistry";
 import type { AppId, WindowInstance } from "../../lib/types";
+import { AppPixelIcon } from "./AppPixelIcon";
 
 type WindowProps = {
   window: WindowInstance;
@@ -27,7 +28,6 @@ export function Window({
   onToggleMaximize
 }: WindowProps) {
   const app = getAppDefinition(window.appId);
-  const Icon = app.icon;
 
   function handlePointerDown(event: ReactPointerEvent<HTMLDivElement>) {
     if ((event.target as HTMLElement).closest("button")) {
@@ -111,7 +111,7 @@ export function Window({
     >
       <div className="os-window__titlebar" onPointerDown={handlePointerDown}>
         <div className="os-window__title">
-          <Icon aria-hidden="true" size={17} />
+          <AppPixelIcon app={app} className="os-window__title-icon" fallbackSize={17} />
           <span>{app.title}</span>
         </div>
         <div className="os-window__controls">

@@ -149,12 +149,12 @@
   inset: 0;
   z-index: 3;
   display: grid;
-  grid-template-columns: repeat(auto-fill, 104px);
-  grid-auto-rows: 108px;
+  grid-template-columns: repeat(5, 160px);
+  grid-auto-rows: 154px;
   align-content: start;
-  justify-content: start;
-  gap: 18px 20px;
-  padding: 28px 24px 160px;
+  justify-content: center;
+  gap: 42px 38px;
+  padding: 38px 32px 160px;
   pointer-events: auto;
 }
 
@@ -188,9 +188,9 @@
   gap: 7px;
   align-content: start;
   justify-items: center;
-  width: 104px;
-  min-height: 98px;
-  padding: 10px 7px 8px;
+  width: 160px;
+  min-height: 154px;
+  padding: 4px 6px 8px;
   color: var(--os-ink);
   font-family: var(--mono);
   font-size: 0.68rem;
@@ -221,14 +221,23 @@
 
 .desktop-icon__glyph {
   display: grid;
-  width: 54px;
-  height: 54px;
+  width: 112px;
+  height: 112px;
   place-items: center;
   color: var(--app-accent);
   background: linear-gradient(145deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.05));
   border: 1px solid color-mix(in srgb, var(--app-accent), transparent 55%);
   border-radius: 16px;
   box-shadow: 0 0 28px color-mix(in srgb, var(--app-accent), transparent 72%);
+}
+
+.desktop-icon__image {
+  display: block;
+  width: 112px;
+  height: 112px;
+  object-fit: contain;
+  image-rendering: pixelated;
+  pointer-events: none;
 }
 
 .window-layer {
@@ -1071,6 +1080,7 @@
 
   .desktop-icons {
     inset: 0;
+    grid-template-columns: repeat(4, 160px);
   }
 
   .os-window {
@@ -1099,21 +1109,23 @@
   }
 
   .desktop-icons {
-    grid-template-columns: repeat(auto-fill, minmax(86px, 1fr));
-    grid-auto-rows: 96px;
-    gap: 12px;
-    padding: 18px 12px 130px;
+    grid-template-columns: repeat(2, minmax(132px, 1fr));
+    grid-auto-rows: 132px;
+    gap: 18px 12px;
+    padding: 18px 12px 150px;
+    overflow-y: auto;
   }
 
   .desktop-icon {
     width: 100%;
-    min-height: 84px;
-    font-size: 0.62rem;
+    min-height: 126px;
+    font-size: 0.72rem;
   }
 
-  .desktop-icon__glyph {
-    width: 46px;
-    height: 46px;
+  .desktop-icon__glyph,
+  .desktop-icon__image {
+    width: 82px;
+    height: 82px;
   }
 
   .resume-grid,
@@ -1141,6 +1153,12 @@
   .os-taskbar__world,
   .os-taskbar__clock {
     display: none;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 759px) {
+  .desktop-icons {
+    grid-template-columns: repeat(3, 160px);
   }
 }
 
@@ -1259,12 +1277,13 @@
 }
 
 .desktop-icon {
-  width: 104px;
-  min-height: 96px;
-  gap: 6px;
+  width: 160px;
+  min-height: 154px;
+  gap: 5px;
   color: #ffffff;
-  font-size: 0.72rem;
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.72);
+  font-size: 0.92rem;
+  font-weight: 700;
+  text-shadow: 2px 2px 0 #000000, 0 0 3px rgba(0, 0, 0, 0.75);
   text-transform: none;
   border-radius: 0;
 }
@@ -1281,9 +1300,9 @@
 }
 
 .desktop-icon > span:last-child {
-  max-width: 94px;
+  max-width: 156px;
   padding: 1px 3px;
-  line-height: 1.15;
+  line-height: 1.08;
   overflow-wrap: anywhere;
 }
 
@@ -1297,9 +1316,19 @@
 }
 
 .desktop-icon__glyph {
-  width: 50px;
-  height: 50px;
+  width: 112px;
+  height: 112px;
   color: #ffffff;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.desktop-icon__glyph svg {
+  width: 54px;
+  height: 54px;
+  padding: 12px;
   background:
     linear-gradient(145deg, color-mix(in srgb, var(--app-accent), white 22%), color-mix(in srgb, var(--app-accent), black 18%));
   border: 1px solid rgba(255, 255, 255, 0.76);
@@ -1592,6 +1621,30 @@
 .start-menu__grid button small {
   color: inherit;
   font-size: 0.62rem;
+}
+
+.start-menu__app-icon,
+.os-taskbar__icon,
+.os-window__title-icon {
+  display: block;
+  object-fit: contain;
+  image-rendering: pixelated;
+  pointer-events: none;
+}
+
+.start-menu__app-icon {
+  width: 25px;
+  height: 25px;
+}
+
+.os-taskbar__icon {
+  width: 18px;
+  height: 18px;
+}
+
+.os-window__title-icon {
+  width: 17px;
+  height: 17px;
 }
 
 .start-menu__reset {

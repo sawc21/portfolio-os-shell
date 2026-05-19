@@ -1,5 +1,6 @@
 import type { PointerEvent as ReactPointerEvent } from "react";
 import type { AppDefinition } from "../../lib/types";
+import { AppPixelIcon } from "./AppPixelIcon";
 
 type PointerPoint = {
   clientX: number;
@@ -31,8 +32,6 @@ export function DesktopIcon({
   onOpen,
   launchingWorld
 }: DesktopIconProps) {
-  const Icon = app.icon;
-
   function handlePointerDown(event: ReactPointerEvent<HTMLButtonElement>) {
     event.stopPropagation();
     onSelect(app.id);
@@ -99,7 +98,7 @@ export function DesktopIcon({
       aria-label={`${selected ? "Selected" : "Open"} ${app.title}. Click, press Enter, or press Space to open. Drag to move.`}
     >
       <span className="desktop-icon__glyph">
-        <Icon aria-hidden="true" size={28} strokeWidth={1.8} />
+        <AppPixelIcon app={app} className="desktop-icon__image" fallbackSize={34} />
       </span>
       <span>{app.shortTitle}</span>
     </button>

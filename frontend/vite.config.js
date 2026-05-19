@@ -4,6 +4,7 @@ import { resolve } from "node:path";
 
 export default defineConfig({
   plugins: [react()],
+  base: "/dist/",
   build: {
     outDir: resolve(__dirname, "../Portfolio/wwwroot/dist"),
     emptyOutDir: true,
@@ -13,7 +14,10 @@ export default defineConfig({
       output: {
         entryFileNames: "portfolio-os.js",
         chunkFileNames: "portfolio-os-[name].js",
-        assetFileNames: "portfolio-os[extname]"
+        assetFileNames: (assetInfo) =>
+          assetInfo.names?.some((name) => name.endsWith(".css"))
+            ? "portfolio-os.css"
+            : "assets/[name][extname]"
       }
     }
   }

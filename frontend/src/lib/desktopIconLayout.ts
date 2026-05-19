@@ -11,26 +11,41 @@ export type DesktopGridMetrics = {
 };
 
 const gridDefaults = {
-  cellWidth: 104,
-  cellHeight: 108,
-  gapX: 20,
-  gapY: 18,
-  paddingLeft: 24,
-  paddingTop: 28
+  cellWidth: 160,
+  cellHeight: 154,
+  gapX: 38,
+  gapY: 42,
+  paddingLeft: 32,
+  paddingTop: 38
 };
 
 export function getDesktopGridSlots(containerWidth: number, containerHeight: number): DesktopGridMetrics {
-  const usableWidth = Math.max(gridDefaults.cellWidth, containerWidth - gridDefaults.paddingLeft * 2);
-  const columns = Math.max(
-    1,
-    Math.floor((usableWidth + gridDefaults.gapX) / (gridDefaults.cellWidth + gridDefaults.gapX))
-  );
+  const columns = getResponsiveColumnCount(containerWidth);
+  const rowWidth = columns * gridDefaults.cellWidth + (columns - 1) * gridDefaults.gapX;
+  const centeredPadding = Math.max(gridDefaults.paddingLeft, Math.floor((containerWidth - rowWidth) / 2));
 
   return {
     ...gridDefaults,
+    paddingLeft: centeredPadding,
     columns,
-    cellHeight: containerHeight < 520 ? 96 : gridDefaults.cellHeight
+    cellHeight: containerHeight < 580 ? 132 : gridDefaults.cellHeight
   };
+}
+
+function getResponsiveColumnCount(containerWidth: number) {
+  if (containerWidth >= 980) {
+    return 5;
+  }
+
+  if (containerWidth >= 760) {
+    return 4;
+  }
+
+  if (containerWidth >= 641) {
+    return 3;
+  }
+
+  return 2;
 }
 
 export function getSlotIndexFromPoint(
