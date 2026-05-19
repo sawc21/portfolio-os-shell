@@ -3,7 +3,6 @@ import type { AppDefinition, DesktopIconPosition } from "../../lib/types";
 
 type DesktopIconProps = {
   app: AppDefinition;
-  index: number;
   position?: DesktopIconPosition;
   selected: boolean;
   onSelect: (appId: AppDefinition["id"]) => void;
@@ -14,7 +13,6 @@ type DesktopIconProps = {
 
 export function DesktopIcon({
   app,
-  index,
   position,
   selected,
   onSelect,
@@ -23,7 +21,7 @@ export function DesktopIcon({
   launchingWorld
 }: DesktopIconProps) {
   const Icon = app.icon;
-  const resolvedPosition = position ?? defaultIconPosition(index);
+  const hasCustomPosition = Boolean(position);
 
   function handlePointerDown(event: ReactPointerEvent<HTMLButtonElement>) {
     event.stopPropagation();
@@ -31,8 +29,9 @@ export function DesktopIcon({
 
     const originX = event.clientX;
     const originY = event.clientY;
-    const startX = resolvedPosition.x;
-    const startY = resolvedPosition.y;
+    const startRect = event.currentTarget.getBoundingClientRect();
+    const startX = position?.x ?? startRect.left;
+    const startY = position?.y ?? startRect.top;
     let moved = false;
 
     event.currentTarget.setPointerCapture(event.pointerId);
@@ -41,7 +40,9 @@ export function DesktopIcon({
       const nextX = startX + moveEvent.clientX - originX;
       const nextY = startY + moveEvent.clientY - originY;
       moved = Math.abs(nextX - startX) > 4 || Math.abs(nextY - startY) > 4;
-      onMove(app.id, { x: Math.max(12, nextX), y: Math.max(12, nextY) });
+      if (moved) {
+        onMove(app.id, { x: Math.max(12, nextX), y: Math.max(12, nextY) });
+      }
     };
 
     const handlePointerUp = () => {
@@ -62,12 +63,15 @@ export function DesktopIcon({
       className="desktop-icon"
       data-launching={launchingWorld ? "true" : "false"}
       data-selected={selected ? "true" : "false"}
+      data-positioned={hasCustomPosition ? "true" : "false"}
       style={
-        {
-          "--app-accent": app.accent,
-          left: resolvedPosition.x,
-          top: resolvedPosition.y
-        } as React.CSSProperties
+        hasCustomPosition
+          ? ({
+              "--app-accent": app.accent,
+              left: position?.x,
+              top: position?.y
+            } as React.CSSProperties)
+          : ({ "--app-accent": app.accent } as React.CSSProperties)
       }
       type="button"
       onPointerDown={handlePointerDown}
@@ -77,7 +81,7 @@ export function DesktopIcon({
           onOpen(app.id);
         }
       }}
-      aria-label={`${selected ? "Selected" : "Open"} ${app.title}. Click, press Enter, or press Space to open.`}
+      aria-label={`${selected ? "Selected" : "Open"} ${app.title}. Click, press Enter, or press Space to open. Drag to move.`}
     >
       <span className="desktop-icon__glyph">
         <Icon aria-hidden="true" size={28} strokeWidth={1.8} />
@@ -85,14 +89,4 @@ export function DesktopIcon({
       <span>{app.shortTitle}</span>
     </button>
   );
-}
-
-function defaultIconPosition(index: number): DesktopIconPosition {
-  const column = index % 2;
-  const row = Math.floor(index / 2);
-
-  return {
-    x: 24 + column * 110,
-    y: 24 + row * 112
-  };
 }

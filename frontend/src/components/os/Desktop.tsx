@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useMemo, useState } from "react";
 import type { AppId, DesktopIconPosition, WindowInstance } from "../../lib/types";
 import { portfolioKernel } from "../../os/kernel/kernel";
-import { DesktopIcon } from "./DesktopIcon";
+import { DesktopIconGrid } from "./DesktopIconGrid";
 import { StartMenu } from "./StartMenu";
 import { Taskbar } from "./Taskbar";
 import { WindowManager } from "./WindowManager";
@@ -183,21 +183,15 @@ export function Desktop() {
           <button type="button" onClick={sortIcons}>Sort</button>
           <button type="button" onClick={resetWorkspace}>Reset OS</button>
         </div>
-        <div className="desktop-icons" aria-label="Desktop apps">
-          {desktopApps.map((app, index) => (
-            <DesktopIcon
-              key={app.id}
-              app={app}
-              index={index}
-              position={iconPositions[app.id]}
-              selected={selectedIconId === app.id}
-              onSelect={setSelectedIconId}
-              onMove={moveIcon}
-              onOpen={openApp}
-              launchingWorld={worldMode === "booting"}
-            />
-          ))}
-        </div>
+        <DesktopIconGrid
+          apps={desktopApps}
+          positions={iconPositions}
+          selectedAppId={selectedIconId}
+          onSelect={setSelectedIconId}
+          onMove={moveIcon}
+          onOpen={openApp}
+          launchingWorld={worldMode === "booting"}
+        />
         <WindowManager
           windows={windows}
           focusedAppId={focusedAppId}
