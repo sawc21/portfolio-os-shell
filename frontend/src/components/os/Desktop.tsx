@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useMemo, useState } from "react";
-import type { AppId, DesktopIconPosition, WindowInstance } from "../../lib/types";
+import { moveIconInOrder, normalizeDesktopIconOrder } from "../../lib/desktopIconLayout";
+import type { AppId, WindowInstance } from "../../lib/types";
 import { portfolioKernel } from "../../os/kernel/kernel";
 import { DesktopIconGrid } from "./DesktopIconGrid";
 import { StartMenu } from "./StartMenu";
@@ -9,32 +10,39 @@ import { WindowManager } from "./WindowManager";
 import { WorldPreview } from "./WorldPreview";
 
 type WorldMode = "desktop" | "booting" | "world";
-type IconPositionMap = Partial<Record<AppId, DesktopIconPosition>>;
 type AppParamsMap = Partial<Record<AppId, unknown>>;
 
 const initialApps: AppId[] = ["files"];
 const windowsStorageKey = "portfolio-os:windows:v2";
-const iconsStorageKey = "portfolio-os:desktop-icons:v2";
+const iconOrderStorageKey = "portfolio-os:desktop-icon-order:v1";
 
 export function Desktop() {
   const [windows, setWindows] = useState<WindowInstance[]>(readWindowSession);
   const [focusedAppId, setFocusedAppId] = useState<AppId | null>("files");
   const [startOpen, setStartOpen] = useState(false);
   const [selectedIconId, setSelectedIconId] = useState<AppId | null>(null);
-  const [iconPositions, setIconPositions] = useState<IconPositionMap>(readIconPositions);
+  const [iconOrder, setIconOrder] = useState<AppId[]>(readDesktopIconOrder);
   const [appParams, setAppParams] = useState<AppParamsMap>({});
   const [worldMode, setWorldMode] = useState<WorldMode>("desktop");
   const [zCursor, setZCursor] = useState(30);
 
   const desktopApps = useMemo(() => portfolioKernel.getDesktopApps(), []);
+  const defaultIconOrder = useMemo(() => desktopApps.map((app) => app.id), [desktopApps]);
+  const orderedDesktopApps = useMemo(() => {
+    const normalizedOrder = normalizeDesktopIconOrder(iconOrder, defaultIconOrder);
+    return normalizedOrder.map((appId) => portfolioKernel.getAppById(appId));
+  }, [defaultIconOrder, iconOrder]);
 
   useEffect(() => {
     window.localStorage.setItem(windowsStorageKey, JSON.stringify(windows));
   }, [windows]);
 
   useEffect(() => {
-    window.localStorage.setItem(iconsStorageKey, JSON.stringify(iconPositions));
-  }, [iconPositions]);
+    window.localStorage.setItem(
+      iconOrderStorageKey,
+      JSON.stringify(normalizeDesktopIconOrder(iconOrder, defaultIconOrder))
+    );
+  }, [defaultIconOrder, iconOrder]);
 
   useEffect(() => {
     function handleResize() {
@@ -133,18 +141,22 @@ export function Desktop() {
     );
   }
 
-  function moveIcon(appId: AppId, position: DesktopIconPosition) {
-    setIconPositions((current) => ({ ...current, [appId]: position }));
+  function reorderIcon(appId: AppId, targetIndex: number) {
+    setIconOrder((current) => {
+      const normalizedOrder = normalizeDesktopIconOrder(current, defaultIconOrder);
+      const nextOrder = moveIconInOrder(normalizedOrder, appId, targetIndex);
+      return nextOrder.every((id, index) => id === normalizedOrder[index]) ? current : nextOrder;
+    });
   }
 
   function sortIcons() {
-    setIconPositions({});
+    setIconOrder(defaultIconOrder);
     setSelectedIconId(null);
   }
 
   function resetWorkspace() {
     portfolioKernel.resetDemoState();
-    setIconPositions({});
+    setIconOrder(defaultIconOrder);
     setWindows(initialApps.map(createWindow));
     setFocusedAppId("files");
     setSelectedIconId(null);
@@ -184,11 +196,10 @@ export function Desktop() {
           <button type="button" onClick={resetWorkspace}>Reset OS</button>
         </div>
         <DesktopIconGrid
-          apps={desktopApps}
-          positions={iconPositions}
+          apps={orderedDesktopApps}
           selectedAppId={selectedIconId}
           onSelect={setSelectedIconId}
-          onMove={moveIcon}
+          onReorder={reorderIcon}
           onOpen={openApp}
           launchingWorld={worldMode === "booting"}
         />
@@ -283,17 +294,18 @@ function readWindowSession(): WindowInstance[] {
   }
 }
 
-function readIconPositions(): IconPositionMap {
-  const stored = window.localStorage.getItem(iconsStorageKey);
+function readDesktopIconOrder(): AppId[] {
+  const defaultOrder = portfolioKernel.getDesktopApps().map((app) => app.id);
+  const stored = window.localStorage.getItem(iconOrderStorageKey);
 
   if (!stored) {
-    return {};
+    return defaultOrder;
   }
 
   try {
-    return JSON.parse(stored) as IconPositionMap;
+    return normalizeDesktopIconOrder(JSON.parse(stored) as AppId[], defaultOrder);
   } catch (error) {
-    console.warn("Unable to restore Portfolio OS icon layout.", error);
-    return {};
+    console.warn("Unable to restore Portfolio OS icon order.", error);
+    return defaultOrder;
   }
 }

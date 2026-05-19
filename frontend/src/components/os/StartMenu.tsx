@@ -38,41 +38,47 @@ export function StartMenu({ open, onOpenApp, onLaunchWorld, onResetWorkspace }: 
 
   return (
     <section className="start-menu" aria-label="Portfolio OS start menu">
-      <div className="start-menu__top">
-        <div>
-          <span className="os-label">kernel.gallery</span>
-          <strong>Portfolio OS</strong>
+      <div className="start-menu__brand" aria-hidden="true">
+        <span>Portfolio</span>
+        <strong>OS 95</strong>
+      </div>
+      <div className="start-menu__body">
+        <div className="start-menu__top">
+          <div>
+            <span className="os-label">kernel.gallery</span>
+            <strong>Portfolio OS</strong>
+          </div>
+          <button className="start-menu__launch" type="button" onClick={onLaunchWorld}>
+            <Sparkles aria-hidden="true" size={16} />
+            Launch World
+          </button>
         </div>
-        <button className="start-menu__launch" type="button" onClick={onLaunchWorld}>
-          <Sparkles aria-hidden="true" size={16} />
-          Launch World
+        <label className="start-menu__search">
+          <Search aria-hidden="true" size={16} />
+          <input
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+            placeholder="Find apps or commands"
+            aria-label="Search Portfolio OS apps"
+            autoFocus
+          />
+        </label>
+        <div className="start-menu__grid">
+          {visibleApps.map((app) => {
+            const Icon = app.icon;
+            return (
+              <button key={app.id} type="button" onClick={() => onOpenApp(app.id)}>
+                <Icon aria-hidden="true" size={20} />
+                <span>{app.title}</span>
+                <small>{app.category}</small>
+              </button>
+            );
+          })}
+        </div>
+        <button className="start-menu__reset" type="button" onClick={onResetWorkspace}>
+          Reset workspace layout
         </button>
       </div>
-      <label className="start-menu__search">
-        <Search aria-hidden="true" size={16} />
-        <input
-          value={query}
-          onChange={(event) => setQuery(event.target.value)}
-          placeholder="Search apps or commands"
-          aria-label="Search Portfolio OS apps"
-          autoFocus
-        />
-      </label>
-      <div className="start-menu__grid">
-        {visibleApps.map((app) => {
-          const Icon = app.icon;
-          return (
-            <button key={app.id} type="button" onClick={() => onOpenApp(app.id)}>
-              <Icon aria-hidden="true" size={20} />
-              <span>{app.title}</span>
-              <small>{app.category}</small>
-            </button>
-          );
-        })}
-      </div>
-      <button className="start-menu__reset" type="button" onClick={onResetWorkspace}>
-        Reset workspace layout
-      </button>
     </section>
   );
 }

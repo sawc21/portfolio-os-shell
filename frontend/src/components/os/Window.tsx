@@ -126,6 +126,12 @@ export function Window({
           </button>
         </div>
       </div>
+      <nav className="os-window__menubar" aria-label={`${app.title} menu`}>
+        <button type="button">File</button>
+        <button type="button">Edit</button>
+        <button type="button">View</button>
+        <button type="button">Help</button>
+      </nav>
       <div className="os-window__content">{children}</div>
       <button
         className="os-window__resize"

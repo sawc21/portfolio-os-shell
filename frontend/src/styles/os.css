@@ -1167,8 +1167,11 @@
 .portfolio-os {
   color: #ffffff;
   background:
-    linear-gradient(180deg, #64b7ff 0 18%, #2f8fe6 18% 42%, transparent 42%),
-    linear-gradient(180deg, transparent 0 58%, #75c858 58% 64%, #4da438 64% 72%, #2c7f2d 72% 100%);
+    linear-gradient(180deg, #75c6ff 0 13%, #4aa7ef 13% 34%, #2c8bdb 34% 48%, transparent 48%),
+    linear-gradient(160deg, transparent 0 52%, #b7ef62 52% 58%, #7fc94c 58% 65%, transparent 65%),
+    linear-gradient(20deg, transparent 0 54%, #9fe35d 54% 64%, #5ead3c 64% 73%, transparent 73%),
+    linear-gradient(180deg, transparent 0 49%, #82ce50 49% 58%, #4d9e35 58% 73%, #27772d 73% 100%);
+  image-rendering: pixelated;
   box-shadow: none;
 }
 
@@ -1182,15 +1185,17 @@
   margin: 0 0 42px;
   overflow: hidden;
   background:
-    linear-gradient(90deg, transparent 0 3.125%, rgba(255, 255, 255, 0.08) 3.125% 6.25%, transparent 6.25% 100%),
-    linear-gradient(180deg, transparent 0 5.55%, rgba(255, 255, 255, 0.07) 5.55% 11.1%, transparent 11.1% 100%),
-    radial-gradient(circle at 13% 18%, #fff9b8 0 2.8rem, #ffd95c 2.9rem 3.7rem, transparent 3.8rem),
-    linear-gradient(135deg, transparent 0 64%, #58af3a 64% 70%, transparent 70%),
-    linear-gradient(25deg, transparent 0 59%, #6bc34a 59% 68%, transparent 68%),
-    linear-gradient(155deg, transparent 0 56%, #7bd957 56% 65%, transparent 65%),
-    linear-gradient(180deg, transparent 0 50%, #8ddf58 50% 58%, #5eb33d 58% 70%, #2f842e 70% 100%),
-    linear-gradient(180deg, #67bfff 0 48%, #3aa0ed 48% 50%, transparent 50%);
-  background-size: 32px 32px, 32px 32px, auto, auto, auto, auto, auto, auto;
+    linear-gradient(90deg, transparent 0 30px, rgba(255, 255, 255, 0.12) 30px 32px, transparent 32px 100%),
+    linear-gradient(180deg, transparent 0 30px, rgba(255, 255, 255, 0.08) 30px 32px, transparent 32px 100%),
+    radial-gradient(ellipse at 18% 13%, #ffffff 0 22px, transparent 23px),
+    radial-gradient(ellipse at 22% 12%, #ffffff 0 32px, transparent 33px),
+    radial-gradient(ellipse at 28% 14%, #ffffff 0 24px, transparent 25px),
+    radial-gradient(circle at 82% 16%, #fff4a6 0 28px, #ffd86d 29px 39px, transparent 40px),
+    linear-gradient(155deg, transparent 0 54%, #d2f376 54% 58%, #89d04e 58% 65%, transparent 65%),
+    linear-gradient(28deg, transparent 0 52%, #a8e35e 52% 62%, #5faf3c 62% 73%, transparent 73%),
+    linear-gradient(180deg, transparent 0 48%, #94d85b 48% 60%, #55a83a 60% 74%, #2c7f31 74% 100%),
+    linear-gradient(180deg, #77c9ff 0 48%, #38a0ee 48% 50%, transparent 50%);
+  background-size: 32px 32px, 32px 32px, auto, auto, auto, auto, auto, auto, auto, auto;
   border: 0;
   border-radius: 0;
   backdrop-filter: none;
@@ -1198,14 +1203,20 @@
 
 .desktop-surface::before {
   position: absolute;
-  right: 28px;
-  bottom: 32px;
-  color: rgba(255, 255, 255, 0.25);
-  font-size: clamp(2rem, 6vw, 5.6rem);
-  font-weight: 700;
+  right: 18px;
+  bottom: 52px;
+  width: 176px;
+  height: 38px;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.84rem;
+  font-weight: 400;
   letter-spacing: 0;
-  content: "Portfolio OS";
+  line-height: 1.2;
+  text-align: right;
+  content: "Portfolio OS\A Sawyer Cawthon";
+  white-space: pre;
   pointer-events: none;
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.38);
 }
 
 .desktop-surface::after {
@@ -1249,13 +1260,24 @@
 
 .desktop-icon {
   width: 104px;
-  min-height: 100px;
+  min-height: 96px;
   gap: 6px;
   color: #ffffff;
   font-size: 0.72rem;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.72);
   text-transform: none;
   border-radius: 0;
+}
+
+.desktop-icon[data-dragging="true"] {
+  opacity: 0.72;
+  transform: scale(0.96);
+}
+
+.desktop-icon[data-drop-target="true"] {
+  background: rgba(49, 106, 197, 0.42);
+  outline: 1px dashed #ffffff;
+  outline-offset: -5px;
 }
 
 .desktop-icon > span:last-child {
@@ -1335,6 +1357,32 @@
   border-right-color: #404040;
   border-bottom-color: #404040;
   border-radius: 0;
+}
+
+.os-window__menubar {
+  display: flex;
+  gap: 2px;
+  min-height: 25px;
+  padding: 2px 5px;
+  background: #ece9d8;
+  border-bottom: 1px solid #aca899;
+}
+
+.os-window__menubar button {
+  min-height: 20px;
+  padding: 0 8px;
+  color: #111111;
+  font-size: 0.72rem;
+  text-align: left;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 0;
+}
+
+.os-window__menubar button:hover,
+.os-window__menubar button:focus-visible {
+  color: #ffffff;
+  background: #316ac5;
 }
 
 .os-window__content {
@@ -1444,6 +1492,8 @@
 }
 
 .start-menu {
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr);
   width: min(460px, calc(100vw - 18px));
   padding: 0;
   overflow: hidden;
@@ -1457,10 +1507,39 @@
   backdrop-filter: none;
 }
 
+.start-menu__brand {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
+  padding: 12px 0 10px;
+  color: #ffffff;
+  font-size: 1.05rem;
+  line-height: 1;
+  background: linear-gradient(180deg, #808080, #202020);
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+.start-menu__brand span {
+  color: #d4d0c8;
+  font-weight: 700;
+}
+
+.start-menu__brand strong {
+  font-size: 1.42rem;
+}
+
+.start-menu__body {
+  min-width: 0;
+}
+
 .start-menu__top {
   padding: 10px 12px;
-  color: #ffffff;
-  background: linear-gradient(90deg, #0a246a, #3a6ea5);
+  color: #111111;
+  background: #ece9d8;
+  border-bottom: 1px solid #aca899;
 }
 
 .start-menu__launch,
@@ -1488,12 +1567,18 @@
 }
 
 .start-menu__grid {
-  padding: 0 10px 10px;
+  display: block;
+  padding: 0 0 8px;
 }
 
 .start-menu__grid button {
+  display: grid;
+  grid-template-columns: 28px 1fr auto;
+  width: 100%;
+  min-height: 36px;
+  padding: 4px 12px;
   color: #111111;
-  background: #ffffff;
+  background: transparent;
   border: 1px solid transparent;
   border-radius: 0;
 }
@@ -1506,6 +1591,7 @@
 
 .start-menu__grid button small {
   color: inherit;
+  font-size: 0.62rem;
 }
 
 .start-menu__reset {
@@ -1520,39 +1606,43 @@
   min-height: 42px;
   padding: 3px 6px;
   color: #111111;
-  background: linear-gradient(180deg, #2f8be6, #1f5fbf 44%, #174ea6);
+  background: #d4d0c8;
   border: 0;
-  border-top: 1px solid #9ec9ff;
+  border-top: 1px solid #ffffff;
   border-radius: 0;
-  box-shadow: none;
+  box-shadow: inset 0 1px 0 #f5f5f5;
   backdrop-filter: none;
 }
 
 .os-taskbar__start {
   min-height: 34px;
-  color: #ffffff;
+  color: #111111;
   font-weight: 700;
-  background: linear-gradient(180deg, #5ecb49, #228b22) !important;
-  border: 1px solid #97df88 !important;
-  border-right-color: #0d5a0d !important;
-  border-bottom-color: #0d5a0d !important;
-  border-radius: 14px 4px 4px 14px;
-  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.45);
+  background: #d4d0c8 !important;
+  border: 1px solid #ffffff !important;
+  border-right-color: #404040 !important;
+  border-bottom-color: #404040 !important;
+  border-radius: 0;
+  box-shadow: inset 1px 1px 0 #f5f5f5, inset -1px -1px 0 #808080;
+  text-shadow: none;
 }
 
 .os-taskbar__windows button {
   min-height: 32px;
-  color: #ffffff;
-  background: linear-gradient(180deg, #4f9ff0, #246dc6);
-  border: 1px solid #9ec9ff !important;
-  border-right-color: #0d3f8d !important;
-  border-bottom-color: #0d3f8d !important;
-  border-radius: 2px;
+  color: #111111;
+  background: #d4d0c8;
+  border: 1px solid #ffffff !important;
+  border-right-color: #404040 !important;
+  border-bottom-color: #404040 !important;
+  border-radius: 0;
+  box-shadow: inset 1px 1px 0 #f5f5f5, inset -1px -1px 0 #808080;
 }
 
 .os-taskbar__windows button.is-active {
-  color: #ffffff;
-  background: linear-gradient(180deg, #1b4f9f, #123f84);
+  color: #111111;
+  background: #c0c0c0;
+  border-color: #404040 #ffffff #ffffff #404040 !important;
+  box-shadow: inset 1px 1px 0 #808080;
 }
 
 .os-taskbar__quick-launch,
@@ -1565,8 +1655,8 @@
 
 .os-taskbar__quick-launch {
   padding: 0 7px;
-  border-left: 1px solid rgba(255, 255, 255, 0.42);
-  border-right: 1px solid rgba(0, 0, 0, 0.36);
+  border-left: 1px solid #808080;
+  border-right: 1px solid #ffffff;
 }
 
 .os-taskbar__quick-launch button {
@@ -1574,33 +1664,34 @@
   width: 28px;
   height: 28px;
   place-items: center;
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.28) !important;
-  border-right-color: rgba(0, 0, 0, 0.35) !important;
-  border-bottom-color: rgba(0, 0, 0, 0.35) !important;
-  border-radius: 2px;
+  color: #111111;
+  background: #d4d0c8;
+  border: 1px solid transparent !important;
+  border-radius: 0;
 }
 
 .os-taskbar__quick-launch button:hover,
 .os-taskbar__quick-launch button:focus-visible {
-  background: rgba(255, 255, 255, 0.22);
+  border-color: #ffffff #404040 #404040 #ffffff !important;
+  background: #d4d0c8;
 }
 
 .os-taskbar__tray {
   min-width: 148px;
   justify-content: end;
   padding: 0 6px;
-  color: #ffffff;
-  background: rgba(0, 0, 0, 0.14);
-  border-left: 1px solid rgba(255, 255, 255, 0.38);
-  box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.22);
+  color: #111111;
+  background: #d4d0c8;
+  border: 1px solid #808080;
+  border-right-color: #ffffff;
+  border-bottom-color: #ffffff;
+  box-shadow: inset 1px 1px 0 #b5b5b5;
 }
 
 .os-taskbar__clock {
   min-width: 72px;
   padding: 0 4px;
-  color: #ffffff;
+  color: #111111;
   text-align: center;
 }
 
