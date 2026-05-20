@@ -12,7 +12,17 @@ export function AppPixelIcon({ app, className, fallbackSize }: AppPixelIconProps
   const asset = appIconAssets[app.id];
 
   if (asset) {
-    return <img className={className} src={asset} alt="" aria-hidden="true" draggable={false} />;
+    return (
+      <img
+        className={className}
+        src={asset}
+        alt=""
+        aria-hidden="true"
+        draggable={false}
+        decoding="sync"
+        loading="eager"
+      />
+    );
   }
 
   return <Icon aria-hidden="true" className={className} size={fallbackSize} strokeWidth={1.8} />;

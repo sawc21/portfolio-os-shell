@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1792 1024" role="img" aria-label="Pixel art green hills under a bright blue sky">
+  <defs>
+    <linearGradient id="sky" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#0575dd"/>
+      <stop offset="0.46" stop-color="#22b7f3"/>
+      <stop offset="1" stop-color="#bcecff"/>
+    </linearGradient>
+    <linearGradient id="hill" x1="0" x2="0.8" y1="0" y2="1">
+      <stop offset="0" stop-color="#bdf343"/>
+      <stop offset="0.45" stop-color="#7ed31d"/>
+      <stop offset="1" stop-color="#318f1f"/>
+    </linearGradient>
+    <linearGradient id="hillDark" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#8bdc29"/>
+      <stop offset="1" stop-color="#146e22"/>
+    </linearGradient>
+    <linearGradient id="mountain" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#71b7ee"/>
+      <stop offset="1" stop-color="#236fc8"/>
+    </linearGradient>
+    <filter id="pixel">
+      <feComponentTransfer>
+        <feFuncR type="discrete" tableValues="0 .07 .14 .21 .28 .35 .42 .49 .56 .63 .7 .77 .84 .91 1"/>
+        <feFuncG type="discrete" tableValues="0 .07 .14 .21 .28 .35 .42 .49 .56 .63 .7 .77 .84 .91 1"/>
+        <feFuncB type="discrete" tableValues="0 .07 .14 .21 .28 .35 .42 .49 .56 .63 .7 .77 .84 .91 1"/>
+      </feComponentTransfer>
+    </filter>
+    <g id="cloud">
+      <rect x="0" y="44" width="260" height="38" fill="#ffffff"/>
+      <rect x="28" y="22" width="72" height="46" fill="#e9f7ff"/>
+      <rect x="78" y="0" width="92" height="76" fill="#ffffff"/>
+      <rect x="144" y="28" width="112" height="60" fill="#d8efff"/>
+      <rect x="182" y="10" width="76" height="46" fill="#ffffff"/>
+      <rect x="18" y="74" width="104" height="22" fill="#a9d9ff" opacity=".62"/>
+      <rect x="128" y="82" width="132" height="18" fill="#9ed0f7" opacity=".52"/>
+    </g>
+  </defs>
+
+  <rect width="1792" height="1024" fill="url(#sky)"/>
+
+  <g filter="url(#pixel)" opacity=".92">
+    <use href="#cloud" x="-8" y="132"/>
+    <use href="#cloud" x="342" y="286" transform="scale(.82)"/>
+    <use href="#cloud" x="1246" y="102" transform="scale(1.08)"/>
+    <use href="#cloud" x="1390" y="390" transform="scale(.82)"/>
+    <use href="#cloud" x="1034" y="438" transform="scale(.76)"/>
+    <use href="#cloud" x="770" y="250" transform="scale(.38)"/>
+    <use href="#cloud" x="1260" y="330" transform="scale(.32)"/>
+  </g>
+
+  <path d="M735 611 L943 450 L1037 611 Z" fill="url(#mountain)" opacity=".74"/>
+  <path d="M900 611 L1116 488 L1268 611 Z" fill="#347fd0" opacity=".72"/>
+  <path d="M1080 618 L1342 446 L1510 618 Z" fill="#2d76c5" opacity=".65"/>
+  <path d="M1302 621 L1576 498 L1792 621 Z" fill="#3383d2" opacity=".65"/>
+  <path d="M910 516 L944 450 L988 611 L943 611 Z" fill="#9ed4ff" opacity=".26"/>
+  <path d="M1128 530 L1342 446 L1396 621 L1290 621 Z" fill="#90ccff" opacity=".22"/>
+
+  <path d="M0 613 C230 526 428 512 616 584 C826 664 1084 695 1294 652 C1494 612 1650 568 1792 596 L1792 1024 L0 1024 Z" fill="#49b13a"/>
+  <path d="M0 602 C236 508 426 494 620 572 C830 656 1075 680 1300 636 C1498 598 1660 558 1792 586 L1792 840 C1390 773 1050 753 728 732 C430 712 198 740 0 808 Z" fill="url(#hill)"/>
+  <path d="M0 806 C276 718 582 690 917 724 C1234 756 1510 794 1792 744 L1792 1024 L0 1024 Z" fill="url(#hillDark)" opacity=".9"/>
+  <path d="M0 914 C330 800 650 780 986 824 C1284 862 1508 850 1792 792 L1792 1024 L0 1024 Z" fill="#1c7d25" opacity=".82"/>
+
+  <path d="M1512 712 C1570 682 1648 682 1698 710 C1730 728 1758 738 1792 735 L1792 781 C1690 789 1588 782 1482 770 Z" fill="#2aa4e8" opacity=".85"/>
+  <path d="M1518 721 L1788 721" stroke="#91e6ff" stroke-width="5" stroke-dasharray="26 18" opacity=".7"/>
+
+  <g filter="url(#pixel)" opacity=".62">
+    <path d="M54 848 C74 790 104 756 136 720" stroke="#23701e" stroke-width="10" fill="none"/>
+    <path d="M80 865 C128 840 170 832 214 824" stroke="#b6ee4c" stroke-width="8" fill="none"/>
+    <rect x="350" y="746" width="8" height="8" fill="#ffffff"/>
+    <rect x="386" y="766" width="8" height="8" fill="#ffffff"/>
+    <rect x="456" y="820" width="8" height="8" fill="#ffffff"/>
+    <rect x="522" y="846" width="8" height="8" fill="#f7d54a"/>
+    <rect x="918" y="870" width="8" height="8" fill="#f7d54a"/>
+    <rect x="1050" y="890" width="8" height="8" fill="#ffffff"/>
+    <rect x="1286" y="842" width="8" height="8" fill="#ffffff"/>
+    <rect x="1326" y="862" width="8" height="8" fill="#f7d54a"/>
+    <ellipse cx="118" cy="818" rx="60" ry="26" fill="#4c9530"/>
+    <ellipse cx="160" cy="792" rx="42" ry="24" fill="#5bb43a"/>
+    <ellipse cx="98" cy="804" rx="38" ry="22" fill="#2b8429"/>
+  </g>
+</svg>

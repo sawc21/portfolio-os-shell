@@ -1184,11 +1184,7 @@
 
 .portfolio-os {
   color: #ffffff;
-  background:
-    linear-gradient(180deg, #75c6ff 0 13%, #4aa7ef 13% 34%, #2c8bdb 34% 48%, transparent 48%),
-    linear-gradient(160deg, transparent 0 52%, #b7ef62 52% 58%, #7fc94c 58% 65%, transparent 65%),
-    linear-gradient(20deg, transparent 0 54%, #9fe35d 54% 64%, #5ead3c 64% 73%, transparent 73%),
-    linear-gradient(180deg, transparent 0 49%, #82ce50 49% 58%, #4d9e35 58% 73%, #27772d 73% 100%);
+  background: #1096e9 url("../assets/wallpapers/pixel-bliss.svg") center / cover no-repeat fixed;
   image-rendering: pixelated;
   box-shadow: none;
 }
@@ -1202,18 +1198,7 @@
   min-height: calc(100vh - 42px);
   margin: 0 0 42px;
   overflow: hidden;
-  background:
-    linear-gradient(90deg, transparent 0 30px, rgba(255, 255, 255, 0.12) 30px 32px, transparent 32px 100%),
-    linear-gradient(180deg, transparent 0 30px, rgba(255, 255, 255, 0.08) 30px 32px, transparent 32px 100%),
-    radial-gradient(ellipse at 18% 13%, #ffffff 0 22px, transparent 23px),
-    radial-gradient(ellipse at 22% 12%, #ffffff 0 32px, transparent 33px),
-    radial-gradient(ellipse at 28% 14%, #ffffff 0 24px, transparent 25px),
-    radial-gradient(circle at 82% 16%, #fff4a6 0 28px, #ffd86d 29px 39px, transparent 40px),
-    linear-gradient(155deg, transparent 0 54%, #d2f376 54% 58%, #89d04e 58% 65%, transparent 65%),
-    linear-gradient(28deg, transparent 0 52%, #a8e35e 52% 62%, #5faf3c 62% 73%, transparent 73%),
-    linear-gradient(180deg, transparent 0 48%, #94d85b 48% 60%, #55a83a 60% 74%, #2c7f31 74% 100%),
-    linear-gradient(180deg, #77c9ff 0 48%, #38a0ee 48% 50%, transparent 50%);
-  background-size: 32px 32px, 32px 32px, auto, auto, auto, auto, auto, auto, auto, auto;
+  background: transparent;
   border: 0;
   border-radius: 0;
   backdrop-filter: none;
@@ -1238,16 +1223,15 @@
 }
 
 .desktop-surface::after {
-  position: absolute;
-  inset: auto 0 0;
-  height: 132px;
-  content: "";
-  background:
-    linear-gradient(90deg, rgba(0, 0, 0, 0.08) 0 3px, transparent 3px 32px),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0 3px, transparent 3px 32px),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.16), transparent 18px);
-  background-size: 32px 32px, 32px 32px, auto;
+  content: none;
   pointer-events: none;
+}
+
+.desktop-icons {
+  grid-template-columns: repeat(5, 150px);
+  grid-auto-rows: 134px;
+  gap: 34px 42px;
+  padding: 46px 40px 132px;
 }
 
 .desktop-controls {
@@ -1277,11 +1261,11 @@
 }
 
 .desktop-icon {
-  width: 160px;
-  min-height: 154px;
-  gap: 5px;
+  width: 150px;
+  min-height: 134px;
+  gap: 2px;
   color: #ffffff;
-  font-size: 0.92rem;
+  font-size: 0.9rem;
   font-weight: 700;
   text-shadow: 2px 2px 0 #000000, 0 0 3px rgba(0, 0, 0, 0.75);
   text-transform: none;
@@ -1300,24 +1284,37 @@
 }
 
 .desktop-icon > span:last-child {
-  max-width: 156px;
-  padding: 1px 3px;
-  line-height: 1.08;
+  max-width: 148px;
+  padding: 2px 4px 3px;
+  line-height: 1.1;
   overflow-wrap: anywhere;
 }
 
 .desktop-icon:hover,
-.desktop-icon:focus-visible,
-.desktop-icon[data-selected="true"] {
-  background: rgba(49, 106, 197, 0.72);
-  border-color: rgba(255, 255, 255, 0.42);
+.desktop-icon:focus-visible {
+  background: rgba(49, 106, 197, 0.18);
+  border-color: rgba(255, 255, 255, 0.32);
   outline: 1px dotted #ffffff;
   outline-offset: -4px;
 }
 
+.desktop-icon[data-selected="true"] {
+  background: transparent;
+  border-color: transparent;
+  outline: 1px dotted rgba(255, 255, 255, 0.9);
+  outline-offset: -3px;
+}
+
+.desktop-icon[data-selected="true"] > span:last-child,
+.desktop-icon:focus-visible > span:last-child {
+  color: #ffffff;
+  background: #316ac5;
+  box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.42), inset -1px -1px 0 rgba(0, 0, 0, 0.38);
+}
+
 .desktop-icon__glyph {
-  width: 112px;
-  height: 112px;
+  width: 98px;
+  height: 92px;
   color: #ffffff;
   background: transparent;
   border: 0;
@@ -1336,6 +1333,12 @@
   border-bottom-color: rgba(0, 0, 0, 0.38);
   border-radius: 7px;
   box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.28);
+}
+
+.desktop-icon__image {
+  width: 96px;
+  height: 96px;
+  filter: drop-shadow(2px 3px 0 rgba(0, 0, 0, 0.58));
 }
 
 .os-window {
