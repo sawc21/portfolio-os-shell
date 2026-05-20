@@ -1,13 +1,11 @@
 import { appComponents } from "./apps/appComponents";
 import { Window } from "./Window";
-import type { AppId, WindowInstance } from "../../lib/types";
+import type { AppId, SystemAction, WindowInstance } from "../../lib/types";
 
 type WindowManagerProps = {
   windows: WindowInstance[];
   focusedAppId: AppId | null;
-  openApp: (appId: AppId, params?: unknown) => void;
-  launchWorld: () => void;
-  resetWorkspace: () => void;
+  runAction: (action: SystemAction) => void;
   appParams: Partial<Record<AppId, unknown>>;
   onFocus: (appId: AppId) => void;
   onClose: (appId: AppId) => void;
@@ -20,9 +18,7 @@ type WindowManagerProps = {
 export function WindowManager({
   windows,
   focusedAppId,
-  openApp,
-  launchWorld,
-  resetWorkspace,
+  runAction,
   appParams,
   onFocus,
   onClose,
@@ -49,9 +45,7 @@ export function WindowManager({
             onToggleMaximize={onToggleMaximize}
           >
             <AppComponent
-              openApp={openApp}
-              launchWorld={launchWorld}
-              resetWorkspace={resetWorkspace}
+              runAction={runAction}
               params={appParams[window.appId]}
             />
           </Window>

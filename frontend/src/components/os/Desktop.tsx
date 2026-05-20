@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useMemo, useState } from "react";
 import { moveIconInOrder, normalizeDesktopIconOrder } from "../../lib/desktopIconLayout";
-import type { AppId, WindowInstance } from "../../lib/types";
+import type { AppId, SystemAction, WindowInstance } from "../../lib/types";
 import { portfolioKernel } from "../../os/kernel/kernel";
 import { DesktopIconGrid } from "./DesktopIconGrid";
 import { StartMenu } from "./StartMenu";
@@ -161,6 +161,7 @@ export function Desktop() {
     setFocusedAppId(null);
     setSelectedIconId(null);
     setAppParams({});
+    setWorldMode("desktop");
   }
 
   function launchWorld() {
@@ -174,6 +175,45 @@ export function Desktop() {
 
     setWorldMode("booting");
     window.setTimeout(() => setWorldMode("world"), 2500);
+  }
+
+  function runSystemAction(action: SystemAction) {
+    switch (action.type) {
+      case "open-app":
+      case "focus-app":
+        openApp(action.appId, action.params);
+        return;
+      case "open-search":
+        openApp("search", { query: action.query });
+        return;
+      case "launch-world":
+        launchWorld();
+        return;
+      case "reset-os":
+        resetWorkspace();
+        return;
+      case "open-url":
+        window.open(action.href, "_blank", "noopener,noreferrer");
+        return;
+      case "copy-text":
+        void navigator.clipboard?.writeText(action.text);
+        return;
+      case "download-url": {
+        const link = document.createElement("a");
+        link.href = action.href;
+        if (action.filename) {
+          link.download = action.filename;
+        }
+        link.rel = "noopener";
+        link.click();
+        return;
+      }
+      case "print":
+        console.info(action.lines.join("\n"));
+        return;
+      case "clear":
+        return;
+    }
   }
 
   return (
@@ -193,22 +233,20 @@ export function Desktop() {
       <main className="desktop-surface" data-world-mode={worldMode} onPointerDown={() => setSelectedIconId(null)}>
         <div className="desktop-controls" aria-label="Desktop layout controls">
           <button type="button" onClick={sortIcons}>Sort</button>
-          <button type="button" onClick={resetWorkspace}>Reset OS</button>
+          <button type="button" onClick={() => runSystemAction(portfolioKernel.actions.resetOs())}>Reset OS</button>
         </div>
         <DesktopIconGrid
           apps={orderedDesktopApps}
           selectedAppId={selectedIconId}
           onSelect={setSelectedIconId}
           onReorder={reorderIcon}
-          onOpen={openApp}
+          onOpen={(appId) => runSystemAction(portfolioKernel.actions.openApp(appId))}
           launchingWorld={worldMode === "booting"}
         />
         <WindowManager
           windows={windows}
           focusedAppId={focusedAppId}
-          openApp={openApp}
-          launchWorld={launchWorld}
-          resetWorkspace={resetWorkspace}
+          runAction={runSystemAction}
           appParams={appParams}
           onFocus={focusWindow}
           onClose={closeWindow}
@@ -228,9 +266,7 @@ export function Desktop() {
             >
               <StartMenu
                 open={startOpen}
-                onOpenApp={openApp}
-                onLaunchWorld={launchWorld}
-                onResetWorkspace={resetWorkspace}
+                onRunAction={runSystemAction}
               />
             </motion.div>
           ) : null}
@@ -242,9 +278,7 @@ export function Desktop() {
         focusedAppId={focusedAppId}
         startOpen={startOpen}
         onToggleStart={() => setStartOpen((open) => !open)}
-        onOpenApp={openApp}
-        onFocusWindow={focusWindow}
-        onLaunchWorld={launchWorld}
+        onRunAction={runSystemAction}
       />
     </section>
   );

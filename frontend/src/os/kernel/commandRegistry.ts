@@ -1,6 +1,7 @@
 import type { AppId, SystemAction } from "../../lib/types";
 import type { PortfolioDataProvider } from "../services/portfolioDataProvider";
 import { getApps } from "./appRegistry";
+import { systemActions } from "./systemActions";
 
 export type CommandDefinition = {
   name: string;
@@ -14,52 +15,62 @@ export const commandDefinitions: CommandDefinition[] = [
   { name: "apps", description: "List registered OS apps", aliases: ["apps", "list apps", "ls"] },
   { name: "search <query>", description: "Open Sawyer Search with a query", aliases: ["search"] },
   { name: "files", description: "Open File Explorer", aliases: ["files", "explorer", "dir"], targetAppId: "files" },
+  { name: "open projects", description: "Open Projects", aliases: ["open projects", "projects"], targetAppId: "projects" },
+  { name: "open resume", description: "Open Resume", aliases: ["open resume", "resume"], targetAppId: "resume" },
   { name: "open recruiter", description: "Open Recruiter Quick View", aliases: ["open recruiter", "recruiter"], targetAppId: "recruiter" },
+  { name: "open contact", description: "Open Contact", aliases: ["open contact", "contact"], targetAppId: "contact" },
+  { name: "open skills", description: "Open Skills", aliases: ["open skills", "skills", "stack"], targetAppId: "skills" },
+  { name: "open case studies", description: "Open Case Studies", aliases: ["open case studies", "case studies", "cases"], targetAppId: "case-studies" },
   { name: "hire sawyer", description: "Open the hiring-focused recruiter view", aliases: ["hire sawyer", "why hire sawyer"], targetAppId: "recruiter" },
-  { name: "skills", description: "Open Skills", aliases: ["skills", "stack"], targetAppId: "skills" },
-  { name: "contact", description: "Open Contact", aliases: ["contact", "email"], targetAppId: "contact" },
+  { name: "whoami", description: "Print Sawyer's role positioning", aliases: ["whoami", "about"] },
   { name: "launch world", description: "Start the desktop-to-world transition", aliases: ["launch world", "launch-world", "world"] },
   { name: "reset os", description: "Reset workspace and demo app state", aliases: ["reset os", "reset"] },
   { name: "clear", description: "Clear terminal output", aliases: ["clear"] }
 ];
 
-export function runKernelCommand(rawCommand: string, _provider: PortfolioDataProvider): SystemAction {
+export function runKernelCommand(rawCommand: string, provider: PortfolioDataProvider): SystemAction {
   const command = rawCommand.trim().toLowerCase();
 
   if (command === "" || command === "help") {
-    return {
-      type: "print",
-      lines: commandDefinitions.map((definition) => `${definition.name.padEnd(18)} ${definition.description}`)
-    };
+    return systemActions.print(commandDefinitions.map((definition) => `${definition.name.padEnd(18)} ${definition.description}`));
   }
 
   if (command === "clear") {
-    return { type: "clear" };
+    return systemActions.clear();
   }
 
   if (command === "apps" || command === "list apps" || command === "ls") {
-    return {
-      type: "print",
-      lines: getApps()
+    return systemActions.print(
+      getApps()
         .filter((app) => app.launcher)
         .map((app) => `${app.id.padEnd(13)} ${app.title} / ${app.category}`)
-    };
+    );
   }
 
   if (command.startsWith("search ")) {
-    return { type: "open-search", query: command.slice(7).trim() };
+    return systemActions.openSearch(command.slice(7).trim());
   }
 
   if (command === "hire sawyer" || command === "why hire sawyer") {
-    return { type: "open-app", appId: "recruiter" };
+    return systemActions.openApp("recruiter");
+  }
+
+  if (command === "whoami") {
+    const profile = provider.getRecruiterProfile();
+    return systemActions.print([
+      profile.name,
+      profile.targetRoles.join(" / "),
+      profile.shortPitch,
+      profile.valueProposition
+    ]);
   }
 
   if (command === "launch world" || command === "launch-world" || command === "world") {
-    return { type: "launch-world" };
+    return systemActions.launchWorld();
   }
 
   if (command === "reset os" || command === "reset") {
-    return { type: "reset-os" };
+    return systemActions.resetOs();
   }
 
   const appCommand = command.startsWith("open ") ? command.slice(5).trim() : command;
@@ -75,11 +86,8 @@ export function runKernelCommand(rawCommand: string, _provider: PortfolioDataPro
   });
 
   if (app) {
-    return app.id === "world" ? { type: "launch-world" } : { type: "open-app", appId: app.id };
+    return app.id === "world" ? systemActions.launchWorld() : systemActions.openApp(app.id);
   }
 
-  return {
-    type: "print",
-    lines: [`Unknown command: ${rawCommand}`, "Type help, apps, search react, or hire sawyer."]
-  };
+  return systemActions.print([`Unknown command: ${rawCommand}`, "Type help, apps, search react, or hire sawyer."]);
 }

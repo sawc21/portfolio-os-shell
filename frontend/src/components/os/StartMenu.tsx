@@ -1,36 +1,45 @@
 import { Search, Sparkles } from "lucide-react";
 import { useMemo, useState } from "react";
-import type { AppDefinition } from "../../lib/types";
+import type { AppDefinition, SearchResult, SystemAction } from "../../lib/types";
 import { portfolioKernel } from "../../os/kernel/kernel";
 import { AppPixelIcon } from "./AppPixelIcon";
 
 type StartMenuProps = {
   open: boolean;
-  onOpenApp: (appId: AppDefinition["id"]) => void;
-  onLaunchWorld: () => void;
-  onResetWorkspace: () => void;
+  onRunAction: (action: SystemAction) => void;
 };
 
-export function StartMenu({ open, onOpenApp, onLaunchWorld, onResetWorkspace }: StartMenuProps) {
+type LauncherItem =
+  | { kind: "app"; app: AppDefinition; action: SystemAction }
+  | { kind: "result"; result: SearchResult; action: SystemAction };
+
+export function StartMenu({ open, onRunAction }: StartMenuProps) {
   const [query, setQuery] = useState("");
-  const visibleApps = useMemo(() => {
+  const visibleItems = useMemo<LauncherItem[]>(() => {
     const normalizedQuery = query.trim().toLowerCase();
 
     if (!normalizedQuery) {
-      return portfolioKernel.getLauncherApps();
+      return portfolioKernel.getLauncherApps().map((app) => ({
+        kind: "app",
+        app,
+        action: portfolioKernel.actions.openApp(app.id)
+      }));
     }
 
     const seen = new Set<string>();
     return portfolioKernel.search(query)
-      .map((result) => result.action.type === "open-app" ? portfolioKernel.getAppById(result.action.appId) : null)
-      .filter((app): app is AppDefinition => Boolean(app))
-      .filter((app) => {
-        if (seen.has(app.id)) {
+      .filter((result) => {
+        if (seen.has(result.id)) {
           return false;
         }
-        seen.add(app.id);
-        return app.launcher;
-      });
+        seen.add(result.id);
+        return true;
+      })
+      .map((result) => ({
+        kind: "result",
+        result,
+        action: result.action
+      }));
   }, [query]);
 
   if (!open) {
@@ -49,7 +58,7 @@ export function StartMenu({ open, onOpenApp, onLaunchWorld, onResetWorkspace }: 
             <span className="os-label">kernel.gallery</span>
             <strong>Portfolio OS</strong>
           </div>
-          <button className="start-menu__launch" type="button" onClick={onLaunchWorld}>
+          <button className="start-menu__launch" type="button" onClick={() => onRunAction(portfolioKernel.actions.launchWorld())}>
             <Sparkles aria-hidden="true" size={16} />
             Launch World
           </button>
@@ -65,17 +74,26 @@ export function StartMenu({ open, onOpenApp, onLaunchWorld, onResetWorkspace }: 
           />
         </label>
         <div className="start-menu__grid">
-          {visibleApps.map((app) => {
+          {visibleItems.map((item) => {
+            const app = item.kind === "app"
+              ? item.app
+              : item.action.type === "open-app" || item.action.type === "focus-app"
+                ? portfolioKernel.getAppById(item.action.appId)
+                : null;
+            const title = item.kind === "app" ? item.app.title : item.result.title;
+            const category = item.kind === "app" ? item.app.category : item.result.category;
+            const description = item.kind === "app" ? item.app.description : item.result.description;
+
             return (
-              <button key={app.id} type="button" onClick={() => onOpenApp(app.id)}>
-                <AppPixelIcon app={app} className="start-menu__app-icon" fallbackSize={20} />
-                <span>{app.title}</span>
-                <small>{app.category}</small>
+              <button key={item.kind === "app" ? item.app.id : item.result.id} type="button" onClick={() => onRunAction(item.action)}>
+                {app ? <AppPixelIcon app={app} className="start-menu__app-icon" fallbackSize={20} /> : <Search aria-hidden="true" size={20} />}
+                <span>{title}</span>
+                <small>{category} / {description}</small>
               </button>
             );
           })}
         </div>
-        <button className="start-menu__reset" type="button" onClick={onResetWorkspace}>
+        <button className="start-menu__reset" type="button" onClick={() => onRunAction(portfolioKernel.actions.resetOs())}>
           Reset workspace layout
         </button>
       </div>

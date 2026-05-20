@@ -1,6 +1,7 @@
 {
   "scripts": {
     "build:client": "vite build --config frontend/vite.config.js",
+    "test:kernel": "vitest run",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -14,6 +15,7 @@
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.2.0",
     "typescript": "^6.0.3",
-    "vite": "^7.1.12"
+    "vite": "^7.1.12",
+    "vitest": "^4.1.7"
   }
 }

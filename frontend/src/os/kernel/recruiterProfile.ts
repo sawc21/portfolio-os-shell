@@ -27,6 +27,11 @@ export const recruiterProfile: RecruiterProfile = {
     "ASP.NET Core portfolio foundation with route tests, Markdown content, RSS, sitemap, and SEO fallbacks.",
     "Creative technology roadmap for a focused React Three Fiber portfolio world."
   ],
+  workHighlights: [
+    "Research-oriented documentation practice: architecture notes, tests, and case studies are written for technical reviewers and research-heavy teams such as NASA.",
+    "API-ready portfolio apps: provider interfaces can later support integrations such as QuickBooks-style finance, automation, or project data without rewriting the OS shell.",
+    "Product planning evidence: Sprint Planner, Scope Budget, and Developer Habits show how Sawyer thinks about scope, risk, consistency, and delivery."
+  ],
   contactLinks: [
     { label: "Email", value: "hello@example.com", href: "mailto:hello@example.com" },
     { label: "GitHub", value: "github.com/your-handle", href: "https://github.com/" },

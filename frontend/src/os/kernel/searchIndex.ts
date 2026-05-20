@@ -1,7 +1,8 @@
-import type { AppId, SearchResult } from "../../lib/types";
+import type { AppId, SearchResult, SystemAction } from "../../lib/types";
 import type { PortfolioDataProvider } from "../services/portfolioDataProvider";
 import { getApps } from "./appRegistry";
 import { commandDefinitions } from "./commandRegistry";
+import { systemActions } from "./systemActions";
 
 type SearchDocument = {
   id: string;
@@ -10,6 +11,7 @@ type SearchDocument = {
   category: string;
   keywords: string[];
   appId: AppId;
+  action: SystemAction;
 };
 
 const priorityMatches: Record<string, AppId[]> = {
@@ -29,7 +31,9 @@ const priorityMatches: Record<string, AppId[]> = {
   terminal: ["terminal"],
   contact: ["contact"],
   resume: ["resume"],
-  projects: ["projects"]
+  projects: ["projects"],
+  nasa: ["case-studies", "projects", "resume", "recruiter"],
+  quickbooks: ["case-studies", "budget", "projects", "skills"]
 };
 
 export function searchPortfolio(query: string, provider: PortfolioDataProvider): SearchResult[] {
@@ -51,19 +55,20 @@ export function searchPortfolio(query: string, provider: PortfolioDataProvider):
       description: document.description,
       category: document.category,
       keywords: document.keywords,
-      action: { type: "open-app", appId: document.appId },
+      action: document.action,
       score
     }));
 }
 
 function buildSearchDocuments(provider: PortfolioDataProvider): SearchDocument[] {
   const appDocs = getApps().map((app) => ({
-    id: `app:${app.id}`,
-    title: app.title,
-    description: app.description,
-    category: app.category,
-    keywords: [app.id, app.shortTitle, ...app.tags, ...app.commands],
-    appId: app.id
+      id: `app:${app.id}`,
+      title: app.title,
+      description: app.description,
+      category: app.category,
+      keywords: [app.id, app.shortTitle, ...app.tags, ...app.commands],
+      appId: app.id,
+      action: systemActions.openApp(app.id)
   }));
 
   const projectDocs = provider.getProjects().map((project) => ({
@@ -72,7 +77,8 @@ function buildSearchDocuments(provider: PortfolioDataProvider): SearchDocument[]
     description: project.summary,
     category: "project",
     keywords: [project.phase, project.role, ...project.tags, ...project.branches],
-    appId: "projects" as AppId
+    appId: "projects" as AppId,
+    action: systemActions.openApp("projects", { slug: project.slug })
   }));
 
   const skillDocs = provider.getSkillGroups().map((group) => ({
@@ -81,7 +87,8 @@ function buildSearchDocuments(provider: PortfolioDataProvider): SearchDocument[]
     description: group.items.join(", "),
     category: "skill",
     keywords: group.items,
-    appId: "skills" as AppId
+    appId: "skills" as AppId,
+    action: systemActions.openApp("skills", { group: group.title })
   }));
 
   const profile = provider.getRecruiterProfile();
@@ -91,8 +98,17 @@ function buildSearchDocuments(provider: PortfolioDataProvider): SearchDocument[]
       title: `Hire ${profile.name}`,
       description: profile.valueProposition,
       category: "recruiter",
-      keywords: ["hire sawyer", "internship", ...profile.targetRoles, ...profile.skills, ...profile.projectHighlights],
-      appId: "recruiter"
+      keywords: [
+        "hire sawyer",
+        "internship",
+        ...profile.targetRoles,
+        ...profile.skills,
+        ...profile.projectHighlights,
+        ...profile.workHighlights,
+        ...profile.contactLinks.flatMap((link) => [link.label, link.value])
+      ],
+      appId: "recruiter",
+      action: systemActions.openApp("recruiter")
     }
   ];
 
@@ -102,7 +118,8 @@ function buildSearchDocuments(provider: PortfolioDataProvider): SearchDocument[]
     description: highlight,
     category: "resume",
     keywords: ["resume", "experience", "stack", highlight],
-    appId: "resume" as AppId
+    appId: "resume" as AppId,
+    action: systemActions.openApp("resume")
   }));
 
   const caseDocs = provider.getCaseStudies().map((study) => ({
@@ -111,7 +128,8 @@ function buildSearchDocuments(provider: PortfolioDataProvider): SearchDocument[]
     description: study.summary,
     category: "case-study",
     keywords: [study.status, ...study.proof],
-    appId: "case-studies" as AppId
+    appId: "case-studies" as AppId,
+    action: systemActions.openApp("case-studies", { title: study.title })
   }));
 
   const commandDocs = commandDefinitions.map((command) => ({
@@ -120,7 +138,8 @@ function buildSearchDocuments(provider: PortfolioDataProvider): SearchDocument[]
     description: command.description,
     category: "terminal-command",
     keywords: command.aliases,
-    appId: command.targetAppId ?? "terminal"
+    appId: command.targetAppId ?? "terminal",
+    action: command.targetAppId ? systemActions.openApp(command.targetAppId) : systemActions.openApp("terminal", { command: "help" })
   }));
 
   const signalDocs = provider.getPortfolioSignals().map((signal) => ({
@@ -129,7 +148,8 @@ function buildSearchDocuments(provider: PortfolioDataProvider): SearchDocument[]
     description: signal.description,
     category: "portfolio-signal",
     keywords: signal.keywords,
-    appId: "recruiter" as AppId
+    appId: "recruiter" as AppId,
+    action: systemActions.openApp("recruiter", { signal: signal.title })
   }));
 
   const fileDocs = provider.getFileSystemEntries().map((entry) => ({
@@ -138,10 +158,21 @@ function buildSearchDocuments(provider: PortfolioDataProvider): SearchDocument[]
     description: `${entry.directory} - ${entry.description}`,
     category: `file-${entry.kind}`,
     keywords: [entry.directory, entry.sourcePath ?? "", entry.href ?? "", ...entry.tags],
-    appId: entry.appId ?? "files" as AppId
+    appId: entry.appId ?? "files" as AppId,
+    action: entry.action ?? (entry.appId ? systemActions.openApp(entry.appId) : systemActions.openApp("files", { entryId: entry.id }))
   }));
 
-  return [...appDocs, ...projectDocs, ...skillDocs, ...profileDocs, ...resumeDocs, ...caseDocs, ...commandDocs, ...signalDocs, ...fileDocs];
+  const contactDocs = profile.contactLinks.map((link) => ({
+    id: `contact:${link.label}`,
+    title: `${link.label}: ${link.value}`,
+    description: `Contact path for ${profile.name}.`,
+    category: "contact",
+    keywords: ["contact", "email", "recruiter", link.label, link.value],
+    appId: "contact" as AppId,
+    action: systemActions.openApp("contact")
+  }));
+
+  return [...appDocs, ...projectDocs, ...skillDocs, ...profileDocs, ...resumeDocs, ...caseDocs, ...commandDocs, ...signalDocs, ...fileDocs, ...contactDocs];
 }
 
 function scoreDocument(document: SearchDocument, terms: string[], normalizedQuery: string) {
@@ -172,6 +203,10 @@ function scoreDocument(document: SearchDocument, terms: string[], normalizedQuer
     if (rank >= 0) {
       score += 80 - rank * 8;
     }
+  }
+
+  if (document.id === "profile:hire-sawyer") {
+    score += 24;
   }
 
   return score;

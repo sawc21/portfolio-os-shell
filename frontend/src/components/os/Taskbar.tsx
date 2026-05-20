@@ -1,7 +1,8 @@
 import { BatteryCharging, Grid2X2, Rocket, ShieldCheck, Volume2, Wifi } from "lucide-react";
 import { useEffect, useState } from "react";
 import { getAppDefinition } from "../../lib/appRegistry";
-import type { AppId, WindowInstance } from "../../lib/types";
+import type { AppId, SystemAction, WindowInstance } from "../../lib/types";
+import { portfolioKernel } from "../../os/kernel/kernel";
 import { AppPixelIcon } from "./AppPixelIcon";
 
 type TaskbarProps = {
@@ -9,9 +10,7 @@ type TaskbarProps = {
   focusedAppId: AppId | null;
   startOpen: boolean;
   onToggleStart: () => void;
-  onOpenApp: (appId: AppId) => void;
-  onFocusWindow: (appId: AppId) => void;
-  onLaunchWorld: () => void;
+  onRunAction: (action: SystemAction) => void;
 };
 
 export function Taskbar({
@@ -19,9 +18,7 @@ export function Taskbar({
   focusedAppId,
   startOpen,
   onToggleStart,
-  onOpenApp,
-  onFocusWindow,
-  onLaunchWorld
+  onRunAction
 }: TaskbarProps) {
   const [clock, setClock] = useState(() => formatClock());
   const quickLaunchApps: AppId[] = ["files", "search", "terminal"];
@@ -46,7 +43,7 @@ export function Taskbar({
         {quickLaunchApps.map((appId) => {
           const app = getAppDefinition(appId);
           return (
-            <button key={appId} type="button" onClick={() => onOpenApp(appId)} aria-label={`Open ${app.title}`}>
+            <button key={appId} type="button" onClick={() => onRunAction(portfolioKernel.actions.openApp(appId))} aria-label={`Open ${app.title}`}>
               <AppPixelIcon app={app} className="os-taskbar__icon" fallbackSize={15} />
             </button>
           );
@@ -63,7 +60,7 @@ export function Taskbar({
                 window.minimized ? "is-minimized" : ""
               ].filter(Boolean).join(" ") || undefined}
               type="button"
-              onClick={() => onFocusWindow(window.appId)}
+              onClick={() => onRunAction(portfolioKernel.actions.focusApp(window.appId))}
               aria-pressed={focusedAppId === window.appId && !window.minimized}
             >
               <AppPixelIcon app={app} className="os-taskbar__icon" fallbackSize={16} />
@@ -72,7 +69,7 @@ export function Taskbar({
           );
         })}
       </div>
-      <button className="os-taskbar__world" type="button" onClick={onLaunchWorld}>
+      <button className="os-taskbar__world" type="button" onClick={() => onRunAction(portfolioKernel.actions.launchWorld())}>
         <Rocket aria-hidden="true" size={17} />
         Launch World
       </button>

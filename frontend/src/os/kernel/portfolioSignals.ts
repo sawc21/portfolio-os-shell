@@ -24,5 +24,11 @@ export const portfolioSignals: PortfolioSignal[] = [
     description:
       "The Launch World prototype sets up a practical path toward React Three Fiber without bloating the MVP.",
     keywords: ["3d", "creative", "three", "react three fiber", "world"]
+  },
+  {
+    title: "API-ready integration thinking",
+    description:
+      "The provider seam keeps future data sources, including QuickBooks-style finance APIs or research/project feeds, separate from OS shell behavior.",
+    keywords: ["api", "provider", "quickbooks", "automation", "integration", "research", "nasa"]
   }
 ];

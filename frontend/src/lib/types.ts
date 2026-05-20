@@ -78,6 +78,7 @@ export type RecruiterProfile = {
   valueProposition: string;
   skills: string[];
   projectHighlights: string[];
+  workHighlights: string[];
   contactLinks: ContactLink[];
   resumeLink: string;
 };
@@ -117,6 +118,7 @@ export type FileSystemEntry = {
   appId?: AppId;
   href?: string;
   sourcePath?: string;
+  action?: SystemAction;
 };
 
 export type PlannerTask = {
@@ -169,12 +171,16 @@ export type DeveloperHabitsData = {
 };
 
 export type SystemAction =
-  | { type: "open-app"; appId: AppId }
+  | { type: "open-app"; appId: AppId; params?: unknown }
+  | { type: "focus-app"; appId: AppId; params?: unknown }
   | { type: "open-search"; query: string }
   | { type: "launch-world" }
   | { type: "reset-os" }
   | { type: "clear" }
-  | { type: "print"; lines: string[] };
+  | { type: "print"; lines: string[] }
+  | { type: "open-url"; href: string }
+  | { type: "copy-text"; text: string; label?: string }
+  | { type: "download-url"; href: string; filename?: string };
 
 export type SearchResult = {
   id: string;

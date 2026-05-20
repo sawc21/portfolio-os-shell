@@ -18,9 +18,7 @@ import { portfolioKernel } from "../../../os/kernel/kernel";
 import type { AppId, FileSystemEntry, ScopeScenarioInput, SystemAction } from "../../../lib/types";
 
 export type OsAppComponentProps = {
-  openApp: (appId: AppId, params?: unknown) => void;
-  launchWorld: () => void;
-  resetWorkspace: () => void;
+  runAction: (action: SystemAction) => void;
   params?: unknown;
 };
 
@@ -48,9 +46,10 @@ export function AboutApp() {
   );
 }
 
-export function RecruiterApp({ openApp }: OsAppComponentProps) {
+export function RecruiterApp({ runAction }: OsAppComponentProps) {
   const profile = portfolioKernel.getRecruiterProfile();
   const signals = portfolioKernel.getPortfolioSignals();
+  const featuredProjects = portfolioKernel.getProjects().slice(0, 2);
 
   return (
     <div className="app-view app-view--recruiter">
@@ -64,6 +63,28 @@ export function RecruiterApp({ openApp }: OsAppComponentProps) {
           <span key={role}>{role}</span>
         ))}
       </div>
+      <section className="case-note">
+        <strong>Role positioning</strong>
+        <p>{profile.shortPitch}</p>
+      </section>
+      <section className="skill-grid" aria-label="Strongest technical skills">
+        <article>
+          <h3>Strongest skills</h3>
+          <div className="token-row">
+            {profile.skills.slice(0, 8).map((skill) => (
+              <span key={skill}>{skill}</span>
+            ))}
+          </div>
+        </article>
+        <article>
+          <h3>Research and work highlights</h3>
+          <ul>
+            {profile.workHighlights.map((highlight) => (
+              <li key={highlight}>{highlight}</li>
+            ))}
+          </ul>
+        </article>
+      </section>
       <div className="project-stack">
         {signals.map((signal) => (
           <article className="project-card" key={signal.title}>
@@ -80,17 +101,33 @@ export function RecruiterApp({ openApp }: OsAppComponentProps) {
             </div>
           </article>
         ))}
+        {featuredProjects.map((project) => (
+          <article className="project-card" key={project.slug}>
+            <div>
+              <span>{project.phase}</span>
+              <strong>{project.role}</strong>
+            </div>
+            <h3>{project.title}</h3>
+            <p>{project.summary}</p>
+            <div className="token-row">
+              {project.tags.map((tag) => (
+                <span key={tag}>{tag}</span>
+              ))}
+            </div>
+          </article>
+        ))}
       </div>
       <div className="app-actions">
-        <button type="button" className="app-action" onClick={() => openApp("resume")}>Open Resume</button>
-        <button type="button" className="app-action" onClick={() => openApp("projects")}>View Project Proof</button>
-        <button type="button" className="app-action" onClick={() => openApp("contact")}>Contact Sawyer</button>
+        <button type="button" className="app-action" onClick={() => runAction(portfolioKernel.actions.openApp("resume"))}>Open Resume</button>
+        <button type="button" className="app-action" onClick={() => runAction(portfolioKernel.actions.openApp("projects"))}>Open Projects</button>
+        <button type="button" className="app-action" onClick={() => runAction(portfolioKernel.actions.openApp("case-studies"))}>Open Case Studies</button>
+        <button type="button" className="app-action" onClick={() => runAction(portfolioKernel.actions.openApp("contact"))}>Contact</button>
       </div>
     </div>
   );
 }
 
-export function SearchApp({ openApp, params }: OsAppComponentProps) {
+export function SearchApp({ runAction, params }: OsAppComponentProps) {
   const initialQuery = typeof params === "object" && params !== null && "query" in params
     ? String((params as { query?: string }).query ?? "")
     : "hire sawyer";
@@ -101,13 +138,12 @@ export function SearchApp({ openApp, params }: OsAppComponentProps) {
     setQuery(initialQuery);
   }, [initialQuery]);
 
-  function runAction(action: SystemAction) {
-    if (action.type === "open-app") {
-      openApp(action.appId);
-    }
+  function handleResultAction(action: SystemAction) {
     if (action.type === "open-search") {
       setQuery(action.query);
+      return;
     }
+    runAction(action);
   }
 
   return (
@@ -128,7 +164,7 @@ export function SearchApp({ openApp, params }: OsAppComponentProps) {
       </label>
       <div className="search-results">
         {results.map((result) => (
-          <button key={result.id} type="button" onClick={() => runAction(result.action)}>
+          <button key={result.id} type="button" onClick={() => handleResultAction(result.action)}>
             <span>{result.category}</span>
             <strong>{result.title}</strong>
             <p>{result.description}</p>
@@ -140,7 +176,7 @@ export function SearchApp({ openApp, params }: OsAppComponentProps) {
   );
 }
 
-export function FileExplorerApp({ openApp }: OsAppComponentProps) {
+export function FileExplorerApp({ runAction }: OsAppComponentProps) {
   const entries = portfolioKernel.getFileSystemEntries();
   const directories = Array.from(new Set(entries.map((entry) => entry.directory)));
   const [activeDirectory, setActiveDirectory] = useState(directories[0] ?? "");
@@ -149,20 +185,7 @@ export function FileExplorerApp({ openApp }: OsAppComponentProps) {
 
   function openEntry(entry: FileSystemEntry) {
     setSelectedEntry(entry);
-
-    if (entry.appId) {
-      openApp(entry.appId);
-      return;
-    }
-
-    if (entry.href) {
-      window.open(entry.href, "_blank", "noopener,noreferrer");
-      return;
-    }
-
-    if (entry.sourcePath) {
-      void navigator.clipboard?.writeText(entry.sourcePath);
-    }
+    runAction(portfolioKernel.getFileSystemEntryAction(entry));
   }
 
   return (
@@ -178,8 +201,8 @@ export function FileExplorerApp({ openApp }: OsAppComponentProps) {
       <header className="file-explorer__toolbar">
         <button type="button" aria-label="Back">Back</button>
         <button type="button" aria-label="Forward">Forward</button>
-        <button type="button" onClick={() => openApp("search")}>Search</button>
-        <button type="button" onClick={() => openApp("files")}>Folders</button>
+        <button type="button" onClick={() => runAction(portfolioKernel.actions.openApp("search"))}>Search</button>
+        <button type="button" onClick={() => runAction(portfolioKernel.actions.focusApp("files"))}>Folders</button>
         <label>
           Address
           <input value={activeDirectory} onChange={(event) => setActiveDirectory(event.target.value)} />
@@ -229,7 +252,10 @@ export function FileExplorerApp({ openApp }: OsAppComponentProps) {
             <span>{selectedEntry.description}</span>
             <code>{selectedEntry.sourcePath ?? selectedEntry.href ?? selectedEntry.directory}</code>
             {selectedEntry.sourcePath ? (
-              <button type="button" onClick={() => void navigator.clipboard?.writeText(selectedEntry.sourcePath ?? "")}>
+              <button
+                type="button"
+                onClick={() => runAction(portfolioKernel.actions.copyText(selectedEntry.sourcePath ?? "", selectedEntry.name))}
+              >
                 <Copy aria-hidden="true" size={14} />
                 Copy source path
               </button>
@@ -304,7 +330,7 @@ export function SkillsApp() {
   );
 }
 
-export function CaseStudiesApp({ openApp }: OsAppComponentProps) {
+export function CaseStudiesApp({ runAction }: OsAppComponentProps) {
   const caseStudies = portfolioKernel.getCaseStudies();
 
   return (
@@ -331,7 +357,7 @@ export function CaseStudiesApp({ openApp }: OsAppComponentProps) {
           </article>
         ))}
       </div>
-      <button type="button" className="app-action" onClick={() => openApp("recruiter")}>
+      <button type="button" className="app-action" onClick={() => runAction(portfolioKernel.actions.openApp("recruiter"))}>
         Open Recruiter Quick View
       </button>
     </div>
@@ -361,7 +387,7 @@ export function NotesApp() {
   );
 }
 
-export function ResumeApp({ openApp }: OsAppComponentProps) {
+export function ResumeApp({ runAction }: OsAppComponentProps) {
   const profile = portfolioKernel.getRecruiterProfile();
   const resumeHighlights = portfolioKernel.getResumeHighlights();
   const operatingModes = portfolioKernel.getOperatingModes();
@@ -392,14 +418,14 @@ export function ResumeApp({ openApp }: OsAppComponentProps) {
         </div>
       </section>
       <a className="app-link" href="/resume">Open server resume route</a>
-      <button className="app-action" type="button" onClick={() => openApp("recruiter")}>
+      <button className="app-action" type="button" onClick={() => runAction(portfolioKernel.actions.openApp("recruiter"))}>
         Hire Sawyer Cawthon
       </button>
     </div>
   );
 }
 
-export function ContactApp({ openApp }: OsAppComponentProps) {
+export function ContactApp({ runAction }: OsAppComponentProps) {
   const profile = portfolioKernel.getRecruiterProfile();
 
   return (
@@ -418,23 +444,32 @@ export function ContactApp({ openApp }: OsAppComponentProps) {
           </a>
         ))}
       </div>
-      <button type="button" className="app-action" onClick={() => openApp("recruiter")}>
+      <button type="button" className="app-action" onClick={() => runAction(portfolioKernel.actions.openApp("recruiter"))}>
         Hire Sawyer Cawthon
       </button>
     </div>
   );
 }
 
-export function TerminalApp({ openApp, launchWorld, resetWorkspace }: OsAppComponentProps) {
+export function TerminalApp({ runAction, params }: OsAppComponentProps) {
   const [lines, setLines] = useState<string[]>([
     "Portfolio OS terminal online.",
     "Type help to list commands."
   ]);
   const [command, setCommand] = useState("");
+  const commandParam = typeof params === "object" && params !== null && "command" in params
+    ? String((params as { command?: string }).command ?? "")
+    : "";
 
-  function executeCommand() {
-    const promptLine = `> ${command || "help"}`;
-    const action = portfolioKernel.runCommand(command);
+  useEffect(() => {
+    if (commandParam) {
+      executeCommand(commandParam);
+    }
+  }, [commandParam]);
+
+  function executeCommand(input = command) {
+    const promptLine = `> ${input || "help"}`;
+    const action = portfolioKernel.runCommand(input);
 
     if (action.type === "clear") {
       setLines([]);
@@ -442,15 +477,8 @@ export function TerminalApp({ openApp, launchWorld, resetWorkspace }: OsAppCompo
       return;
     }
 
-    if (action.type === "open-app") {
-      openApp(action.appId);
-      setLines((current) => [...current, promptLine, `Opening ${action.appId}...`]);
-      setCommand("");
-      return;
-    }
-
     if (action.type === "open-search") {
-      openApp("search", { query: action.query });
+      runAction(action);
       const results = portfolioKernel.search(action.query);
       setLines((current) => [
         ...current,
@@ -462,16 +490,10 @@ export function TerminalApp({ openApp, launchWorld, resetWorkspace }: OsAppCompo
       return;
     }
 
-    if (action.type === "launch-world") {
-      launchWorld();
-      setLines((current) => [...current, promptLine, "Launching world interface..."]);
-      setCommand("");
-      return;
-    }
-
-    if (action.type === "reset-os") {
-      resetWorkspace();
-      setLines((current) => [...current, promptLine, "Portfolio OS workspace and demo state reset."]);
+    if (action.type !== "print") {
+      runAction(action);
+      const announcement = portfolioKernel.describeAction(action);
+      setLines((current) => announcement ? [...current, promptLine, announcement] : [...current, promptLine]);
       setCommand("");
       return;
     }
@@ -650,7 +672,7 @@ export function HabitsApp() {
   );
 }
 
-export function WorldApp({ launchWorld }: OsAppComponentProps) {
+export function WorldApp({ runAction }: OsAppComponentProps) {
   const worldRoadmap = portfolioKernel.getWorldRoadmap();
 
   return (
@@ -671,7 +693,7 @@ export function WorldApp({ launchWorld }: OsAppComponentProps) {
           </article>
         ))}
       </div>
-      <button className="app-action" type="button" onClick={launchWorld}>
+      <button className="app-action" type="button" onClick={() => runAction(portfolioKernel.actions.launchWorld())}>
         <Rocket aria-hidden="true" size={17} />
         Run boot sequence
       </button>

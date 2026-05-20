@@ -134,6 +134,69 @@ export const fileSystemEntries: FileSystemEntry[] = [
     appId: "terminal"
   },
   {
+    id: "desktop-resume",
+    name: "Resume.app",
+    kind: "app",
+    directory: "C:\\PortfolioOS\\Desktop",
+    description: "Resume app with stack, operating modes, and interview proof.",
+    tags: ["resume", "experience", "stack"],
+    appId: "resume"
+  },
+  {
+    id: "desktop-projects",
+    name: "Projects.app",
+    kind: "app",
+    directory: "C:\\PortfolioOS\\Desktop",
+    description: "Project proof and case-study branches.",
+    tags: ["projects", "proof", "case studies"],
+    appId: "projects"
+  },
+  {
+    id: "desktop-cases",
+    name: "Case Studies.app",
+    kind: "app",
+    directory: "C:\\PortfolioOS\\Desktop",
+    description: "Interview-ready architecture decision notes.",
+    tags: ["case studies", "architecture", "interview"],
+    appId: "case-studies"
+  },
+  {
+    id: "desktop-skills",
+    name: "Skills.app",
+    kind: "app",
+    directory: "C:\\PortfolioOS\\Desktop",
+    description: "Grouped frontend, backend, tooling, and delivery strengths.",
+    tags: ["skills", "c#", "react", "typescript"],
+    appId: "skills"
+  },
+  {
+    id: "desktop-contact",
+    name: "Contact.app",
+    kind: "app",
+    directory: "C:\\PortfolioOS\\Desktop",
+    description: "Contact paths for recruiters and collaborators.",
+    tags: ["contact", "email", "links"],
+    appId: "contact"
+  },
+  {
+    id: "system-commands",
+    name: "Commands.txt",
+    kind: "source",
+    directory: "C:\\PortfolioOS\\System",
+    description: "Opens Terminal with the help command queued.",
+    tags: ["commands", "terminal", "help"],
+    action: { type: "open-app", appId: "terminal", params: { command: "help" } }
+  },
+  {
+    id: "system-search",
+    name: "Search.lnk",
+    kind: "app",
+    directory: "C:\\PortfolioOS\\System",
+    description: "Opens Sawyer Search.",
+    tags: ["search", "find", "kernel"],
+    action: { type: "open-search", query: "" }
+  },
+  {
     id: "routes-projects",
     name: "Projects.url",
     kind: "route",
