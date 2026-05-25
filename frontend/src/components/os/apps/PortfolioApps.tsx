@@ -536,6 +536,8 @@ export function ResumeApp({ runAction }: OsAppComponentProps) {
   const profile = portfolioKernel.getRecruiterProfile();
   const resumeHighlights = portfolioKernel.getResumeHighlights();
   const operatingModes = portfolioKernel.getOperatingModes();
+  const resumePdfHref = "/files/sawyer-cawthon-resume.pdf";
+  const resumePdfFilename = "sawyer-cawthon-resume.pdf";
 
   return (
     <div className="app-view app-view--resume">
@@ -563,6 +565,13 @@ export function ResumeApp({ runAction }: OsAppComponentProps) {
         </div>
       </section>
       <a className="app-link" href="/resume">Open server resume route</a>
+      <button
+        className="app-action"
+        type="button"
+        onClick={() => runAction(portfolioKernel.actions.downloadUrl(resumePdfHref, resumePdfFilename))}
+      >
+        Download Resume PDF
+      </button>
       <button className="app-action" type="button" onClick={() => runAction(portfolioKernel.actions.openApp("recruiter"))}>
         Hire Sawyer Cawthon
       </button>

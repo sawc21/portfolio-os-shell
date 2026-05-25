@@ -2,7 +2,7 @@
 @model Portfolio.Pages.ResumeModel
 @{
     ViewData["Title"] = "Resume | System Profile";
-    ViewData["Description"] = "System profile for Sawyer Cawthon: design-minded full-stack ASP.NET and C# developer.";
+    ViewData["Description"] = "Resume for Sawyer Cawthon: AI-focused software developer with ASP.NET, C#, LLM, knowledge graph, and research experience.";
     ViewData["CanonicalPath"] = "/resume";
 }
 
@@ -12,14 +12,15 @@
             <p class="system-label">system.profile</p>
             <h1>Technical credibility with product judgment.</h1>
         </div>
-        <p>Resume content is kept in Markdown now, with room to evolve into structured JSON and PDF generation later.</p>
+        <p>Full resume content is rendered from Markdown, with a downloadable PDF available for recruiters and collaborators.</p>
     </header>
 
     <section class="profile-grid">
         <aside class="profile-card">
-            <p class="system-label">current stack</p>
-            <strong>ASP.NET Core / C# / Razor Pages</strong>
-            <span>Markdown content, tests, self-hosting path, and production basics.</span>
+            <p class="system-label">download</p>
+            <strong>Resume PDF</strong>
+            <span>Download the original resume file for offline review.</span>
+            <a class="button" href="/files/sawyer-cawthon-resume.pdf" download>Download resume PDF</a>
         </aside>
         <div class="prose">
             @Html.Raw(Model.Resume?.Html ?? "<p>Resume content is not available yet.</p>")

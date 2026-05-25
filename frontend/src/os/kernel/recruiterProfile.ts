@@ -39,9 +39,10 @@ export const recruiterProfile: RecruiterProfile = {
     "Product planning evidence: Sprint Planner, Scope Budget, and Developer Habits show how Sawyer thinks about scope, risk, consistency, and delivery."
   ],
   contactLinks: [
-    { label: "Email", value: "hello@example.com", href: "mailto:hello@example.com" },
-    { label: "GitHub", value: "github.com/your-handle", href: "https://github.com/" },
-    { label: "LinkedIn", value: "linkedin.com/in/your-handle", href: "https://www.linkedin.com/" }
+    { label: "Email", value: "sawyer.cawthon@gmail.com", href: "mailto:sawyer.cawthon@gmail.com" },
+    { label: "GitHub", value: "github.com/sawc21", href: "https://github.com/sawc21" },
+    { label: "LinkedIn", value: "linkedin.com/in/sawyer-cawthon-a87560287", href: "https://www.linkedin.com/in/sawyer-cawthon-a87560287/" },
+    { label: "X", value: "x.com/sawyerc_cs", href: "https://x.com/sawyerc_cs" }
   ],
   resumeLink: "/resume"
 };

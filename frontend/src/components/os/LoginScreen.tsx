@@ -23,9 +23,9 @@ type LoginQuickLink = {
 
 const loginQuickLinks: LoginQuickLink[] = [
   { label: "GitHub", href: "https://github.com/sawc21", icon: GitBranch, external: true },
-  { label: "LinkedIn", href: "https://www.linkedin.com/", icon: BriefcaseBusiness, external: true },
-  { label: "X", href: "https://x.com/", icon: X, external: true },
-  { label: "Email", href: "mailto:hello@example.com", icon: Mail },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/sawyer-cawthon-a87560287/", icon: BriefcaseBusiness, external: true },
+  { label: "X", href: "https://x.com/sawyerc_cs", icon: X, external: true },
+  { label: "Email", href: "mailto:sawyer.cawthon@gmail.com", icon: Mail },
   { label: "Resume", href: "/resume", icon: FileText }
 ];
 
