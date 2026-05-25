@@ -2,6 +2,7 @@ import { useEffect, useId, useRef } from "react";
 import { BriefcaseBusiness, FileText, GitBranch, Mail, X } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import sawyerLoginPortrait from "../../assets/profile/sawyer-login.webp";
+import { getProfileLoginQuickLinks } from "../../lib/portfolioProfile";
 
 export type LoginScreenStatus = "idle" | "error" | "success";
 
@@ -21,13 +22,18 @@ type LoginQuickLink = {
   external?: boolean;
 };
 
-const loginQuickLinks: LoginQuickLink[] = [
-  { label: "GitHub", href: "https://github.com/sawc21", icon: GitBranch, external: true },
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/sawyer-cawthon-a87560287/", icon: BriefcaseBusiness, external: true },
-  { label: "X", href: "https://x.com/sawyerc_cs", icon: X, external: true },
-  { label: "Email", href: "mailto:sawyer.cawthon@gmail.com", icon: Mail },
-  { label: "Resume", href: "/resume", icon: FileText }
-];
+const quickLinkIcons: Record<LoginQuickLink["label"], LucideIcon> = {
+  GitHub: GitBranch,
+  LinkedIn: BriefcaseBusiness,
+  X,
+  Email: Mail,
+  Resume: FileText
+};
+
+const loginQuickLinks: LoginQuickLink[] = getProfileLoginQuickLinks().map((link) => ({
+  ...link,
+  icon: quickLinkIcons[link.label]
+}));
 
 export function LoginScreen({
   phrase,

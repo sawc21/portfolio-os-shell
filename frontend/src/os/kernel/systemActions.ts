@@ -1,14 +1,22 @@
-import type { AppId, SystemAction } from "../../lib/types";
+import type { AppId, AppParamsById, SystemAction } from "../../lib/types";
 
 export type { SystemAction };
 
-function withOptionalParams(type: "open-app" | "focus-app", appId: AppId, params?: unknown): SystemAction {
-  return params === undefined ? { type, appId } : { type, appId, params };
+type AppParamsFor<TAppId extends AppId> = TAppId extends keyof AppParamsById ? AppParamsById[TAppId] : never;
+
+function withOptionalParams<TAppId extends AppId>(
+  type: "open-app" | "focus-app",
+  appId: TAppId,
+  params?: AppParamsFor<TAppId>
+): SystemAction {
+  return params === undefined ? { type, appId } as SystemAction : { type, appId, params } as SystemAction;
 }
 
 export const systemActions = {
-  openApp: (appId: AppId, params?: unknown): SystemAction => withOptionalParams("open-app", appId, params),
-  focusApp: (appId: AppId, params?: unknown): SystemAction => withOptionalParams("focus-app", appId, params),
+  openApp: <TAppId extends AppId>(appId: TAppId, params?: AppParamsFor<TAppId>): SystemAction =>
+    withOptionalParams("open-app", appId, params),
+  focusApp: <TAppId extends AppId>(appId: TAppId, params?: AppParamsFor<TAppId>): SystemAction =>
+    withOptionalParams("focus-app", appId, params),
   openSearch: (query: string): SystemAction => ({ type: "open-search", query }),
   launchWorld: (): SystemAction => ({ type: "launch-world" }),
   resetOs: (): SystemAction => ({ type: "reset-os" }),
@@ -20,10 +28,6 @@ export const systemActions = {
   downloadUrl: (href: string, filename?: string): SystemAction =>
     filename === undefined ? { type: "download-url", href } : { type: "download-url", href, filename }
 };
-
-export function printLines(lines: string[]): SystemAction {
-  return systemActions.print(lines);
-}
 
 export function describeSystemAction(action: SystemAction): string | null {
   switch (action.type) {

@@ -1,13 +1,13 @@
 import { AnimatePresence } from "motion/react";
 import { appComponents } from "./apps/appComponents";
 import { Window } from "./Window";
-import type { AppId, SystemAction, WindowInstance } from "../../lib/types";
+import type { AppId, AppParamsMap, SystemAction, WindowInstance } from "../../lib/types";
 
 type WindowManagerProps = {
   windows: WindowInstance[];
   focusedAppId: AppId | null;
   runAction: (action: SystemAction) => void;
-  appParams: Partial<Record<AppId, unknown>>;
+  appParams: AppParamsMap;
   onFocus: (appId: AppId) => void;
   onClose: (appId: AppId) => void;
   onMinimize: (appId: AppId) => void;

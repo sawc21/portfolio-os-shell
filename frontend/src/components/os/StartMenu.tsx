@@ -1,6 +1,7 @@
 import { Search, Sparkles } from "lucide-react";
 import { motion } from "motion/react";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
+import { trapTabKey } from "../../lib/focusTrap";
 import type { AppDefinition, SearchResult, SystemAction } from "../../lib/types";
 import { portfolioKernel } from "../../os/kernel/kernel";
 import { AppPixelIcon } from "./AppPixelIcon";
@@ -15,6 +16,7 @@ type LauncherItem =
   | { kind: "result"; result: SearchResult; action: SystemAction };
 
 export function StartMenu({ open, onRunAction }: StartMenuProps) {
+  const menuRef = useRef<HTMLElement>(null);
   const [query, setQuery] = useState("");
   const visibleItems = useMemo<LauncherItem[]>(() => {
     const normalizedQuery = query.trim().toLowerCase();
@@ -48,7 +50,12 @@ export function StartMenu({ open, onRunAction }: StartMenuProps) {
   }
 
   return (
-    <section className="start-menu" aria-label="Portfolio OS start menu">
+    <section
+      ref={menuRef}
+      className="start-menu"
+      aria-label="Portfolio OS start menu"
+      onKeyDown={(event) => trapTabKey(event, menuRef.current)}
+    >
       <div className="start-menu__brand" aria-hidden="true">
         <span>Portfolio</span>
         <strong>OS 95</strong>

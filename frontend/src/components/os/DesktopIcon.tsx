@@ -1,4 +1,4 @@
-import type { PointerEvent as ReactPointerEvent } from "react";
+import type { KeyboardEvent as ReactKeyboardEvent, PointerEvent as ReactPointerEvent, Ref } from "react";
 import type { AppDefinition } from "../../lib/types";
 import { AppPixelIcon } from "./AppPixelIcon";
 
@@ -18,6 +18,10 @@ type DesktopIconProps = {
   onDragEnd: (appId: AppDefinition["id"], point: PointerPoint) => void;
   onOpen: (appId: AppDefinition["id"]) => void;
   launchingWorld: boolean;
+  buttonRef: Ref<HTMLButtonElement>;
+  tabIndex: number;
+  onFocus: (appId: AppDefinition["id"]) => void;
+  onKeyNavigate: (event: ReactKeyboardEvent<HTMLButtonElement>, appId: AppDefinition["id"]) => void;
 };
 
 export function DesktopIcon({
@@ -30,7 +34,11 @@ export function DesktopIcon({
   onDragMove,
   onDragEnd,
   onOpen,
-  launchingWorld
+  launchingWorld,
+  buttonRef,
+  tabIndex,
+  onFocus,
+  onKeyNavigate
 }: DesktopIconProps) {
   function handlePointerDown(event: ReactPointerEvent<HTMLButtonElement>) {
     event.stopPropagation();
@@ -81,6 +89,7 @@ export function DesktopIcon({
 
   return (
     <button
+      ref={buttonRef}
       className="desktop-icon"
       data-launching={launchingWorld ? "true" : "false"}
       data-selected={selected ? "true" : "false"}
@@ -88,8 +97,15 @@ export function DesktopIcon({
       data-drop-target={dropTarget ? "true" : "false"}
       style={{ "--app-accent": app.accent } as React.CSSProperties}
       type="button"
+      tabIndex={tabIndex}
       onPointerDown={handlePointerDown}
+      onFocus={() => onFocus(app.id)}
       onKeyDown={(event) => {
+        onKeyNavigate(event, app.id);
+        if (event.defaultPrevented) {
+          return;
+        }
+
         if (event.key === "Enter" || event.key === " ") {
           event.preventDefault();
           onOpen(app.id);

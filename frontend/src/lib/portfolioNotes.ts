@@ -1,8 +1,10 @@
 import type { PortfolioNote } from "./types";
 
 export const portfolioNotesStorageKey = "portfolio-os:ai-notes:v1";
+export const portfolioNotesUpdatedEvent = "portfolio-notes-updated";
 
 type StorageLike = Pick<Storage, "getItem" | "setItem" | "removeItem">;
+type NotesEventTarget = Pick<EventTarget, "dispatchEvent">;
 
 type NoteInput = {
   title?: string;
@@ -216,21 +218,31 @@ export function readPortfolioNotes(storage: Pick<Storage, "getItem"> = window.lo
   }
 }
 
-export function writePortfolioNotes(notes: PortfolioNote[], storage: Pick<Storage, "setItem"> = window.localStorage) {
+export function writePortfolioNotes(
+  notes: PortfolioNote[],
+  storage: Pick<Storage, "setItem"> = window.localStorage,
+  eventTarget: NotesEventTarget | null | undefined = undefined
+) {
   storage.setItem(portfolioNotesStorageKey, JSON.stringify(notes));
+  emitPortfolioNotesUpdated(eventTarget);
 }
 
 export function appendPortfolioNote(
   note: PortfolioNote,
-  storage: Pick<Storage, "getItem" | "setItem"> = window.localStorage
+  storage: Pick<Storage, "getItem" | "setItem"> = window.localStorage,
+  eventTarget: NotesEventTarget | null | undefined = undefined
 ) {
   const nextNotes = [note, ...readPortfolioNotes(storage)];
-  writePortfolioNotes(nextNotes, storage);
+  writePortfolioNotes(nextNotes, storage, eventTarget);
   return nextNotes;
 }
 
-export function resetPortfolioNotes(storage: StorageLike = window.localStorage) {
+export function resetPortfolioNotes(
+  storage: StorageLike = window.localStorage,
+  eventTarget: NotesEventTarget | null | undefined = undefined
+) {
   storage.removeItem(portfolioNotesStorageKey);
+  emitPortfolioNotesUpdated(eventTarget);
   return cloneSeedNotes();
 }
 
@@ -327,6 +339,15 @@ function isPortfolioNote(value: unknown): value is PortfolioNote {
     typeof note.createdAtUtc === "string" &&
     typeof note.updatedAtUtc === "string"
   );
+}
+
+function emitPortfolioNotesUpdated(eventTarget: NotesEventTarget | null | undefined) {
+  const target = eventTarget === undefined ? getDefaultNotesEventTarget() : eventTarget;
+  target?.dispatchEvent(new Event(portfolioNotesUpdatedEvent));
+}
+
+function getDefaultNotesEventTarget(): NotesEventTarget | null {
+  return typeof window === "undefined" ? null : window;
 }
 
 function escapeHtml(value: string) {

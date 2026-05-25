@@ -39,13 +39,6 @@ export const resumeHighlights = [
   "Accessibility, responsive UI, testing, and release flow fundamentals."
 ];
 
-export const aboutProfile = {
-  headline: "A full-stack developer building portfolio software like a product.",
-  summary:
-    "This operating system turns the portfolio itself into a working interface: apps, windows, commands, demo data, and a roadmap toward a small 3D world. It is built to show product thinking, frontend architecture, ASP.NET ownership, and disciplined iteration.",
-  signals: ["Software developer internships", "ASP.NET + React", "Creative tools", "Readable architecture"]
-};
-
 export const operatingModes = [
   "Product designer: shape identity, flows, copy, and visual hierarchy.",
   "C# developer: build durable server-rendered features with tests.",

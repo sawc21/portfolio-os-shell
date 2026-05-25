@@ -57,6 +57,22 @@ export type DesktopIconPosition = {
   y: number;
 };
 
+export type AppParamsById = {
+  search: { query?: string };
+  terminal: { command?: string };
+  notes: { noteId?: string; query?: string };
+};
+
+export type KnownAppParams = AppParamsById[keyof AppParamsById];
+export type AppParamsMap = Partial<Record<AppId, KnownAppParams>>;
+
+type AppParamAction<TType extends "open-app" | "focus-app"> = {
+  [TAppId in AppId]: {
+    type: TType;
+    appId: TAppId;
+  } & (TAppId extends keyof AppParamsById ? { params?: AppParamsById[TAppId] } : { params?: never });
+}[AppId];
+
 export type ProjectItem = {
   title: string;
   slug: string;
@@ -187,8 +203,8 @@ export type DeveloperHabitsData = {
 };
 
 export type SystemAction =
-  | { type: "open-app"; appId: AppId; params?: unknown }
-  | { type: "focus-app"; appId: AppId; params?: unknown }
+  | AppParamAction<"open-app">
+  | AppParamAction<"focus-app">
   | { type: "open-search"; query: string }
   | { type: "launch-world" }
   | { type: "reset-os" }

@@ -14,6 +14,8 @@ type SearchDocument = {
   action: SystemAction;
 };
 
+const searchDocumentCache = new WeakMap<PortfolioDataProvider, SearchDocument[]>();
+
 const priorityMatches: Record<string, AppId[]> = {
   "hire sawyer": ["recruiter", "resume", "projects", "contact", "case-studies"],
   internship: ["recruiter", "resume", "projects", "contact"],
@@ -52,7 +54,7 @@ export function searchPortfolio(query: string, provider: PortfolioDataProvider):
     return [];
   }
 
-  return buildSearchDocuments(provider)
+  return getSearchDocuments(provider)
     .map((document) => ({ document, score: scoreDocument(document, terms, normalizedQuery) }))
     .filter((result) => result.score > 0)
     .sort((a, b) => b.score - a.score || a.document.title.localeCompare(b.document.title))
@@ -66,6 +68,17 @@ export function searchPortfolio(query: string, provider: PortfolioDataProvider):
       action: document.action,
       score
     }));
+}
+
+function getSearchDocuments(provider: PortfolioDataProvider) {
+  const cached = searchDocumentCache.get(provider);
+  if (cached) {
+    return cached;
+  }
+
+  const documents = buildSearchDocuments(provider);
+  searchDocumentCache.set(provider, documents);
+  return documents;
 }
 
 function buildSearchDocuments(provider: PortfolioDataProvider): SearchDocument[] {
@@ -86,7 +99,7 @@ function buildSearchDocuments(provider: PortfolioDataProvider): SearchDocument[]
     category: "project",
     keywords: [project.phase, project.role, ...project.tags, ...project.branches],
     appId: "projects" as AppId,
-    action: systemActions.openApp("projects", { slug: project.slug })
+    action: systemActions.openApp("projects")
   }));
 
   const skillDocs = provider.getSkillGroups().map((group) => ({
@@ -96,7 +109,7 @@ function buildSearchDocuments(provider: PortfolioDataProvider): SearchDocument[]
     category: "skill",
     keywords: group.items,
     appId: "skills" as AppId,
-    action: systemActions.openApp("skills", { group: group.title })
+    action: systemActions.openApp("skills")
   }));
 
   const profile = provider.getRecruiterProfile();
@@ -137,7 +150,7 @@ function buildSearchDocuments(provider: PortfolioDataProvider): SearchDocument[]
     category: "case-study",
     keywords: [study.status, ...study.proof],
     appId: "case-studies" as AppId,
-    action: systemActions.openApp("case-studies", { title: study.title })
+    action: systemActions.openApp("case-studies")
   }));
 
   const commandDocs = commandDefinitions.map((command) => ({
@@ -157,7 +170,7 @@ function buildSearchDocuments(provider: PortfolioDataProvider): SearchDocument[]
     category: "portfolio-signal",
     keywords: signal.keywords,
     appId: "recruiter" as AppId,
-    action: systemActions.openApp("recruiter", { signal: signal.title })
+    action: systemActions.openApp("recruiter")
   }));
 
   const fileDocs = provider.getFileSystemEntries().map((entry) => ({
@@ -167,7 +180,7 @@ function buildSearchDocuments(provider: PortfolioDataProvider): SearchDocument[]
     category: `file-${entry.kind}`,
     keywords: [entry.directory, entry.sourcePath ?? "", entry.href ?? "", ...entry.tags],
     appId: entry.appId ?? "files" as AppId,
-    action: entry.action ?? (entry.appId ? systemActions.openApp(entry.appId) : systemActions.openApp("files", { entryId: entry.id }))
+    action: entry.action ?? (entry.appId ? systemActions.openApp(entry.appId) : systemActions.openApp("files"))
   }));
 
   const contactDocs = profile.contactLinks.map((link) => ({

@@ -9,10 +9,12 @@ import {
   Trash2
 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
+import { getNotesAppParams } from "../../../lib/appParams";
 import {
   createPortfolioNote,
   deletePortfolioNote,
   parseNoteTags,
+  portfolioNotesUpdatedEvent,
   readPortfolioNotes,
   renderNoteMarkdown,
   resetPortfolioNotes,
@@ -21,20 +23,44 @@ import {
   updatePortfolioNote,
   writePortfolioNotes
 } from "../../../lib/portfolioNotes";
-import type { PortfolioNote } from "../../../lib/types";
+import type { KnownAppParams, PortfolioNote } from "../../../lib/types";
 
 type NoteFilter = "all" | "favorites" | "public" | "private";
 
-export function NotesApp() {
+type NotesAppProps = {
+  params?: KnownAppParams;
+};
+
+export function NotesApp({ params }: NotesAppProps) {
+  const paramsState = getNotesAppParams(params);
   const [notes, setNotes] = useState<PortfolioNote[]>(() => readPortfolioNotes());
-  const [activeId, setActiveId] = useState(() => notes[0]?.id ?? "");
-  const [query, setQuery] = useState("");
+  const [activeId, setActiveId] = useState(() => paramsState.noteId ?? notes[0]?.id ?? "");
+  const [query, setQuery] = useState(paramsState.query ?? "");
   const [activeTag, setActiveTag] = useState("all");
   const [filter, setFilter] = useState<NoteFilter>("all");
 
   useEffect(() => {
-    writePortfolioNotes(notes);
+    writePortfolioNotes(notes, window.localStorage, null);
   }, [notes]);
+
+  useEffect(() => {
+    function refreshNotes() {
+      setNotes(readPortfolioNotes());
+    }
+
+    window.addEventListener(portfolioNotesUpdatedEvent, refreshNotes);
+    return () => window.removeEventListener(portfolioNotesUpdatedEvent, refreshNotes);
+  }, []);
+
+  useEffect(() => {
+    if (paramsState.query !== undefined) {
+      setQuery(paramsState.query);
+    }
+
+    if (paramsState.noteId !== undefined) {
+      setActiveId(paramsState.noteId);
+    }
+  }, [paramsState.noteId, paramsState.query]);
 
   useEffect(() => {
     if (notes.length === 0) {
@@ -109,7 +135,7 @@ export function NotesApp() {
   }
 
   function resetNotes() {
-    const seededNotes = resetPortfolioNotes();
+    const seededNotes = resetPortfolioNotes(window.localStorage, window);
     persist(seededNotes, seededNotes[0]?.id ?? "");
     setQuery("");
     setActiveTag("all");

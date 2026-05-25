@@ -1,5 +1,5 @@
 import { BatteryCharging, Grid2X2, Rocket, ShieldCheck, Volume2, Wifi } from "lucide-react";
-import { useEffect, useState } from "react";
+import { type RefObject, useEffect, useState } from "react";
 import { getAppDefinition } from "../../lib/appRegistry";
 import type { AppId, SystemAction, WindowInstance } from "../../lib/types";
 import { portfolioKernel } from "../../os/kernel/kernel";
@@ -9,6 +9,7 @@ type TaskbarProps = {
   windows: WindowInstance[];
   focusedAppId: AppId | null;
   startOpen: boolean;
+  startButtonRef: RefObject<HTMLButtonElement | null>;
   onToggleStart: () => void;
   onRunAction: (action: SystemAction) => void;
 };
@@ -17,6 +18,7 @@ export function Taskbar({
   windows,
   focusedAppId,
   startOpen,
+  startButtonRef,
   onToggleStart,
   onRunAction
 }: TaskbarProps) {
@@ -31,6 +33,7 @@ export function Taskbar({
   return (
     <footer className="os-taskbar" aria-label="Portfolio OS taskbar">
       <button
+        ref={startButtonRef}
         className="os-taskbar__start"
         type="button"
         aria-expanded={startOpen}

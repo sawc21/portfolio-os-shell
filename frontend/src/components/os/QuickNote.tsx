@@ -1,5 +1,6 @@
 import { FileText, FolderOpen, Save, X } from "lucide-react";
 import { type FormEvent, useEffect, useRef, useState } from "react";
+import { trapTabKey } from "../../lib/focusTrap";
 import {
   appendPortfolioNote,
   createQuickCaptureNote,
@@ -10,7 +11,7 @@ import {
 type QuickNoteProps = {
   open: boolean;
   onClose: () => void;
-  onOpenNotes: () => void;
+  onOpenNotes: (noteId?: string) => void;
 };
 
 type SaveStatus = "idle" | "error" | "saved";
@@ -20,6 +21,8 @@ export function QuickNote({ open, onClose, onOpenNotes }: QuickNoteProps) {
   const [body, setBody] = useState("");
   const [tags, setTags] = useState(quickCaptureDefaultTags.join(", "));
   const [status, setStatus] = useState<SaveStatus>("idle");
+  const [savedNoteId, setSavedNoteId] = useState<string | undefined>();
+  const dialogRef = useRef<HTMLElement>(null);
   const bodyRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
@@ -31,6 +34,7 @@ export function QuickNote({ open, onClose, onOpenNotes }: QuickNoteProps) {
     setBody("");
     setTags(quickCaptureDefaultTags.join(", "));
     setStatus("idle");
+    setSavedNoteId(undefined);
     window.setTimeout(() => bodyRef.current?.focus(), 0);
   }, [open]);
 
@@ -50,27 +54,31 @@ export function QuickNote({ open, onClose, onOpenNotes }: QuickNoteProps) {
       return;
     }
 
-    appendPortfolioNote(createQuickCaptureNote({
+    const note = createQuickCaptureNote({
       title: trimmedTitle || quickCaptureDefaultTitle,
       body: trimmedBody,
       tags
-    }));
+    });
+    appendPortfolioNote(note, window.localStorage, window);
+    setSavedNoteId(note.id);
     setStatus("saved");
   }
 
   function openNotes() {
-    onOpenNotes();
+    onOpenNotes(savedNoteId);
     onClose();
   }
 
   return (
     <div className="quick-note-backdrop" role="presentation">
       <section
+        ref={dialogRef}
         className="quick-note"
         role="dialog"
         aria-modal="true"
         aria-labelledby="quick-note-title"
         aria-describedby="quick-note-status"
+        onKeyDown={(event) => trapTabKey(event, dialogRef.current)}
       >
         <header className="quick-note__titlebar">
           <span>

@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from "motion/react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { moveIconInOrder, normalizeDesktopIconOrder } from "../../lib/desktopIconLayout";
-import type { AppId, SystemAction, WindowInstance } from "../../lib/types";
+import type { AppId, AppParamsMap, KnownAppParams, SystemAction, WindowInstance } from "../../lib/types";
 import { portfolioKernel } from "../../os/kernel/kernel";
 import { DesktopIconGrid } from "./DesktopIconGrid";
 import { QuickNote } from "./QuickNote";
@@ -11,7 +11,6 @@ import { WindowManager } from "./WindowManager";
 import { WorldPreview } from "./WorldPreview";
 
 type WorldMode = "desktop" | "booting" | "world";
-type AppParamsMap = Partial<Record<AppId, unknown>>;
 
 const initialApps: AppId[] = [];
 const windowsStorageKey = "portfolio-os:windows:v2";
@@ -27,6 +26,7 @@ export function Desktop() {
   const [worldMode, setWorldMode] = useState<WorldMode>("desktop");
   const [quickNoteOpen, setQuickNoteOpen] = useState(false);
   const [zCursor, setZCursor] = useState(30);
+  const startButtonRef = useRef<HTMLButtonElement>(null);
 
   const desktopApps = useMemo(() => portfolioKernel.getDesktopApps(), []);
   const defaultIconOrder = useMemo(() => desktopApps.map((app) => app.id), [desktopApps]);
@@ -84,7 +84,10 @@ export function Desktop() {
           return;
         }
 
-        setStartOpen(false);
+        if (startOpen) {
+          setStartOpen(false);
+          window.setTimeout(() => startButtonRef.current?.focus(), 0);
+        }
         if (worldMode === "world") {
           setWorldMode("desktop");
         }
@@ -93,7 +96,7 @@ export function Desktop() {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [quickNoteOpen, worldMode]);
+  }, [quickNoteOpen, startOpen, worldMode]);
 
   function focusWindow(appId: AppId) {
     const nextZ = zCursor + 1;
@@ -106,7 +109,7 @@ export function Desktop() {
     );
   }
 
-  function openApp(appId: AppId, params?: unknown) {
+  function openApp(appId: AppId, params?: KnownAppParams) {
     setStartOpen(false);
     setSelectedIconId(appId);
     if (params !== undefined) {
@@ -294,7 +297,7 @@ export function Desktop() {
         <QuickNote
           open={quickNoteOpen}
           onClose={() => setQuickNoteOpen(false)}
-          onOpenNotes={() => runSystemAction(portfolioKernel.actions.openApp("notes"))}
+          onOpenNotes={(noteId) => runSystemAction(portfolioKernel.actions.openApp("notes", noteId ? { noteId } : undefined))}
         />
         <WorldPreview mode={worldMode} onExitWorld={() => setWorldMode("desktop")} />
       </main>
@@ -302,6 +305,7 @@ export function Desktop() {
         windows={windows}
         focusedAppId={focusedAppId}
         startOpen={startOpen}
+        startButtonRef={startButtonRef}
         onToggleStart={() => setStartOpen((open) => !open)}
         onRunAction={runSystemAction}
       />

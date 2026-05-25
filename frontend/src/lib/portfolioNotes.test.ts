@@ -5,6 +5,7 @@ import {
   createPortfolioNote,
   deletePortfolioNote,
   parseNoteTags,
+  portfolioNotesUpdatedEvent,
   portfolioNotesStorageKey,
   readPortfolioNotes,
   resetPortfolioNotes,
@@ -122,6 +123,23 @@ describe("portfolio notes helpers", () => {
     writePortfolioNotes([existing], storage);
 
     expect(appendPortfolioNote(next, storage)).toEqual([next, existing]);
+  });
+
+  test("dispatches a notes update event when appending notes", () => {
+    const storage = createMemoryStorage();
+    const target = new EventTarget();
+    let eventCount = 0;
+    target.addEventListener(portfolioNotesUpdatedEvent, () => {
+      eventCount += 1;
+    });
+
+    appendPortfolioNote(
+      createPortfolioNote({ title: "Captured" }, { id: "captured-note" }),
+      storage,
+      target
+    );
+
+    expect(eventCount).toBe(1);
   });
 
   test("toggles favorite state", () => {

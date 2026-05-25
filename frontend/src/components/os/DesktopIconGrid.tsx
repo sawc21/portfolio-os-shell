@@ -1,7 +1,8 @@
 import { getDesktopGridSlots, getSlotIndexFromPoint } from "../../lib/desktopIconLayout";
+import { getNextDesktopIconIndex } from "../../lib/desktopIconKeyboard";
 import type { AppDefinition } from "../../lib/types";
 import { DesktopIcon } from "./DesktopIcon";
-import { useState, useRef } from "react";
+import { useEffect, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from "react";
 
 type DesktopIconGridProps = {
   apps: AppDefinition[];
@@ -26,8 +27,14 @@ export function DesktopIconGrid({
   onOpen
 }: DesktopIconGridProps) {
   const gridRef = useRef<HTMLDivElement>(null);
+  const iconRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const [draggingAppId, setDraggingAppId] = useState<AppDefinition["id"] | null>(null);
   const [dropIndex, setDropIndex] = useState<number | null>(null);
+  const [focusedIndex, setFocusedIndex] = useState(0);
+
+  useEffect(() => {
+    setFocusedIndex((current) => Math.min(current, Math.max(apps.length - 1, 0)));
+  }, [apps.length]);
 
   function getTargetIndex(point: PointerPoint) {
     const grid = gridRef.current;
@@ -63,6 +70,52 @@ export function DesktopIconGrid({
     setDropIndex(null);
   }
 
+  function focusIcon(index: number) {
+    const app = apps[index];
+    if (!app) {
+      return;
+    }
+
+    setFocusedIndex(index);
+    onSelect(app.id);
+    window.requestAnimationFrame(() => iconRefs.current[index]?.focus());
+  }
+
+  function handleIconFocus(appId: AppDefinition["id"]) {
+    const index = apps.findIndex((app) => app.id === appId);
+    if (index >= 0) {
+      setFocusedIndex(index);
+      onSelect(appId);
+    }
+  }
+
+  function handleIconKeyNavigate(
+    event: ReactKeyboardEvent<HTMLButtonElement>,
+    appId: AppDefinition["id"]
+  ) {
+    if (!["ArrowRight", "ArrowLeft", "ArrowDown", "ArrowUp", "Home", "End"].includes(event.key)) {
+      return;
+    }
+
+    const grid = gridRef.current;
+    const currentIndex = apps.findIndex((app) => app.id === appId);
+    if (!grid || currentIndex < 0) {
+      return;
+    }
+
+    const rect = grid.getBoundingClientRect();
+    const metrics = getDesktopGridSlots(rect.width, rect.height);
+    const nextIndex = getNextDesktopIconIndex({
+      currentIndex,
+      key: event.key,
+      columns: metrics.columns,
+      total: apps.length
+    });
+
+    event.preventDefault();
+    focusIcon(nextIndex);
+  }
+
   return (
     <div className="desktop-icons" aria-label="Desktop apps" ref={gridRef}>
       {apps.map((app, index) => (
@@ -78,6 +131,12 @@ export function DesktopIconGrid({
           onDragEnd={handleDragEnd}
           onOpen={onOpen}
           launchingWorld={launchingWorld}
+          buttonRef={(element) => {
+            iconRefs.current[index] = element;
+          }}
+          tabIndex={index === focusedIndex ? 0 : -1}
+          onFocus={handleIconFocus}
+          onKeyNavigate={handleIconKeyNavigate}
         />
       ))}
     </div>

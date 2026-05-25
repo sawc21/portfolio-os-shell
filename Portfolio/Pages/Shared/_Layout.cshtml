@@ -1,6 +1,8 @@
+@inject Portfolio.Profile.IPortfolioProfileService ProfileService
 @{
+    var profile = ProfileService.GetProfile();
     var title = ViewData["Title"] as string ?? "Sawyer Cawthon | Kernel Gallery";
-    var description = ViewData["Description"] as string ?? "Graphic-minimalist ASP.NET portfolio for product thinking, full-stack C# work, and self-hosting experiments.";
+    var description = ViewData["Description"] as string ?? profile.ShortPitch;
     var canonicalPath = ViewData["CanonicalPath"] as string ?? Context.Request.Path.ToString();
     var ogType = ViewData["OgType"] as string ?? "website";
     var ogImagePath = ViewData["OgImage"] as string ?? "/images/og-kernel-gallery.svg";
@@ -65,7 +67,7 @@
         <footer class="site-footer">
             <div>
                 <strong>Sawyer Cawthon</strong>
-                <p>Product-minded ASP.NET portfolio with a self-hosting kernel.</p>
+                <p>@profile.Headline with a self-hosting Portfolio OS.</p>
             </div>
             <div class="footer-links">
                 <a href="/feed.xml">RSS</a>

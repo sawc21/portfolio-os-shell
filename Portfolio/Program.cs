@@ -2,6 +2,7 @@ namespace Portfolio;
 
 using System.Text;
 using Portfolio.Content;
+using Portfolio.Profile;
 
 public class Program
 {
@@ -11,6 +12,7 @@ public class Program
 
         builder.Services.AddRazorPages();
         builder.Services.AddSingleton<IMarkdownContentService, MarkdownContentService>();
+        builder.Services.AddSingleton<IPortfolioProfileService, JsonPortfolioProfileService>();
 
         var app = builder.Build();
 

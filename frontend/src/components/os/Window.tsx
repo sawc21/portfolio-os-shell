@@ -1,8 +1,9 @@
 import { Maximize2, Minus, X } from "lucide-react";
 import { motion } from "motion/react";
-import type { PointerEvent as ReactPointerEvent, ReactNode } from "react";
+import type { KeyboardEvent as ReactKeyboardEvent, PointerEvent as ReactPointerEvent, ReactNode } from "react";
 import { getAppDefinition } from "../../lib/appRegistry";
 import type { AppId, WindowInstance } from "../../lib/types";
+import { getKeyboardWindowChange } from "../../lib/windowKeyboard";
 import { AppPixelIcon } from "./AppPixelIcon";
 
 type WindowProps = {
@@ -88,6 +89,42 @@ export function Window({
     globalThis.window.addEventListener("pointerup", handlePointerUp);
   }
 
+  function handleKeyDown(event: ReactKeyboardEvent<HTMLElement>) {
+    const target = event.target;
+    const isTextEntry =
+      target instanceof HTMLInputElement ||
+      target instanceof HTMLTextAreaElement ||
+      (target instanceof HTMLElement && target.isContentEditable);
+    if (isTextEntry) {
+      return;
+    }
+
+    const change = getKeyboardWindowChange(event);
+    if (!change) {
+      return;
+    }
+
+    event.preventDefault();
+    onFocus(window.appId);
+
+    if (change.kind === "move" && !window.maximized) {
+      onMove(window.appId, window.x + change.deltaX, window.y + change.deltaY);
+      return;
+    }
+
+    if (change.kind === "resize" && !window.maximized) {
+      onResize(window.appId, window.width + change.deltaWidth, window.height + change.deltaHeight);
+      return;
+    }
+
+    if (change.kind === "minimize") {
+      onMinimize(window.appId);
+      return;
+    }
+
+    onToggleMaximize(window.appId);
+  }
+
   if (window.minimized) {
     return null;
   }
@@ -113,6 +150,8 @@ export function Window({
       transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
       aria-label={`${app.title} window`}
       onPointerDown={() => onFocus(window.appId)}
+      onKeyDown={handleKeyDown}
+      tabIndex={-1}
     >
       <div className="os-window__titlebar" onPointerDown={handlePointerDown}>
         <div className="os-window__title">

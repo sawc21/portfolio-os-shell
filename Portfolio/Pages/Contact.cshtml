@@ -1,4 +1,5 @@
 @page "/contact"
+@model Portfolio.Pages.ContactModel
 @{
     ViewData["Title"] = "Contact | Kernel Gallery";
     ViewData["Description"] = "Contact Sawyer Cawthon about AI projects, ASP.NET work, software development, and collaboration.";
@@ -14,20 +15,20 @@
 </section>
 
 <section class="contact-grid">
-    <a href="mailto:sawyer.cawthon@gmail.com">
+    <a href="mailto:@Model.Profile.Email">
         <span>Email</span>
-        <strong>sawyer.cawthon@gmail.com</strong>
+        <strong>@Model.Profile.Email</strong>
     </a>
-    <a href="https://github.com/sawc21" rel="me">
+    <a href="@Model.Profile.Links.GitHub" rel="me">
         <span>GitHub</span>
-        <strong>github.com/sawc21</strong>
+        <strong>@Model.DisplayUrl(Model.Profile.Links.GitHub)</strong>
     </a>
-    <a href="https://www.linkedin.com/in/sawyer-cawthon-a87560287/" rel="me">
+    <a href="@Model.Profile.Links.LinkedIn" rel="me">
         <span>LinkedIn</span>
-        <strong>linkedin.com/in/sawyer-cawthon-a87560287</strong>
+        <strong>@Model.DisplayUrl(Model.Profile.Links.LinkedIn)</strong>
     </a>
-    <a href="https://x.com/sawyerc_cs" rel="me">
+    <a href="@Model.Profile.Links.X" rel="me">
         <span>X</span>
-        <strong>x.com/sawyerc_cs</strong>
+        <strong>@Model.DisplayUrl(Model.Profile.Links.X)</strong>
     </a>
 </section>

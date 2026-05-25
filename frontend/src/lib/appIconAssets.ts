@@ -15,7 +15,7 @@ import terminalIcon from "../assets/os-icons/terminal.png";
 import worldIcon from "../assets/os-icons/world.png";
 import type { AppId } from "./types";
 
-export const appIconAssets: Partial<Record<AppId, string>> = {
+export const appIconAssets: Record<AppId, string> = {
   about: aboutIcon,
   recruiter: recruiterIcon,
   search: searchIcon,
@@ -23,6 +23,8 @@ export const appIconAssets: Partial<Record<AppId, string>> = {
   projects: projectsIcon,
   skills: skillsIcon,
   "case-studies": caseStudiesIcon,
+  "ai-lab": notesIcon,
+  "agent-console": terminalIcon,
   notes: notesIcon,
   resume: resumeIcon,
   terminal: terminalIcon,

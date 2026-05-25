@@ -20,7 +20,7 @@
             <p class="system-label">download</p>
             <strong>Resume PDF</strong>
             <span>Download the original resume file for offline review.</span>
-            <a class="button" href="/files/sawyer-cawthon-resume.pdf" download>Download resume PDF</a>
+            <a class="button" href="@Model.Profile.Links.ResumePdf" download>Download resume PDF</a>
         </aside>
         <div class="prose">
             @Html.Raw(Model.Resume?.Html ?? "<p>Resume content is not available yet.</p>")
