@@ -16,6 +16,9 @@ export function WorldPreview({ mode, onExitWorld }: WorldPreviewProps) {
       {mode === "booting" ? (
         <div className="boot-overlay">
           <span className="os-label">world.boot</span>
+          <div className="boot-progress" aria-hidden="true">
+            <span />
+          </div>
           {bootLines.map((line, index) => (
             <p key={line} style={{ animationDelay: `${index * 420}ms` }}>
               {line}

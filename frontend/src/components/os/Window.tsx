@@ -1,4 +1,5 @@
 import { Maximize2, Minus, X } from "lucide-react";
+import { motion } from "motion/react";
 import type { PointerEvent as ReactPointerEvent, ReactNode } from "react";
 import { getAppDefinition } from "../../lib/appRegistry";
 import type { AppId, WindowInstance } from "../../lib/types";
@@ -92,7 +93,7 @@ export function Window({
   }
 
   return (
-    <section
+    <motion.section
       className="os-window"
       data-focused={focused ? "true" : "false"}
       data-maximized={window.maximized ? "true" : "false"}
@@ -106,6 +107,10 @@ export function Window({
           zIndex: window.zIndex
         } as React.CSSProperties
       }
+      initial={{ opacity: 0, y: 8, scale: 0.985 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={{ opacity: 0, y: 8, scale: 0.985 }}
+      transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
       aria-label={`${app.title} window`}
       onPointerDown={() => onFocus(window.appId)}
     >
@@ -139,6 +144,6 @@ export function Window({
         onPointerDown={handleResizePointerDown}
         aria-label={`Resize ${app.title}`}
       />
-    </section>
+    </motion.section>
   );
 }

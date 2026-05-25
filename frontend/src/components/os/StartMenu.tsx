@@ -1,4 +1,5 @@
 import { Search, Sparkles } from "lucide-react";
+import { motion } from "motion/react";
 import { useMemo, useState } from "react";
 import type { AppDefinition, SearchResult, SystemAction } from "../../lib/types";
 import { portfolioKernel } from "../../os/kernel/kernel";
@@ -85,11 +86,18 @@ export function StartMenu({ open, onRunAction }: StartMenuProps) {
             const description = item.kind === "app" ? item.app.description : item.result.description;
 
             return (
-              <button key={item.kind === "app" ? item.app.id : item.result.id} type="button" onClick={() => onRunAction(item.action)}>
+              <motion.button
+                key={item.kind === "app" ? item.app.id : item.result.id}
+                type="button"
+                onClick={() => onRunAction(item.action)}
+                initial={{ opacity: 0, y: 4 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.12 }}
+              >
                 {app ? <AppPixelIcon app={app} className="start-menu__app-icon" fallbackSize={20} /> : <Search aria-hidden="true" size={20} />}
                 <span>{title}</span>
                 <small>{category} / {description}</small>
-              </button>
+              </motion.button>
             );
           })}
         </div>

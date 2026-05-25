@@ -12,6 +12,7 @@ import {
   SlidersHorizontal,
   TerminalSquare
 } from "lucide-react";
+import { motion } from "motion/react";
 import type { FormEvent, KeyboardEvent } from "react";
 import { useEffect, useMemo, useState } from "react";
 import { portfolioKernel } from "../../../os/kernel/kernel";
@@ -163,13 +164,20 @@ export function SearchApp({ runAction, params }: OsAppComponentProps) {
         />
       </label>
       <div className="search-results">
-        {results.map((result) => (
-          <button key={result.id} type="button" onClick={() => handleResultAction(result.action)}>
+        {results.map((result, index) => (
+          <motion.button
+            key={result.id}
+            type="button"
+            onClick={() => handleResultAction(result.action)}
+            initial={{ opacity: 0, y: 5 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.14, delay: Math.min(index, 5) * 0.025 }}
+          >
             <span>{result.category}</span>
             <strong>{result.title}</strong>
             <p>{result.description}</p>
             <small>{result.keywords.slice(0, 5).join(" / ")}</small>
-          </button>
+          </motion.button>
         ))}
       </div>
     </div>
@@ -520,7 +528,13 @@ export function TerminalApp({ runAction, params }: OsAppComponentProps) {
     <div className="terminal-app" role="application" aria-label="Portfolio OS terminal">
       <div className="terminal-output" aria-live="polite">
         {lines.map((line, index) => (
-          <p key={`${line}-${index}`}>{line}</p>
+          <p
+            key={`${line}-${index}`}
+            className="terminal-line"
+            style={{ animationDelay: `${Math.min(index, 8) * 35}ms` }}
+          >
+            {line}
+          </p>
         ))}
       </div>
       <form onSubmit={submitCommand}>

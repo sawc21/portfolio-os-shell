@@ -1,0 +1,84 @@
+import { useEffect, useId, useRef } from "react";
+import sawyerLoginPortrait from "../../assets/profile/sawyer-login.webp";
+
+export type LoginScreenStatus = "idle" | "error" | "success";
+
+export type LoginScreenProps = {
+  phrase: string;
+  status: LoginScreenStatus;
+  message: string;
+  submitting: boolean;
+  onPhraseChange: (value: string) => void;
+  onSubmit: () => void;
+};
+
+export function LoginScreen({
+  phrase,
+  status,
+  message,
+  submitting,
+  onPhraseChange,
+  onSubmit
+}: LoginScreenProps) {
+  const inputId = useId();
+  const feedbackId = useId();
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
+
+  useEffect(() => {
+    if (status === "error") {
+      inputRef.current?.focus();
+      inputRef.current?.select();
+    }
+  }, [status, message]);
+
+  return (
+    <section className="login-screen" data-status={status} aria-label="Portfolio OS login">
+      <div className="login-screen__backdrop" aria-hidden="true" />
+      <form
+        className="login-screen__panel"
+        onSubmit={(event) => {
+          event.preventDefault();
+          onSubmit();
+        }}
+      >
+        <div className="login-screen__portrait-frame">
+          <img src={sawyerLoginPortrait} alt="Sawyer Cawthon" />
+        </div>
+        <div className="login-screen__content">
+          <span className="os-label">kernel.gallery</span>
+          <h1>Sawyer Cawthon</h1>
+          <p>Portfolio Operating System</p>
+          <p className="login-screen__helper">Type Hire Sawyer to boot the desktop.</p>
+          <label htmlFor={inputId}>access phrase</label>
+          <div className="login-screen__input-wrap">
+            <span className="login-screen__status-light" aria-hidden="true" />
+            <input
+              id={inputId}
+              ref={inputRef}
+              value={phrase}
+              onChange={(event) => onPhraseChange(event.target.value)}
+              aria-describedby={feedbackId}
+              autoComplete="off"
+              disabled={submitting}
+              spellCheck={false}
+            />
+          </div>
+          <div
+            id={feedbackId}
+            className="login-screen__feedback"
+            role={status === "error" ? "alert" : "status"}
+          >
+            {message}
+          </div>
+          <button type="submit" disabled={submitting}>
+            {submitting ? "Booting..." : "Log on"}
+          </button>
+        </div>
+      </form>
+    </section>
+  );
+}

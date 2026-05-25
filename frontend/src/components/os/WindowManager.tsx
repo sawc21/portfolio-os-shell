@@ -1,3 +1,4 @@
+import { AnimatePresence } from "motion/react";
 import { appComponents } from "./apps/appComponents";
 import { Window } from "./Window";
 import type { AppId, SystemAction, WindowInstance } from "../../lib/types";
@@ -29,28 +30,30 @@ export function WindowManager({
 }: WindowManagerProps) {
   return (
     <div className="window-layer" aria-live="polite">
-      {windows.map((window) => {
-        const AppComponent = appComponents[window.appId];
+      <AnimatePresence>
+        {windows.map((window) => {
+          const AppComponent = appComponents[window.appId];
 
-        return (
-          <Window
-            key={window.appId}
-            window={window}
-            focused={focusedAppId === window.appId}
-            onFocus={onFocus}
-            onClose={onClose}
-            onMinimize={onMinimize}
-            onMove={onMove}
-            onResize={onResize}
-            onToggleMaximize={onToggleMaximize}
-          >
-            <AppComponent
-              runAction={runAction}
-              params={appParams[window.appId]}
-            />
-          </Window>
-        );
-      })}
+          return (
+            <Window
+              key={window.appId}
+              window={window}
+              focused={focusedAppId === window.appId}
+              onFocus={onFocus}
+              onClose={onClose}
+              onMinimize={onMinimize}
+              onMove={onMove}
+              onResize={onResize}
+              onToggleMaximize={onToggleMaximize}
+            >
+              <AppComponent
+                runAction={runAction}
+                params={appParams[window.appId]}
+              />
+            </Window>
+          );
+        })}
+      </AnimatePresence>
     </div>
   );
 }
