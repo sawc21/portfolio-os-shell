@@ -38,6 +38,7 @@ export function ProjectsApp() {
               <strong>{project.role}</strong>
             </div>
             <h3>{project.title}</h3>
+            {project.featured && project.visualProof ? <ProjectProofStrip project={project} /> : null}
             <p>{project.summary}</p>
             <small>{project.phase} / {formatSource(project)}</small>
             <div className="token-row">
@@ -66,6 +67,28 @@ export function ProjectsApp() {
   );
 }
 
+function ProjectProofStrip({ project }: { project: CatalogProject }) {
+  const proofSlots = project.proofSlots ?? [];
+
+  return (
+    <div className="project-proof-strip" aria-label={`${project.title} proof placeholders`}>
+      <div className="project-proof-visual" aria-label={project.visualProof?.alt}>
+        <span>Placeholder</span>
+        <strong>{project.visualProof?.label}</strong>
+        <small>{project.visualProof ? formatProofStatus(project.visualProof.status) : "Needs screenshot"}</small>
+      </div>
+      <div className="project-proof-slots">
+        {proofSlots.slice(0, 3).map((slot) => (
+          <span key={`${project.slug}-${slot.status}`}>
+            <strong>{formatProofStatus(slot.status)}</strong>
+            {slot.label}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function FilterButton({
   active,
   children,
@@ -88,4 +111,19 @@ function formatSource(project: CatalogProject) {
   }
 
   return project.localPathLabel;
+}
+
+function formatProofStatus(status: string) {
+  const labels: Record<string, string> = {
+    "needs-screenshot": "Needs screenshot",
+    "needs-architecture-diagram": "Needs architecture diagram",
+    "needs-demo-capture": "Needs demo capture",
+    "needs-test-evidence": "Needs test evidence",
+    "needs-workflow-diagram": "Needs workflow diagram",
+    "needs-output-sample": "Needs output sample",
+    "needs-data-model": "Needs data model",
+    "needs-runtime-proof": "Needs runtime proof"
+  };
+
+  return labels[status] ?? "Placeholder";
 }

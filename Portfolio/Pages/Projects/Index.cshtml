@@ -49,6 +49,14 @@
     {
         <article class="branch-card showcase-card">
             <div class="branch-visual-link" aria-label="@project.Title source">
+                @if (project.Featured && project.VisualProof is not null)
+                {
+                    <div class="proof-visual-placeholder">
+                        <span>Placeholder</span>
+                        <strong>@project.VisualProof.Label</strong>
+                        <small>@FormatProofStatus(project.VisualProof.Status)</small>
+                    </div>
+                }
                 <span class="branch-count">@((project.Branches ?? []).Count) branches</span>
             </div>
             <div class="branch-body">
@@ -72,9 +80,19 @@
                 </h2>
                 <p>@project.Summary</p>
                 <div class="showcase-proof" aria-label="@project.Title proof points">
-                    <span>@(project.Featured ? "Featured" : "Archive")</span>
-                    <span>@project.SourceType</span>
-                    <span>@project.LocalPathLabel</span>
+                    @if (project.Featured && project.ProofSlots.Count > 0)
+                    {
+                        @foreach (var slot in project.ProofSlots.Take(3))
+                        {
+                            <span><strong>@FormatProofStatus(slot.Status)</strong>@slot.Label</span>
+                        }
+                    }
+                    else
+                    {
+                        <span>@(project.Featured ? "Featured" : "Archive")</span>
+                        <span>@project.SourceType</span>
+                        <span>@project.LocalPathLabel</span>
+                    }
                 </div>
                 <div class="branch-list" aria-label="Project branches">
                     @foreach (var branch in project.Branches ?? [])
@@ -103,3 +121,21 @@
         }
     </ol>
 </section>
+
+@functions {
+    private static string FormatProofStatus(string status)
+    {
+        return status switch
+        {
+            "needs-screenshot" => "Needs screenshot",
+            "needs-architecture-diagram" => "Needs architecture diagram",
+            "needs-demo-capture" => "Needs demo capture",
+            "needs-test-evidence" => "Needs test evidence",
+            "needs-workflow-diagram" => "Needs workflow diagram",
+            "needs-output-sample" => "Needs output sample",
+            "needs-data-model" => "Needs data model",
+            "needs-runtime-proof" => "Needs runtime proof",
+            _ => "Placeholder"
+        };
+    }
+}

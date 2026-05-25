@@ -101,6 +101,9 @@ public sealed class PublicRouteTests : IClassFixture<WebApplicationFactory<Progr
         Assert.Contains("QuickBooksToolKit", projects);
         Assert.Contains("NoteTakingApp", projects);
         Assert.Contains("Inventory Management", projects);
+        Assert.Contains("Portfolio OS Shell", projects);
+        Assert.Contains("Needs screenshot", projects);
+        Assert.Contains("Needs architecture diagram", projects);
     }
 
     [Fact]
