@@ -1,4 +1,6 @@
 import { useEffect, useId, useRef } from "react";
+import { BriefcaseBusiness, FileText, GitBranch, Mail, X } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import sawyerLoginPortrait from "../../assets/profile/sawyer-login.webp";
 
 export type LoginScreenStatus = "idle" | "error" | "success";
@@ -11,6 +13,21 @@ export type LoginScreenProps = {
   onPhraseChange: (value: string) => void;
   onSubmit: () => void;
 };
+
+type LoginQuickLink = {
+  label: string;
+  href: string;
+  icon: LucideIcon;
+  external?: boolean;
+};
+
+const loginQuickLinks: LoginQuickLink[] = [
+  { label: "GitHub", href: "https://github.com/sawc21", icon: GitBranch, external: true },
+  { label: "LinkedIn", href: "https://www.linkedin.com/", icon: BriefcaseBusiness, external: true },
+  { label: "X", href: "https://x.com/", icon: X, external: true },
+  { label: "Email", href: "mailto:hello@example.com", icon: Mail },
+  { label: "Resume", href: "/resume", icon: FileText }
+];
 
 export function LoginScreen({
   phrase,
@@ -52,8 +69,37 @@ export function LoginScreen({
           <span className="os-label">kernel.gallery</span>
           <h1>Sawyer Cawthon</h1>
           <p>Portfolio Operating System</p>
-          <p className="login-screen__helper">Type Hire Sawyer to boot the desktop.</p>
-          <label htmlFor={inputId}>access phrase</label>
+          <p className="login-screen__about">
+            Product-minded developer building React, TypeScript, ASP.NET Core, C#,
+            accessible UI, and interaction systems with disciplined iteration.
+          </p>
+          <div className="login-screen__focus-list" aria-label="Sawyer's core work">
+            <span>React + TypeScript</span>
+            <span>ASP.NET Core + C#</span>
+            <span>Product UI</span>
+            <span>Testing + accessibility</span>
+          </div>
+          <div className="login-screen__phrase-card" aria-label="Required login phrase">
+            <span>type exactly</span>
+            <strong>Hire Sawyer</strong>
+          </div>
+          <p className="login-screen__helper">Enter the phrase above to boot the desktop.</p>
+          <nav className="login-screen__quick-links" aria-label="Sawyer quick links">
+            {loginQuickLinks.map(({ label, href, icon: Icon, external }) => (
+              <a
+                key={label}
+                href={href}
+                aria-label={label}
+                title={label}
+                target={external ? "_blank" : undefined}
+                rel={external ? "me noopener noreferrer" : undefined}
+              >
+                <Icon aria-hidden="true" size={15} strokeWidth={2.4} />
+                <span>{label}</span>
+              </a>
+            ))}
+          </nav>
+          <label htmlFor={inputId}>access phrase (case-sensitive)</label>
           <div className="login-screen__input-wrap">
             <span className="login-screen__status-light" aria-hidden="true" />
             <input
@@ -64,6 +110,7 @@ export function LoginScreen({
               aria-describedby={feedbackId}
               autoComplete="off"
               disabled={submitting}
+              placeholder="Hire Sawyer"
               spellCheck={false}
             />
           </div>

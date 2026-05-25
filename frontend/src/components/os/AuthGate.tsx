@@ -12,7 +12,7 @@ type AuthGateProps = {
   children: ReactNode;
 };
 
-const idleMessage = "Type Hire Sawyer to boot the desktop.";
+const idleMessage = "Enter the exact phrase shown above: Hire Sawyer.";
 const errorMessage = "Phrase must match exactly: Hire Sawyer";
 const successMessage = "Access granted. Loading Portfolio OS...";
 
