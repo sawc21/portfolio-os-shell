@@ -22,6 +22,23 @@ public sealed class CatalogProject
     public bool Featured { get; init; }
     public bool Archive { get; init; }
     public string? CaseStudyPath { get; init; }
+    public ProjectVisualProof? VisualProof { get; init; }
+    public IReadOnlyList<ProjectProofSlot> ProofSlots { get; init; } = [];
+}
+
+public sealed class ProjectVisualProof
+{
+    public string Kind { get; init; } = string.Empty;
+    public string Label { get; init; } = string.Empty;
+    public string Alt { get; init; } = string.Empty;
+    public string Status { get; init; } = string.Empty;
+}
+
+public sealed class ProjectProofSlot
+{
+    public string Label { get; init; } = string.Empty;
+    public string Description { get; init; } = string.Empty;
+    public string Status { get; init; } = string.Empty;
 }
 
 public sealed class PublicationItem
@@ -32,6 +49,10 @@ public sealed class PublicationItem
     public string Status { get; init; } = string.Empty;
     public IReadOnlyList<string> Tags { get; init; } = [];
     public string CitationNote { get; init; } = string.Empty;
+    public string CitationStatus { get; init; } = string.Empty;
+    public string VenueStatus { get; init; } = string.Empty;
+    public string DoiStatus { get; init; } = string.Empty;
+    public string PdfStatus { get; init; } = string.Empty;
     public string? Url { get; init; }
 }
 

@@ -13,7 +13,25 @@
       "localPathLabel": "C:/Users/SawyerCawthon/PortFolio",
       "featured": true,
       "archive": false,
-      "caseStudyPath": "/projects/portfolio-platform"
+      "caseStudyPath": "/projects/portfolio-platform",
+      "visualProof": {
+        "kind": "placeholder",
+        "label": "OS desktop screenshot",
+        "alt": "Placeholder for Portfolio OS desktop screenshot",
+        "status": "needs-screenshot"
+      },
+      "proofSlots": [
+        {
+          "label": "Architecture diagram",
+          "description": "Replace with a diagram showing the React shell, ASP.NET routes, shared profile config, catalog data, and Portfolio OS apps.",
+          "status": "needs-architecture-diagram"
+        },
+        {
+          "label": "Browser QA evidence",
+          "description": "Replace with a QA capture covering login, app launch, AI Notes, Publications & CV, Projects, and Quick Note flows.",
+          "status": "needs-test-evidence"
+        }
+      ]
     },
     {
       "title": "QuickBooksToolKit",
@@ -27,7 +45,25 @@
       "repoUrl": "https://github.com/Intellivega/QuickBooksToolKitAi",
       "localPathLabel": "C:/Users/SawyerCawthon/source/repos/QuickBooksToolKit",
       "featured": true,
-      "archive": false
+      "archive": false,
+      "visualProof": {
+        "kind": "placeholder",
+        "label": "MCP workflow capture",
+        "alt": "Placeholder for QuickBooks MCP workflow demo capture",
+        "status": "needs-demo-capture"
+      },
+      "proofSlots": [
+        {
+          "label": "OAuth and token flow",
+          "description": "Replace with a diagram showing QuickBooks OAuth, protected token storage, and guarded API calls.",
+          "status": "needs-workflow-diagram"
+        },
+        {
+          "label": "Command demo",
+          "description": "Replace with a short terminal or app-host capture showing MCP tools returning QuickBooks data safely.",
+          "status": "needs-demo-capture"
+        }
+      ]
     },
     {
       "title": "NoteTakingApp / AI Notes",
@@ -41,7 +77,25 @@
       "repoUrl": "https://github.com/sawc21/NoteTakingApp",
       "localPathLabel": "C:/Users/SawyerCawthon/source/repos/NoteTakingApp",
       "featured": true,
-      "archive": false
+      "archive": false,
+      "visualProof": {
+        "kind": "placeholder",
+        "label": "AI Notes editor screenshot",
+        "alt": "Placeholder for AI Notes editor and markdown preview screenshot",
+        "status": "needs-screenshot"
+      },
+      "proofSlots": [
+        {
+          "label": "Storage and persistence roadmap",
+          "description": "Replace with a diagram showing localStorage v1, SQLite API phase, PostgreSQL phase, and future public slugs.",
+          "status": "needs-architecture-diagram"
+        },
+        {
+          "label": "Quick Note capture",
+          "description": "Replace with a capture showing Ctrl+Alt+N saving a focused note into AI Notes.",
+          "status": "needs-demo-capture"
+        }
+      ]
     },
     {
       "title": "Extraction",
@@ -55,7 +109,25 @@
       "repoUrl": "https://github.com/sawc21/Extraction",
       "localPathLabel": "GitHub public repository",
       "featured": true,
-      "archive": false
+      "archive": false,
+      "visualProof": {
+        "kind": "placeholder",
+        "label": "CTI extraction pipeline diagram",
+        "alt": "Placeholder for Cyber Threat Intelligence extraction pipeline diagram",
+        "status": "needs-architecture-diagram"
+      },
+      "proofSlots": [
+        {
+          "label": "Knowledge graph output",
+          "description": "Replace with a redacted output sample showing extracted entities, relationships, and triple validation results.",
+          "status": "needs-output-sample"
+        },
+        {
+          "label": "Validation evidence",
+          "description": "Replace with a test or notebook capture showing extraction accuracy checks and repair workflow behavior.",
+          "status": "needs-test-evidence"
+        }
+      ]
     },
     {
       "title": "SmartSelect / Awards Aggregate",
@@ -69,7 +141,25 @@
       "repoUrl": "https://github.com/Intellivega/SmartSelect",
       "localPathLabel": "C:/Users/SawyerCawthon/source/repos/awardsaggregate",
       "featured": true,
-      "archive": false
+      "archive": false,
+      "visualProof": {
+        "kind": "placeholder",
+        "label": "Awards workflow screenshot",
+        "alt": "Placeholder for SmartSelect awards aggregate workflow screenshot",
+        "status": "needs-screenshot"
+      },
+      "proofSlots": [
+        {
+          "label": "Scoring and data model",
+          "description": "Replace with a model diagram showing award, program, initiative, year, client, and grantor relationships.",
+          "status": "needs-data-model"
+        },
+        {
+          "label": "Results proof",
+          "description": "Replace with a safe demo capture showing aggregate filtering or decision-support output.",
+          "status": "needs-demo-capture"
+        }
+      ]
     },
     {
       "title": "Inventory Management",
@@ -83,7 +173,25 @@
       "repoUrl": "https://github.com/sawc21/Inventory-Management-",
       "localPathLabel": "GitHub public repository",
       "featured": true,
-      "archive": false
+      "archive": false,
+      "visualProof": {
+        "kind": "placeholder",
+        "label": "Inventory UI or CLI screenshot",
+        "alt": "Placeholder for Inventory Management user flow screenshot",
+        "status": "needs-screenshot"
+      },
+      "proofSlots": [
+        {
+          "label": "Java domain model proof",
+          "description": "Replace with a class or module diagram showing inventory items, stock movement, validation, and persistence boundaries.",
+          "status": "needs-data-model"
+        },
+        {
+          "label": "Low-stock workflow",
+          "description": "Replace with a test or runtime capture showing concurrent low-stock updates and result handling.",
+          "status": "needs-test-evidence"
+        }
+      ]
     },
     {
       "title": "Planner",
@@ -97,7 +205,25 @@
       "repoUrl": "https://github.com/sawc21/Planner",
       "localPathLabel": "GitHub public repository",
       "featured": true,
-      "archive": false
+      "archive": false,
+      "visualProof": {
+        "kind": "placeholder",
+        "label": "Planning UI screenshot",
+        "alt": "Placeholder for Planner Next.js product surface screenshot",
+        "status": "needs-screenshot"
+      },
+      "proofSlots": [
+        {
+          "label": "Product flow",
+          "description": "Replace with a flow capture showing planning state, prioritization, and task movement.",
+          "status": "needs-demo-capture"
+        },
+        {
+          "label": "Runtime proof",
+          "description": "Replace with a build, deployment, or local run capture showing the Planner app working end to end.",
+          "status": "needs-runtime-proof"
+        }
+      ]
     },
     {
       "title": "practice",
@@ -203,7 +329,11 @@
       "sourceContext": "DoD, San Angelo - Funded Research Contributor",
       "status": "Resume-listed publication",
       "tags": ["Cyber Threat Intelligence", "Semantic chunking", "Consensus filtering", "Knowledge graphs"],
-      "citationNote": "Citation link pending verification; listed from current resume source."
+      "citationNote": "Citation link pending verification; listed from current resume source.",
+      "citationStatus": "Citation pending verification",
+      "venueStatus": "Venue pending",
+      "doiStatus": "DOI unavailable",
+      "pdfStatus": "PDF link unavailable"
     },
     {
       "title": "Automated Validation and Repair of Knowledge Graph Triples for Cyber Threat Intelligence.",
@@ -211,7 +341,11 @@
       "sourceContext": "DoD, San Angelo - Funded Research Contributor",
       "status": "Resume-listed publication",
       "tags": ["Cyber Threat Intelligence", "Knowledge graph triples", "Validation", "Repair"],
-      "citationNote": "Citation link pending verification; listed from current resume source."
+      "citationNote": "Citation link pending verification; listed from current resume source.",
+      "citationStatus": "Citation pending verification",
+      "venueStatus": "Venue pending",
+      "doiStatus": "DOI unavailable",
+      "pdfStatus": "PDF link unavailable"
     },
     {
       "title": "Co-authored published academic paper on NASA Artemis Gateway simulation architecture and system impact.",
@@ -219,7 +353,11 @@
       "sourceContext": "NASA/Barrios, The DataMine - Undergraduate Research Assistant",
       "status": "Resume-listed publication",
       "tags": ["NASA", "Artemis Gateway", "Unreal Engine 5", "Simulation"],
-      "citationNote": "Exact venue and citation link pending verification; summarized from current resume source."
+      "citationNote": "Exact venue and citation link pending verification; summarized from current resume source.",
+      "citationStatus": "Citation pending verification",
+      "venueStatus": "Venue pending",
+      "doiStatus": "DOI unavailable",
+      "pdfStatus": "PDF link unavailable"
     }
   ],
   "cv": {

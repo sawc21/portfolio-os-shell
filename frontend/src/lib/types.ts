@@ -86,6 +86,29 @@ export type ProjectItem = {
 
 export type ProjectSourceType = "github" | "local" | "local-git" | "portfolio-content";
 
+export type ProjectProofStatus =
+  | "needs-screenshot"
+  | "needs-architecture-diagram"
+  | "needs-demo-capture"
+  | "needs-test-evidence"
+  | "needs-workflow-diagram"
+  | "needs-output-sample"
+  | "needs-data-model"
+  | "needs-runtime-proof";
+
+export type ProjectVisualProof = {
+  kind: "placeholder" | "image";
+  label: string;
+  alt: string;
+  status: ProjectProofStatus;
+};
+
+export type ProjectProofSlot = {
+  label: string;
+  description: string;
+  status: ProjectProofStatus;
+};
+
 export type CatalogProject = ProjectItem & {
   sourceType: ProjectSourceType;
   repoUrl?: string;
@@ -93,6 +116,8 @@ export type CatalogProject = ProjectItem & {
   featured: boolean;
   archive: boolean;
   caseStudyPath?: string;
+  visualProof?: ProjectVisualProof;
+  proofSlots?: ProjectProofSlot[];
 };
 
 export type PublicationItem = {
@@ -102,6 +127,10 @@ export type PublicationItem = {
   status: string;
   tags: string[];
   citationNote: string;
+  citationStatus?: string;
+  venueStatus?: string;
+  doiStatus?: string;
+  pdfStatus?: string;
   url?: string;
 };
 

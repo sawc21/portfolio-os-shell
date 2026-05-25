@@ -36,6 +36,18 @@ describe("portfolio catalog", () => {
     expect(archive.every((project) => projectSlugs.has(project.slug))).toBe(true);
   });
 
+  test("featured projects include clearly marked proof placeholders", () => {
+    const featured = getFeaturedProjects();
+
+    expect(featured.every((project) => project.visualProof?.kind === "placeholder")).toBe(true);
+    expect(featured.every((project) => (project.proofSlots?.length ?? 0) > 0)).toBe(true);
+    expect(featured.some((project) => project.visualProof?.status === "needs-screenshot")).toBe(true);
+    expect(
+      featured.some((project) => project.proofSlots?.some((slot) => slot.status === "needs-architecture-diagram"))
+    ).toBe(true);
+    expect(featured.some((project) => project.proofSlots?.some((slot) => slot.status === "needs-demo-capture"))).toBe(true);
+  });
+
   test("publication list uses resume-sourced paper claims without fabricated links", () => {
     const publications = getPublicationItems();
     const titles = publications.map((publication) => publication.title);
@@ -44,6 +56,10 @@ describe("portfolio catalog", () => {
     expect(titles).toContain("Automated Validation and Repair of Knowledge Graph Triples for Cyber Threat Intelligence.");
     expect(titles).toContain("Co-authored published academic paper on NASA Artemis Gateway simulation architecture and system impact.");
     expect(publications.every((publication) => publication.url === undefined)).toBe(true);
+    expect(publications.every((publication) => publication.citationStatus === "Citation pending verification")).toBe(true);
+    expect(publications.every((publication) => publication.venueStatus === "Venue pending")).toBe(true);
+    expect(publications.every((publication) => publication.doiStatus === "DOI unavailable")).toBe(true);
+    expect(publications.every((publication) => publication.pdfStatus === "PDF link unavailable")).toBe(true);
     expect(portfolioCatalog.cv.honors).toContain("Published Research Author");
   });
 });
