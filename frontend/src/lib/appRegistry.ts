@@ -1,6 +1,8 @@
 import {
   BadgeInfo,
+  Bot,
   CalendarCheck,
+  CircuitBoard,
   FileText,
   Flame,
   FolderOpen,
@@ -115,6 +117,34 @@ export const appRegistry: AppDefinition[] = [
     launcher: true,
     commands: ["case-studies", "cases"],
     defaultWindow: { width: 700, height: 500, x: 176, y: 92 }
+  },
+  {
+    id: "ai-lab",
+    title: "AI Lab",
+    shortTitle: "AI Lab",
+    description: "AI project demos, model workflows, and prototype capabilities Sawyer can wire into products.",
+    category: "portfolio",
+    icon: Bot,
+    accent: "#70d7b2",
+    tags: ["ai", "llm", "agents", "automation", "prototype", "portfolio apps"],
+    desktop: true,
+    launcher: true,
+    commands: ["ai", "ai lab", "llm", "agents"],
+    defaultWindow: { width: 700, height: 500, x: 136, y: 118 }
+  },
+  {
+    id: "agent-console",
+    title: "Agent Console",
+    shortTitle: "Agents",
+    description: "A systems view of agentic workflows, tool calls, safeguards, and integration plans.",
+    category: "system",
+    icon: CircuitBoard,
+    accent: "#8be7ff",
+    tags: ["agent", "tools", "workflows", "guardrails", "integration", "ai"],
+    desktop: true,
+    launcher: true,
+    commands: ["agents", "agent console", "tools"],
+    defaultWindow: { width: 680, height: 480, x: 190, y: 132 }
   },
   {
     id: "notes",

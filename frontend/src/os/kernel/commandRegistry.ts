@@ -21,6 +21,8 @@ export const commandDefinitions: CommandDefinition[] = [
   { name: "open contact", description: "Open Contact", aliases: ["open contact", "contact"], targetAppId: "contact" },
   { name: "open skills", description: "Open Skills", aliases: ["open skills", "skills", "stack"], targetAppId: "skills" },
   { name: "open case studies", description: "Open Case Studies", aliases: ["open case studies", "case studies", "cases"], targetAppId: "case-studies" },
+  { name: "open ai lab", description: "Open AI Lab", aliases: ["open ai lab", "ai", "ai lab", "llm"], targetAppId: "ai-lab" },
+  { name: "open agents", description: "Open Agent Console", aliases: ["open agents", "agents", "agent console", "tools"], targetAppId: "agent-console" },
   { name: "hire sawyer", description: "Open the hiring-focused recruiter view", aliases: ["hire sawyer", "why hire sawyer"], targetAppId: "recruiter" },
   { name: "whoami", description: "Print Sawyer's role positioning", aliases: ["whoami", "about"] },
   { name: "launch world", description: "Start the desktop-to-world transition", aliases: ["launch world", "launch-world", "world"] },
@@ -89,5 +91,5 @@ export function runKernelCommand(rawCommand: string, provider: PortfolioDataProv
     return app.id === "world" ? systemActions.launchWorld() : systemActions.openApp(app.id);
   }
 
-  return systemActions.print([`Unknown command: ${rawCommand}`, "Type help, apps, search react, or hire sawyer."]);
+  return systemActions.print([`Unknown command: ${rawCommand}`, "Type help, apps, search ai, or hire sawyer."]);
 }

@@ -1,6 +1,8 @@
 import {
   ArrowUpRight,
+  Bot,
   CheckCircle2,
+  CircuitBoard,
   Circle,
   Copy,
   FileCode2,
@@ -160,7 +162,7 @@ export function SearchApp({ runAction, params }: OsAppComponentProps) {
           value={query}
           onChange={(event) => setQuery(event.target.value)}
           aria-label="Search the Portfolio OS"
-          placeholder="try hire sawyer, react, testing, 3d"
+          placeholder="try ai, agents, hire sawyer, react"
         />
       </label>
       <div className="search-results">
@@ -368,6 +370,141 @@ export function CaseStudiesApp({ runAction }: OsAppComponentProps) {
       <button type="button" className="app-action" onClick={() => runAction(portfolioKernel.actions.openApp("recruiter"))}>
         Open Recruiter Quick View
       </button>
+    </div>
+  );
+}
+
+const aiProjectCards = [
+  {
+    title: "Portfolio OS as an agent-ready shell",
+    status: "built",
+    summary:
+      "The desktop, command routing, search index, and app registry are structured so future AI tools can open apps, route users, and explain portfolio evidence without rewriting the shell.",
+    tokens: ["React", "TypeScript", "commands", "search", "tool actions"]
+  },
+  {
+    title: "Model workflow surfaces",
+    status: "prototype",
+    summary:
+      "AI experiences are framed as inspectable workflows: input, context, guardrails, actions, and verification states instead of a vague text box.",
+    tokens: ["LLM UX", "workflow design", "guardrails", "review states"]
+  },
+  {
+    title: "Automation-ready product apps",
+    status: "roadmap",
+    summary:
+      "Planner, Scope Budget, File Explorer, and Terminal already model the kind of stateful surfaces that can later connect to real automations and external APIs.",
+    tokens: ["automation", "stateful UI", "provider layer", "API-ready"]
+  }
+];
+
+const agentWorkflowCards = [
+  {
+    title: "Observe",
+    summary: "Collect task context from OS apps, files, search results, and explicit user intent.",
+    tokens: ["context", "search", "source paths"]
+  },
+  {
+    title: "Plan",
+    summary: "Break work into small, reviewable steps with visible assumptions and success checks.",
+    tokens: ["task planning", "scope", "risk"]
+  },
+  {
+    title: "Act",
+    summary: "Use typed system actions to open apps, copy paths, route searches, or hand off to future integrations.",
+    tokens: ["tools", "commands", "actions"]
+  },
+  {
+    title: "Verify",
+    summary: "Treat tests, build output, browser checks, and source diffs as first-class completion evidence.",
+    tokens: ["tests", "build", "browser QA"]
+  }
+];
+
+export function AiLabApp({ runAction }: OsAppComponentProps) {
+  return (
+    <div className="app-view app-view--ai-lab">
+      <header className="app-hero">
+        <span className="os-label">ai.capabilities</span>
+        <h2>AI projects shown as product systems.</h2>
+        <p>
+          Sawyer is positioning this OS around practical AI capability: agent-ready interfaces,
+          LLM workflow design, automation surfaces, and full-stack product wiring.
+        </p>
+      </header>
+      <div className="project-stack">
+        {aiProjectCards.map((card) => (
+          <article className="project-card" key={card.title}>
+            <div>
+              <span>{card.status}</span>
+              <strong>AI capability</strong>
+            </div>
+            <h3>{card.title}</h3>
+            <p>{card.summary}</p>
+            <div className="token-row">
+              {card.tokens.map((token) => (
+                <span key={token}>{token}</span>
+              ))}
+            </div>
+          </article>
+        ))}
+      </div>
+      <div className="app-actions">
+        <button type="button" className="app-action" onClick={() => runAction(portfolioKernel.actions.openApp("agent-console"))}>
+          <CircuitBoard aria-hidden="true" size={17} />
+          Open Agent Console
+        </button>
+        <button type="button" className="app-action" onClick={() => runAction(portfolioKernel.actions.openApp("projects"))}>
+          Open Projects
+        </button>
+        <button type="button" className="app-action" onClick={() => runAction(portfolioKernel.actions.openApp("skills"))}>
+          Open Skills
+        </button>
+      </div>
+    </div>
+  );
+}
+
+export function AgentConsoleApp({ runAction }: OsAppComponentProps) {
+  return (
+    <div className="app-view app-view--agent-console">
+      <header className="app-hero">
+        <span className="os-label">agent.console</span>
+        <h2>How AI tools can live inside the OS.</h2>
+        <p>
+          This console maps the integration pattern for future apps: visible context,
+          typed actions, clear guardrails, and verification before anything claims completion.
+        </p>
+      </header>
+      <div className="skill-grid">
+        {agentWorkflowCards.map((card) => (
+          <article key={card.title}>
+            <h3>{card.title}</h3>
+            <p>{card.summary}</p>
+            <div className="token-row">
+              {card.tokens.map((token) => (
+                <span key={token}>{token}</span>
+              ))}
+            </div>
+          </article>
+        ))}
+      </div>
+      <section className="case-note">
+        <strong>Integration rule</strong>
+        <p>
+          New AI apps should register through the OS app registry, communicate through typed
+          system actions, and keep model output visibly reviewable before it affects user state.
+        </p>
+      </section>
+      <div className="app-actions">
+        <button type="button" className="app-action" onClick={() => runAction(portfolioKernel.actions.openApp("ai-lab"))}>
+          <Bot aria-hidden="true" size={17} />
+          Open AI Lab
+        </button>
+        <button type="button" className="app-action" onClick={() => runAction(portfolioKernel.actions.openApp("terminal", { command: "apps" }))}>
+          Open Terminal Apps List
+        </button>
+      </div>
     </div>
   );
 }

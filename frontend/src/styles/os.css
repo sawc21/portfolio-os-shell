@@ -784,6 +784,12 @@
   font-size: 1.05rem;
 }
 
+.skill-grid p {
+  margin: 0 0 12px;
+  color: var(--os-muted);
+  font-size: 0.92rem;
+}
+
 .signal-grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }

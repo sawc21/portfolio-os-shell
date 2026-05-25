@@ -8,6 +8,8 @@ export type AppId =
   | "projects"
   | "skills"
   | "case-studies"
+  | "ai-lab"
+  | "agent-console"
   | "notes"
   | "resume"
   | "terminal"
