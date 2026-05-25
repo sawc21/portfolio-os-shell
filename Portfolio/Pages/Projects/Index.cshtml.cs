@@ -1,15 +1,15 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Portfolio.Content;
+using Portfolio.Catalog;
 
 namespace Portfolio.Pages.Projects;
 
-public sealed class IndexModel(IMarkdownContentService content) : PageModel
+public sealed class IndexModel(IPortfolioCatalogService catalogService) : PageModel
 {
-    public IReadOnlyList<ContentItem> Projects { get; private set; } = [];
+    public IReadOnlyList<CatalogProject> Projects { get; private set; } = [];
 
-    public async Task OnGetAsync()
+    public void OnGet()
     {
-        Projects = await content.GetProjectsAsync();
+        Projects = catalogService.GetCatalog().Projects;
     }
 }
 

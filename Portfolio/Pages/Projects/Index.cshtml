@@ -22,7 +22,10 @@
             <p class="system-label">featured.build</p>
             <h2 id="featured-build-title">@featured.Title</h2>
             <p>@featured.Summary</p>
-            <a class="button button-primary" asp-page="/Projects/Details" asp-route-slug="@featured.Slug">Open case study</a>
+            @if (!string.IsNullOrWhiteSpace(featured.CaseStudyPath))
+            {
+                <a class="button button-primary" href="@featured.CaseStudyPath">Open case study</a>
+            }
         </div>
         <dl class="showcase-stats" aria-label="Featured project signals">
             <div>
@@ -45,24 +48,33 @@
     @foreach (var project in Model.Projects)
     {
         <article class="branch-card showcase-card">
-            <a class="branch-visual-link" asp-page="/Projects/Details" asp-route-slug="@project.Slug" aria-label="Open @project.Title case study">
-                @if (!string.IsNullOrWhiteSpace(project.Visual))
-                {
-                    <img src="@project.Visual" alt="@project.VisualAlt" loading="lazy" decoding="async" />
-                }
+            <div class="branch-visual-link" aria-label="@project.Title source">
                 <span class="branch-count">@((project.Branches ?? []).Count) branches</span>
-            </a>
+            </div>
             <div class="branch-body">
                 <div class="meta-row">
                     <span>@project.Phase</span>
                     <span>@project.Role</span>
                 </div>
-                <h2><a asp-page="/Projects/Details" asp-route-slug="@project.Slug">@project.Title</a></h2>
+                <h2>
+                    @if (!string.IsNullOrWhiteSpace(project.CaseStudyPath))
+                    {
+                        <a href="@project.CaseStudyPath">@project.Title</a>
+                    }
+                    else if (!string.IsNullOrWhiteSpace(project.RepoUrl))
+                    {
+                        <a href="@project.RepoUrl">@project.Title</a>
+                    }
+                    else
+                    {
+                        @project.Title
+                    }
+                </h2>
                 <p>@project.Summary</p>
                 <div class="showcase-proof" aria-label="@project.Title proof points">
-                    <span>Product direction</span>
-                    <span>Technical kernel</span>
-                    <span>Branch notes</span>
+                    <span>@(project.Featured ? "Featured" : "Archive")</span>
+                    <span>@project.SourceType</span>
+                    <span>@project.LocalPathLabel</span>
                 </div>
                 <div class="branch-list" aria-label="Project branches">
                     @foreach (var branch in project.Branches ?? [])
@@ -84,7 +96,7 @@
         @foreach (var project in Model.Projects)
         {
             <li>
-                <time datetime="@project.Date.ToString("yyyy-MM-dd")">@project.Date.ToString("yyyy.MM")</time>
+                <time datetime="2026-05-25">catalog</time>
                 <strong>@project.Title</strong>
                 <span>@project.Phase</span>
             </li>

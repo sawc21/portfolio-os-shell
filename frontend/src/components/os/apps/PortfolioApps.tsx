@@ -8,6 +8,7 @@ export { SkillsApp } from "./SkillsApp";
 export { CaseStudiesApp } from "./CaseStudiesApp";
 export { AiLabApp } from "./AiLabApp";
 export { AgentConsoleApp } from "./AgentConsoleApp";
+export { PublicationsApp } from "./PublicationsApp";
 export { NotesApp } from "./NotesApp";
 export { ResumeApp } from "./ResumeApp";
 export { ContactApp } from "./ContactApp";

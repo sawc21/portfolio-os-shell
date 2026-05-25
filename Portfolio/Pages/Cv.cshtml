@@ -1,0 +1,97 @@
+@page "/cv"
+@using Microsoft.AspNetCore.Html
+@model Portfolio.Pages.CvModel
+@{
+    ViewData["Title"] = "CV | Sawyer Cawthon";
+    ViewData["Description"] = "Sawyer Cawthon CV with research publications, AI and cybersecurity work, industry experience, education, honors, and professional links.";
+    ViewData["CanonicalPath"] = "/cv";
+}
+
+<section class="page-header split-header">
+    <div>
+        <p class="system-label">research.cv</p>
+        <h1>Sawyer Cawthon CV</h1>
+    </div>
+    <p>AI-focused software developer with Cyber Threat Intelligence research, ASP.NET industry work, and NASA/Barrios simulation research experience.</p>
+</section>
+
+<section class="featured-build" aria-labelledby="cv-contact-title">
+    <div>
+        <p class="system-label">professional.links</p>
+        <h2 id="cv-contact-title">Contact and source links</h2>
+        <p>@Model.Profile.ShortPitch</p>
+        <div class="footer-links">
+            <a href="mailto:@Model.Profile.Email">@Model.Profile.Email</a>
+            <a href="@Model.Profile.Links.LinkedIn">LinkedIn</a>
+            <a href="@Model.Profile.Links.GitHub">GitHub</a>
+            <a class="button button-primary" href="@Model.Profile.Links.ResumePdf" download>Download resume PDF</a>
+        </div>
+    </div>
+    <dl class="showcase-stats" aria-label="CV highlights">
+        <div>
+            <dt>publications</dt>
+            <dd>@Model.Catalog.Publications.Count</dd>
+        </div>
+        <div>
+            <dt>research roles</dt>
+            <dd>@Model.Catalog.Cv.ResearchRoles.Count</dd>
+        </div>
+        <div>
+            <dt>honors</dt>
+            <dd>@Model.Catalog.Cv.Honors.Count</dd>
+        </div>
+    </dl>
+</section>
+
+<section class="branch-grid branch-grid-wide" aria-label="Publications">
+    @foreach (var publication in Model.Catalog.Publications)
+    {
+        <article class="branch-card showcase-card">
+            <div class="branch-body">
+                <div class="meta-row">
+                    <span>@publication.Category</span>
+                    <span>@publication.Status</span>
+                </div>
+                <h2>@publication.Title</h2>
+                <p>@publication.SourceContext</p>
+                <p>@publication.CitationNote</p>
+                <div class="branch-list" aria-label="Publication tags">
+                    @foreach (var tag in publication.Tags)
+                    {
+                        <span>@tag</span>
+                    }
+                </div>
+            </div>
+        </article>
+    }
+</section>
+
+<section class="project-timeline" aria-labelledby="cv-sections-title">
+    <div>
+        <p class="system-label">cv.sections</p>
+        <h2 id="cv-sections-title">Experience, education, strengths, and honors.</h2>
+    </div>
+    @CvList("Research Experience", Model.Catalog.Cv.ResearchRoles)
+    @CvList("Industry Experience", Model.Catalog.Cv.IndustryExperience)
+    @CvList("Education", Model.Catalog.Cv.Education)
+    @CvList("Technical Strengths", Model.Catalog.Cv.TechnicalStrengths)
+    @CvList("Honors", Model.Catalog.Cv.Honors)
+</section>
+
+@functions {
+    private static IHtmlContent CvList(string title, IReadOnlyList<string> items)
+    {
+        var builder = new System.Text.StringBuilder();
+        builder.Append("<section class=\"content-section\"><h3>");
+        builder.Append(System.Net.WebUtility.HtmlEncode(title));
+        builder.Append("</h3><ul>");
+        foreach (var item in items)
+        {
+            builder.Append("<li>");
+            builder.Append(System.Net.WebUtility.HtmlEncode(item));
+            builder.Append("</li>");
+        }
+        builder.Append("</ul></section>");
+        return new HtmlString(builder.ToString());
+    }
+}

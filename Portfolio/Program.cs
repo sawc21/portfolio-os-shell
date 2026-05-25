@@ -1,6 +1,7 @@
 namespace Portfolio;
 
 using System.Text;
+using Portfolio.Catalog;
 using Portfolio.Content;
 using Portfolio.Profile;
 
@@ -13,6 +14,7 @@ public class Program
         builder.Services.AddRazorPages();
         builder.Services.AddSingleton<IMarkdownContentService, MarkdownContentService>();
         builder.Services.AddSingleton<IPortfolioProfileService, JsonPortfolioProfileService>();
+        builder.Services.AddSingleton<IPortfolioCatalogService, JsonPortfolioCatalogService>();
 
         var app = builder.Build();
 
@@ -39,6 +41,7 @@ public class Program
                 "/projects",
                 "/blog",
                 "/resume",
+                "/cv",
                 "/contact"
             };
 

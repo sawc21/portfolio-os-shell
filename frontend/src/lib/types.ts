@@ -10,6 +10,7 @@ export type AppId =
   | "case-studies"
   | "ai-lab"
   | "agent-console"
+  | "publications"
   | "notes"
   | "resume"
   | "terminal"
@@ -81,6 +82,41 @@ export type ProjectItem = {
   summary: string;
   tags: string[];
   branches: string[];
+};
+
+export type ProjectSourceType = "github" | "local" | "local-git" | "portfolio-content";
+
+export type CatalogProject = ProjectItem & {
+  sourceType: ProjectSourceType;
+  repoUrl?: string;
+  localPathLabel: string;
+  featured: boolean;
+  archive: boolean;
+  caseStudyPath?: string;
+};
+
+export type PublicationItem = {
+  title: string;
+  category: string;
+  sourceContext: string;
+  status: string;
+  tags: string[];
+  citationNote: string;
+  url?: string;
+};
+
+export type CvProfile = {
+  education: string[];
+  researchRoles: string[];
+  industryExperience: string[];
+  technicalStrengths: string[];
+  honors: string[];
+};
+
+export type PortfolioCatalog = {
+  projects: CatalogProject[];
+  publications: PublicationItem[];
+  cv: CvProfile;
 };
 
 export type ContactLink = {

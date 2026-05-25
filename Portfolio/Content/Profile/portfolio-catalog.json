@@ -1,0 +1,252 @@
+{
+  "projects": [
+    {
+      "title": "Portfolio OS Shell",
+      "slug": "portfolio-os-shell",
+      "summary": "Interactive React and ASP.NET portfolio operating system with login gate, desktop apps, search, terminal commands, AI Notes, and recruiter-focused proof.",
+      "phase": "active",
+      "role": "Product design, frontend architecture, and ASP.NET integration",
+      "tags": ["React", "TypeScript", "ASP.NET Core", "Portfolio OS", "Accessibility"],
+      "branches": ["Auth gate", "AI Notes", "Quick Note hotkey", "Shared profile config"],
+      "sourceType": "github",
+      "repoUrl": "https://github.com/sawc21/portfolio-os-shell",
+      "localPathLabel": "C:/Users/SawyerCawthon/PortFolio",
+      "featured": true,
+      "archive": false,
+      "caseStudyPath": "/projects/portfolio-platform"
+    },
+    {
+      "title": "QuickBooksToolKit",
+      "slug": "quickbooks-toolkit",
+      "summary": ".NET 8 QuickBooks Online automation toolkit with OAuth, protected token storage, REST diagnostics, and a local-first MCP server surface for AI hosts.",
+      "phase": "active",
+      "role": "Backend architecture and agent-tool integration",
+      "tags": ["C#", ".NET 8", "QuickBooks", "MCP", "OAuth", "Agent tools"],
+      "branches": ["QuickBooks API", "MCP tool contracts", "DPAPI token storage", "Read/write guardrails"],
+      "sourceType": "local-git",
+      "repoUrl": "https://github.com/Intellivega/QuickBooksToolKitAi",
+      "localPathLabel": "C:/Users/SawyerCawthon/source/repos/QuickBooksToolKit",
+      "featured": true,
+      "archive": false
+    },
+    {
+      "title": "NoteTakingApp / AI Notes",
+      "slug": "note-taking-app",
+      "summary": "ASP.NET note-taking system used as the source concept for the Portfolio OS AI Notes app, including markdown preview, tags, favorites, public flags, and future sync ideas.",
+      "phase": "migration source",
+      "role": "Full-stack ASP.NET and product integration",
+      "tags": ["ASP.NET", "C#", "Markdown", "Notes", "Portfolio OS"],
+      "branches": ["Markdown preview", "Tags", "Public/private notes", "OS-native AI Notes migration"],
+      "sourceType": "github",
+      "repoUrl": "https://github.com/sawc21/NoteTakingApp",
+      "localPathLabel": "C:/Users/SawyerCawthon/source/repos/NoteTakingApp",
+      "featured": true,
+      "archive": false
+    },
+    {
+      "title": "Extraction",
+      "slug": "extraction",
+      "summary": "Python research prototype for local LLM-assisted extraction workflows around Cyber Threat Intelligence and MALOnt-style ontology data.",
+      "phase": "research prototype",
+      "role": "AI research pipeline prototyping",
+      "tags": ["Python", "LLM", "Cyber Threat Intelligence", "Knowledge Graphs", "Ollama"],
+      "branches": ["Local Mistral setup", "CTI extraction", "Ontology data", "Research automation"],
+      "sourceType": "github",
+      "repoUrl": "https://github.com/sawc21/Extraction",
+      "localPathLabel": "GitHub public repository",
+      "featured": true,
+      "archive": false
+    },
+    {
+      "title": "SmartSelect / Awards Aggregate",
+      "slug": "smartselect-awards-aggregate",
+      "summary": "Intellivega ASP.NET project for aggregating award, initiative, program, and grantor/client data into a structured decision-support workflow.",
+      "phase": "industry project",
+      "role": "ASP.NET developer",
+      "tags": ["ASP.NET", "C#", "SQL", "Intellivega", "Data workflow"],
+      "branches": ["Programs", "Aggregate years", "Initiatives", "Client grantors"],
+      "sourceType": "local-git",
+      "repoUrl": "https://github.com/Intellivega/SmartSelect",
+      "localPathLabel": "C:/Users/SawyerCawthon/source/repos/awardsaggregate",
+      "featured": true,
+      "archive": false
+    },
+    {
+      "title": "Inventory Management",
+      "slug": "inventory-management",
+      "summary": "Java coursework project with modular layering, strict domain validation, file persistence, stock movement modeling, and concurrent low-stock updates.",
+      "phase": "course project",
+      "role": "Java application developer",
+      "tags": ["Java", "Maven", "Domain modeling", "Concurrency", "Persistence"],
+      "branches": ["Domain validation", "Result wrapper", "Low-stock policy", "Stock movement"],
+      "sourceType": "github",
+      "repoUrl": "https://github.com/sawc21/Inventory-Management-",
+      "localPathLabel": "GitHub public repository",
+      "featured": true,
+      "archive": false
+    },
+    {
+      "title": "Planner",
+      "slug": "planner",
+      "summary": "Next.js planning application that extends Sawyer's product workflow practice into a modern TypeScript app surface.",
+      "phase": "prototype",
+      "role": "Frontend product application builder",
+      "tags": ["Next.js", "TypeScript", "React", "Planning"],
+      "branches": ["App router", "Planning UI", "TypeScript app shell"],
+      "sourceType": "github",
+      "repoUrl": "https://github.com/sawc21/Planner",
+      "localPathLabel": "GitHub public repository",
+      "featured": true,
+      "archive": false
+    },
+    {
+      "title": "practice",
+      "slug": "practice",
+      "summary": "Python practice repository for algorithm, scripting, and implementation drills.",
+      "phase": "practice",
+      "role": "Programming practice",
+      "tags": ["Python", "Practice"],
+      "branches": ["Scripts", "Exercises"],
+      "sourceType": "github",
+      "repoUrl": "https://github.com/sawc21/practice",
+      "localPathLabel": "GitHub public repository",
+      "featured": false,
+      "archive": true
+    },
+    {
+      "title": "Shopify",
+      "slug": "shopify",
+      "summary": "Repository reserved for Shopify exploration and commerce-platform learning.",
+      "phase": "exploration",
+      "role": "Commerce platform learner",
+      "tags": ["Shopify", "Commerce"],
+      "branches": ["Platform exploration"],
+      "sourceType": "github",
+      "repoUrl": "https://github.com/sawc21/Shopify",
+      "localPathLabel": "GitHub public repository",
+      "featured": false,
+      "archive": true
+    },
+    {
+      "title": "ASP.net_TodoList",
+      "slug": "asp-net-todolist",
+      "summary": "C# ASP.NET to-do list project used for CRUD, MVC/Razor, and web fundamentals practice.",
+      "phase": "practice",
+      "role": "ASP.NET learner",
+      "tags": ["C#", "ASP.NET", "CRUD", "Razor"],
+      "branches": ["To-do CRUD", "ASP.NET fundamentals"],
+      "sourceType": "github",
+      "repoUrl": "https://github.com/sawc21/ASP.net_TodoList",
+      "localPathLabel": "GitHub public repository",
+      "featured": false,
+      "archive": true
+    },
+    {
+      "title": "Bulky_MVC",
+      "slug": "bulky-mvc",
+      "summary": "ASP.NET MVC learning project with layered data access, models, utility packages, and Razor web app surfaces.",
+      "phase": "learning project",
+      "role": "ASP.NET MVC learner",
+      "tags": ["C#", "ASP.NET MVC", "Entity Framework", "Razor"],
+      "branches": ["Data access", "Models", "Razor pages", "MVC architecture"],
+      "sourceType": "github",
+      "repoUrl": "https://github.com/sawc21/Bulky_MVC",
+      "localPathLabel": "C:/Users/SawyerCawthon/source/repos/Bulky_MVC",
+      "featured": false,
+      "archive": true
+    },
+    {
+      "title": "NoteTaking",
+      "slug": "note-taking",
+      "summary": "Earlier local note-taking application used as a stepping stone toward the fuller NoteTakingApp and Portfolio OS AI Notes direction.",
+      "phase": "early local prototype",
+      "role": "ASP.NET learner",
+      "tags": ["C#", "ASP.NET", "Notes"],
+      "branches": ["Local notes", "Application shell"],
+      "sourceType": "local",
+      "localPathLabel": "C:/Users/SawyerCawthon/source/repos/NoteTaking",
+      "featured": false,
+      "archive": true
+    },
+    {
+      "title": "awardsaggregateV1",
+      "slug": "awardsaggregate-v1",
+      "summary": "Earlier awards aggregate codebase that preceded the current SmartSelect/Awards Aggregate branch.",
+      "phase": "legacy project",
+      "role": "ASP.NET maintenance and migration reference",
+      "tags": ["ASP.NET", "C#", "Legacy", "Intellivega"],
+      "branches": ["Legacy comparison", "Migration reference"],
+      "sourceType": "local-git",
+      "localPathLabel": "C:/Users/SawyerCawthon/source/repos/awardsaggregateV1",
+      "featured": false,
+      "archive": true
+    },
+    {
+      "title": "Homelab Roadmap",
+      "slug": "homelab-roadmap",
+      "summary": "Planned companion track for VPS, Raspberry Pi, Cloudflare Tunnel, and private service experiments without risking portfolio uptime.",
+      "phase": "concept",
+      "role": "Infrastructure strategy",
+      "tags": ["Self-hosting", "Cloudflare", "VPS", "Raspberry Pi"],
+      "branches": ["VPS edge", "Cloudflare tunnel", "Raspberry Pi services"],
+      "sourceType": "portfolio-content",
+      "localPathLabel": "Portfolio/Content/Projects/homelab-roadmap.md",
+      "featured": false,
+      "archive": true,
+      "caseStudyPath": "/projects/homelab-roadmap"
+    }
+  ],
+  "publications": [
+    {
+      "title": "Semantic Chunking and Consensus Filtering for Structured Extraction of Cyber Threat Intelligence.",
+      "category": "Cybersecurity research",
+      "sourceContext": "DoD, San Angelo - Funded Research Contributor",
+      "status": "Resume-listed publication",
+      "tags": ["Cyber Threat Intelligence", "Semantic chunking", "Consensus filtering", "Knowledge graphs"],
+      "citationNote": "Citation link pending verification; listed from current resume source."
+    },
+    {
+      "title": "Automated Validation and Repair of Knowledge Graph Triples for Cyber Threat Intelligence.",
+      "category": "Cybersecurity research",
+      "sourceContext": "DoD, San Angelo - Funded Research Contributor",
+      "status": "Resume-listed publication",
+      "tags": ["Cyber Threat Intelligence", "Knowledge graph triples", "Validation", "Repair"],
+      "citationNote": "Citation link pending verification; listed from current resume source."
+    },
+    {
+      "title": "Co-authored published academic paper on NASA Artemis Gateway simulation architecture and system impact.",
+      "category": "Immersive simulation research",
+      "sourceContext": "NASA/Barrios, The DataMine - Undergraduate Research Assistant",
+      "status": "Resume-listed publication",
+      "tags": ["NASA", "Artemis Gateway", "Unreal Engine 5", "Simulation"],
+      "citationNote": "Exact venue and citation link pending verification; summarized from current resume source."
+    }
+  ],
+  "cv": {
+    "education": [
+      "Angelo State University - B.S. in Computer Science, expected January 2028, GPA 3.8."
+    ],
+    "researchRoles": [
+      "DoD, San Angelo - Funded Research Contributor focused on LLM-assisted Cyber Threat Intelligence knowledge graph extraction.",
+      "NASA/Barrios, The DataMine - Undergraduate Research Assistant building Unreal Engine 5 simulation systems for Artemis Gateway visualization."
+    ],
+    "industryExperience": [
+      "Intellivega - Software Developer working on ASP.NET, C#, SQL/PostgreSQL, REST APIs, CRUD systems, and backend processing."
+    ],
+    "technicalStrengths": [
+      "LLM-assisted extraction workflows",
+      "Knowledge graph construction and triple validation",
+      "ASP.NET Core and Razor Pages",
+      "React and TypeScript product interfaces",
+      "QuickBooks API and MCP tool integration",
+      "PostgreSQL schema and query design",
+      "Unreal Engine 5 simulation systems"
+    ],
+    "honors": [
+      "Dean's List",
+      "Distinguished Scholarship Recipient",
+      "DoD Research Grant Recipient",
+      "Published Research Author"
+    ]
+  }
+}

@@ -53,6 +53,7 @@
                 <a asp-page="/Projects/Index" aria-current="@(currentPath.StartsWith("/projects", StringComparison.OrdinalIgnoreCase) ? "page" : null)">Projects</a>
                 <a asp-page="/Blog/Index" aria-current="@(currentPath.StartsWith("/blog", StringComparison.OrdinalIgnoreCase) ? "page" : null)">Blog</a>
                 <a asp-page="/Resume" aria-current="@(currentPath.Equals("/resume", StringComparison.OrdinalIgnoreCase) ? "page" : null)">Resume</a>
+                <a asp-page="/Cv" aria-current="@(currentPath.Equals("/cv", StringComparison.OrdinalIgnoreCase) ? "page" : null)">CV</a>
                 <a asp-page="/Contact" aria-current="@(currentPath.Equals("/contact", StringComparison.OrdinalIgnoreCase) ? "page" : null)">Contact</a>
             </nav>
         </header>

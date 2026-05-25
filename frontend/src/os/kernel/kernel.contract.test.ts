@@ -15,6 +15,7 @@ describe("portfolio kernel contract", () => {
     expect(appIds).toContain("recruiter");
     expect(appIds).toContain("search");
     expect(appIds).toContain("files");
+    expect(appIds).toContain("publications");
     expect(apps.every((app) => app.commands.length > 0)).toBe(true);
   });
 
@@ -41,6 +42,8 @@ describe("portfolio kernel contract", () => {
   test("commands parse into typed system actions", () => {
     expectOpenApp(portfolioKernel.runCommand("open projects"), "projects");
     expectOpenApp(portfolioKernel.runCommand("open case studies"), "case-studies");
+    expectOpenApp(portfolioKernel.runCommand("papers"), "publications");
+    expectOpenApp(portfolioKernel.runCommand("cv"), "publications");
     expectOpenApp(portfolioKernel.runCommand("contact"), "contact");
 
     expect(portfolioKernel.runCommand("search C#")).toEqual({ type: "open-search", query: "c#" });
@@ -59,6 +62,11 @@ describe("portfolio kernel contract", () => {
 
     expect(portfolioKernel.search("NASA").length).toBeGreaterThan(0);
     expect(portfolioKernel.search("QuickBooks").length).toBeGreaterThan(0);
+    expect(portfolioKernel.search("MCP")[0].title).toContain("QuickBooks");
+    expect(portfolioKernel.search("Inventory")[0].title).toContain("Inventory");
+    expect(portfolioKernel.search("Extraction")[0].title).toContain("Extraction");
+    expect(portfolioKernel.search("paper")[0].action).toMatchObject({ type: "open-app", appId: "publications" });
+    expect(portfolioKernel.search("knowledge graph")[0].action).toMatchObject({ type: "open-app", appId: "publications" });
     expect(portfolioKernel.search("contact")[0].action).toMatchObject({ type: "open-app", appId: "contact" });
   });
 });

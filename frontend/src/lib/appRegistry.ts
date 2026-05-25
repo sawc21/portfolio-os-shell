@@ -1,5 +1,6 @@
 import {
   BadgeInfo,
+  BookOpenText,
   Bot,
   CalendarCheck,
   CircuitBoard,
@@ -145,6 +146,20 @@ export const appRegistry: AppDefinition[] = [
     launcher: true,
     commands: ["agents", "agent console", "tools"],
     defaultWindow: { width: 680, height: 480, x: 190, y: 132 }
+  },
+  {
+    id: "publications",
+    title: "Publications & CV",
+    shortTitle: "Papers",
+    description: "Published research, resume-sourced paper claims, CV sections, education, honors, and research experience.",
+    category: "portfolio",
+    icon: BookOpenText,
+    accent: "#ffd166",
+    tags: ["publications", "papers", "research", "cv", "nasa", "dod", "knowledge graph"],
+    desktop: true,
+    launcher: true,
+    commands: ["publications", "papers", "research", "cv"],
+    defaultWindow: { width: 720, height: 520, x: 150, y: 104 }
   },
   {
     id: "notes",

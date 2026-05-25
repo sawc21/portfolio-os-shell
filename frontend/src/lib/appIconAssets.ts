@@ -25,6 +25,7 @@ export const appIconAssets: Record<AppId, string> = {
   "case-studies": caseStudiesIcon,
   "ai-lab": notesIcon,
   "agent-console": terminalIcon,
+  publications: resumeIcon,
   notes: notesIcon,
   resume: resumeIcon,
   terminal: terminalIcon,

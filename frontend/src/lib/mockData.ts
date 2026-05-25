@@ -8,29 +8,9 @@ import type {
   ScopeBudgetData,
   SkillGroup
 } from "./types";
+import { getCatalogProjectItems } from "./portfolioCatalog";
 
-export const projects: ProjectItem[] = [
-  {
-    title: "Portfolio Platform",
-    slug: "portfolio-platform",
-    phase: "prototype",
-    role: "Product design + ASP.NET",
-    summary:
-      "A database-free ASP.NET Core portfolio built around Razor Pages, Markdown content, SEO basics, RSS, and sitemap generation.",
-    tags: ["ASP.NET", "C#", "Razor Pages", "Markdown"],
-    branches: ["identity system", "content engine", "deployment path"]
-  },
-  {
-    title: "Homelab Roadmap",
-    slug: "homelab-roadmap",
-    phase: "concept",
-    role: "Infrastructure strategy",
-    summary:
-      "A companion track for Raspberry Pi, VPS, Cloudflare Tunnel, and private service experiments without risking portfolio uptime.",
-    tags: ["Self-hosting", "Cloudflare", "VPS"],
-    branches: ["VPS edge", "Cloudflare tunnel", "Raspberry Pi services"]
-  }
-];
+export const projects: ProjectItem[] = getCatalogProjectItems();
 
 export const resumeHighlights = [
   "ASP.NET Core, Razor Pages, C#, and server-rendered web applications.",
@@ -154,6 +134,15 @@ export const fileSystemEntries: FileSystemEntry[] = [
     appId: "case-studies"
   },
   {
+    id: "desktop-publications",
+    name: "Publications & CV.app",
+    kind: "app",
+    directory: "C:\\PortfolioOS\\Desktop",
+    description: "Research publications, CV sections, education, honors, and paper status.",
+    tags: ["publications", "papers", "research", "cv", "nasa", "dod"],
+    appId: "publications"
+  },
+  {
     id: "desktop-ai-notes",
     name: "AI Notes.app",
     kind: "app",
@@ -215,6 +204,15 @@ export const fileSystemEntries: FileSystemEntry[] = [
     description: "Server-rendered resume fallback route.",
     tags: ["resume", "route"],
     href: "/resume"
+  },
+  {
+    id: "routes-cv",
+    name: "CV.url",
+    kind: "route",
+    directory: "C:\\PortfolioOS\\PublicRoutes",
+    description: "Server-rendered CV and publications route.",
+    tags: ["cv", "publications", "papers", "research", "route"],
+    href: "/cv"
   },
   {
     id: "routes-contact",

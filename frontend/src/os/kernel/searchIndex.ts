@@ -1,4 +1,5 @@
 import type { AppId, SearchResult, SystemAction } from "../../lib/types";
+import { getCatalogProjects, getPublicationItems, portfolioCatalog } from "../../lib/portfolioCatalog";
 import type { PortfolioDataProvider } from "../services/portfolioDataProvider";
 import { getApps } from "./appRegistry";
 import { commandDefinitions } from "./commandRegistry";
@@ -42,8 +43,18 @@ const priorityMatches: Record<string, AppId[]> = {
   contact: ["contact"],
   resume: ["resume"],
   projects: ["projects"],
-  nasa: ["case-studies", "projects", "resume", "recruiter"],
-  quickbooks: ["notes", "case-studies", "budget", "projects", "skills"]
+  cv: ["publications", "resume", "recruiter"],
+  papers: ["publications", "resume", "projects"],
+  paper: ["publications", "resume", "projects"],
+  publications: ["publications", "resume", "projects"],
+  research: ["publications", "projects", "resume"],
+  "knowledge graph": ["publications", "projects", "resume", "skills"],
+  nasa: ["publications", "case-studies", "projects", "resume", "recruiter"],
+  dod: ["publications", "resume", "projects"],
+  mcp: ["projects", "agent-console", "ai-lab"],
+  inventory: ["projects"],
+  extraction: ["projects", "publications"],
+  quickbooks: ["projects", "notes", "case-studies", "budget", "skills"]
 };
 
 export function searchPortfolio(query: string, provider: PortfolioDataProvider): SearchResult[] {
@@ -102,6 +113,24 @@ function buildSearchDocuments(provider: PortfolioDataProvider): SearchDocument[]
     action: systemActions.openApp("projects")
   }));
 
+  const catalogProjectDocs = getCatalogProjects().map((project) => ({
+    id: `catalog-project:${project.slug}`,
+    title: project.title,
+    description: `${project.summary} ${project.localPathLabel}`,
+    category: project.featured ? "featured-project" : "project-archive",
+    keywords: [
+      project.phase,
+      project.role,
+      project.sourceType,
+      project.repoUrl ?? "",
+      project.localPathLabel,
+      ...project.tags,
+      ...project.branches
+    ],
+    appId: "projects" as AppId,
+    action: systemActions.openApp("projects")
+  }));
+
   const skillDocs = provider.getSkillGroups().map((group) => ({
     id: `skill:${group.title}`,
     title: group.title,
@@ -153,6 +182,32 @@ function buildSearchDocuments(provider: PortfolioDataProvider): SearchDocument[]
     action: systemActions.openApp("case-studies")
   }));
 
+  const publicationDocs = getPublicationItems().map((publication) => ({
+    id: `publication:${publication.title}`,
+    title: publication.title,
+    description: `${publication.sourceContext} - ${publication.citationNote}`,
+    category: "publication",
+    keywords: [publication.category, publication.sourceContext, publication.status, ...publication.tags],
+    appId: "publications" as AppId,
+    action: systemActions.openApp("publications")
+  }));
+
+  const cvDocs = [
+    ...portfolioCatalog.cv.education,
+    ...portfolioCatalog.cv.researchRoles,
+    ...portfolioCatalog.cv.industryExperience,
+    ...portfolioCatalog.cv.technicalStrengths,
+    ...portfolioCatalog.cv.honors
+  ].map((item, index) => ({
+    id: `cv:${index}`,
+    title: "CV highlight",
+    description: item,
+    category: "cv",
+    keywords: ["cv", "publications", "research", "education", "honors", item],
+    appId: "publications" as AppId,
+    action: systemActions.openApp("publications")
+  }));
+
   const commandDocs = commandDefinitions.map((command) => ({
     id: `command:${command.name}`,
     title: command.name,
@@ -193,7 +248,21 @@ function buildSearchDocuments(provider: PortfolioDataProvider): SearchDocument[]
     action: systemActions.openApp("contact")
   }));
 
-  return [...appDocs, ...projectDocs, ...skillDocs, ...profileDocs, ...resumeDocs, ...caseDocs, ...commandDocs, ...signalDocs, ...fileDocs, ...contactDocs];
+  return [
+    ...appDocs,
+    ...catalogProjectDocs,
+    ...projectDocs,
+    ...skillDocs,
+    ...profileDocs,
+    ...resumeDocs,
+    ...caseDocs,
+    ...publicationDocs,
+    ...cvDocs,
+    ...commandDocs,
+    ...signalDocs,
+    ...fileDocs,
+    ...contactDocs
+  ];
 }
 
 function scoreDocument(document: SearchDocument, terms: string[], normalizedQuery: string) {
@@ -226,7 +295,7 @@ function scoreDocument(document: SearchDocument, terms: string[], normalizedQuer
     }
   }
 
-  if (document.id === "profile:hire-sawyer") {
+  if (document.id === "profile:hire-sawyer" && score > 0) {
     score += 24;
   }
 
