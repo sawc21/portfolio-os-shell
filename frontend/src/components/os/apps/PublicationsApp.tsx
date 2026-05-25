@@ -34,6 +34,11 @@ export function PublicationsApp({ runAction }: OsAppComponentProps) {
             <h3>{publication.title}</h3>
             <p>{publication.sourceContext}</p>
             <small>{publication.citationNote}</small>
+            <div className="publication-citation-grid" aria-label={`${publication.title} citation placeholders`}>
+              {getCitationPlaceholders(publication).map((status) => (
+                <span key={status}>{status}</span>
+              ))}
+            </div>
             <div className="token-row">
               {publication.tags.map((tag) => (
                 <span key={tag}>{tag}</span>
@@ -51,6 +56,17 @@ export function PublicationsApp({ runAction }: OsAppComponentProps) {
         <CvSection title="Honors" items={cv.honors} />
       </section>
     </div>
+  );
+}
+
+function getCitationPlaceholders(publication: {
+  citationStatus?: string;
+  venueStatus?: string;
+  doiStatus?: string;
+  pdfStatus?: string;
+}) {
+  return [publication.citationStatus, publication.venueStatus, publication.doiStatus, publication.pdfStatus].filter(
+    (status): status is string => Boolean(status)
   );
 }
 

@@ -760,6 +760,18 @@
   font-size: 0.66rem;
 }
 
+.publication-citation-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.publication-citation-grid span {
+  padding: 6px 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px dashed rgba(85, 240, 194, 0.28);
+}
+
 .project-card a,
 .app-link {
   display: inline-flex;
@@ -2362,6 +2374,11 @@
 .project-proof-slots strong,
 .publication-citation-grid span {
   color: #0a246a;
+}
+
+.publication-citation-grid span {
+  background: #fff8d8;
+  border: 1px dashed #b38b00;
 }
 
 .search-box,

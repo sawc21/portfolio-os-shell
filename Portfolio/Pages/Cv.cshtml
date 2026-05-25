@@ -55,6 +55,12 @@
                 <h2>@publication.Title</h2>
                 <p>@publication.SourceContext</p>
                 <p>@publication.CitationNote</p>
+                <div class="showcase-proof publication-proof" aria-label="Citation placeholders">
+                    @foreach (var status in CitationPlaceholders(publication))
+                    {
+                        <span>@status</span>
+                    }
+                </div>
                 <div class="branch-list" aria-label="Publication tags">
                     @foreach (var tag in publication.Tags)
                     {
@@ -79,6 +85,17 @@
 </section>
 
 @functions {
+    private static IReadOnlyList<string> CitationPlaceholders(Portfolio.Catalog.PublicationItem publication)
+    {
+        return new[]
+        {
+            publication.CitationStatus,
+            publication.VenueStatus,
+            publication.DoiStatus,
+            publication.PdfStatus
+        }.Where(status => !string.IsNullOrWhiteSpace(status)).ToArray();
+    }
+
     private static IHtmlContent CvList(string title, IReadOnlyList<string> items)
     {
         var builder = new System.Text.StringBuilder();

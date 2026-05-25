@@ -91,6 +91,8 @@ public sealed class PublicRouteTests : IClassFixture<WebApplicationFactory<Progr
         Assert.Contains("Automated Validation and Repair", cv);
         Assert.Contains("NASA/Barrios", cv);
         Assert.Contains("Download resume PDF", cv);
+        Assert.Contains("Citation pending verification", cv);
+        Assert.Contains("DOI unavailable", cv);
     }
 
     [Fact]

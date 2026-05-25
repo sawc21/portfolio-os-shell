@@ -725,6 +725,14 @@ h3 {
   background: rgba(255, 255, 255, 0.68);
 }
 
+.publication-proof {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.publication-proof span {
+  border: 1px dashed var(--graphite);
+}
+
 .meta-row {
   display: flex;
   flex-wrap: wrap;
