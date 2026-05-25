@@ -23,6 +23,7 @@ export const commandDefinitions: CommandDefinition[] = [
   { name: "open case studies", description: "Open Case Studies", aliases: ["open case studies", "case studies", "cases"], targetAppId: "case-studies" },
   { name: "open ai lab", description: "Open AI Lab", aliases: ["open ai lab", "ai", "ai lab", "llm"], targetAppId: "ai-lab" },
   { name: "open agents", description: "Open Agent Console", aliases: ["open agents", "agents", "agent console", "tools"], targetAppId: "agent-console" },
+  { name: "open ai notes", description: "Open AI Notes", aliases: ["open ai notes", "ai notes", "notes", "notebook", "research notebook"], targetAppId: "notes" },
   { name: "hire sawyer", description: "Open the hiring-focused recruiter view", aliases: ["hire sawyer", "why hire sawyer"], targetAppId: "recruiter" },
   { name: "whoami", description: "Print Sawyer's role positioning", aliases: ["whoami", "about"] },
   { name: "launch world", description: "Start the desktop-to-world transition", aliases: ["launch world", "launch-world", "world"] },

@@ -110,6 +110,20 @@ export type NoteItem = {
   slug: string;
 };
 
+export type NoteVisibility = "private" | "public";
+
+export type PortfolioNote = {
+  id: string;
+  title: string;
+  content: string;
+  tags: string[];
+  isFavorite: boolean;
+  visibility: NoteVisibility;
+  slug?: string;
+  createdAtUtc: string;
+  updatedAtUtc: string;
+};
+
 export type FileSystemEntry = {
   id: string;
   name: string;

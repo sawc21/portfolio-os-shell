@@ -74,6 +74,7 @@ export function Taskbar({
         Launch World
       </button>
       <div className="os-taskbar__tray" aria-label="System tray">
+        <span className="os-taskbar__hotkey">Ctrl+Alt+N</span>
         <ShieldCheck aria-hidden="true" size={15} />
         <Wifi aria-hidden="true" size={15} />
         <Volume2 aria-hidden="true" size={15} />

@@ -148,17 +148,17 @@ export const appRegistry: AppDefinition[] = [
   },
   {
     id: "notes",
-    title: "Blog / Notes",
-    shortTitle: "Notes",
-    description: "Build notes and technical writing inside the desktop.",
+    title: "AI Notes",
+    shortTitle: "AI Notes",
+    description: "Research notebook for AI projects, architecture notes, markdown drafts, and agent workflow ideas.",
     category: "content",
     icon: PenLine,
     accent: "#c6a7ff",
-    tags: ["blog", "notes", "writing"],
+    tags: ["ai notes", "notebook", "research notebook", "markdown", "agents", "project notes"],
     desktop: true,
     launcher: true,
-    commands: ["notes", "blog"],
-    defaultWindow: { width: 620, height: 430, x: 226, y: 128 }
+    commands: ["notes", "ai notes", "notebook", "research notebook"],
+    defaultWindow: { width: 760, height: 540, x: 122, y: 86 }
   },
   {
     id: "resume",

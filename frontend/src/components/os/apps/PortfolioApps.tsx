@@ -509,28 +509,7 @@ export function AgentConsoleApp({ runAction }: OsAppComponentProps) {
   );
 }
 
-export function NotesApp() {
-  const notes = portfolioKernel.getNotes();
-
-  return (
-    <div className="app-view">
-      <header className="app-hero">
-        <span className="os-label">thinking.log</span>
-        <h2>Notes stay available inside the OS.</h2>
-        <p>Server-rendered blog routes remain stable, while the desktop presents the same content as files.</p>
-      </header>
-      <div className="notes-list">
-        {notes.map((note) => (
-          <a key={note.slug} href={`/blog/${note.slug}`}>
-            <span>{note.date}</span>
-            <strong>{note.title}</strong>
-            <p>{note.summary}</p>
-          </a>
-        ))}
-      </div>
-    </div>
-  );
-}
+export { NotesApp } from "./NotesApp";
 
 export function ResumeApp({ runAction }: OsAppComponentProps) {
   const profile = portfolioKernel.getRecruiterProfile();

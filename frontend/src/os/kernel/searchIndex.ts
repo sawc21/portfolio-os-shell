@@ -22,7 +22,11 @@ const priorityMatches: Record<string, AppId[]> = {
   ai: ["ai-lab", "agent-console", "projects", "skills", "recruiter"],
   llm: ["ai-lab", "agent-console", "skills"],
   agents: ["agent-console", "ai-lab", "terminal"],
-  automation: ["ai-lab", "agent-console", "planner"],
+  automation: ["ai-lab", "notes", "agent-console", "planner"],
+  notes: ["notes", "ai-lab", "case-studies"],
+  notebook: ["notes", "ai-lab", "projects"],
+  markdown: ["notes", "case-studies", "projects"],
+  postgresql: ["notes", "projects", "skills"],
   "asp.net": ["projects", "resume", "case-studies"],
   testing: ["habits", "projects", "case-studies"],
   "3d": ["world", "projects", "case-studies"],
@@ -37,7 +41,7 @@ const priorityMatches: Record<string, AppId[]> = {
   resume: ["resume"],
   projects: ["projects"],
   nasa: ["case-studies", "projects", "resume", "recruiter"],
-  quickbooks: ["case-studies", "budget", "projects", "skills"]
+  quickbooks: ["notes", "case-studies", "budget", "projects", "skills"]
 };
 
 export function searchPortfolio(query: string, provider: PortfolioDataProvider): SearchResult[] {

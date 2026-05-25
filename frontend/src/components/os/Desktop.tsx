@@ -4,6 +4,7 @@ import { moveIconInOrder, normalizeDesktopIconOrder } from "../../lib/desktopIco
 import type { AppId, SystemAction, WindowInstance } from "../../lib/types";
 import { portfolioKernel } from "../../os/kernel/kernel";
 import { DesktopIconGrid } from "./DesktopIconGrid";
+import { QuickNote } from "./QuickNote";
 import { StartMenu } from "./StartMenu";
 import { Taskbar } from "./Taskbar";
 import { WindowManager } from "./WindowManager";
@@ -24,6 +25,7 @@ export function Desktop() {
   const [iconOrder, setIconOrder] = useState<AppId[]>(readDesktopIconOrder);
   const [appParams, setAppParams] = useState<AppParamsMap>({});
   const [worldMode, setWorldMode] = useState<WorldMode>("desktop");
+  const [quickNoteOpen, setQuickNoteOpen] = useState(false);
   const [zCursor, setZCursor] = useState(30);
 
   const desktopApps = useMemo(() => portfolioKernel.getDesktopApps(), []);
@@ -57,6 +59,19 @@ export function Desktop() {
 
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
+      const target = event.target;
+      const isTextEntry =
+        target instanceof HTMLInputElement ||
+        target instanceof HTMLTextAreaElement ||
+        (target instanceof HTMLElement && target.isContentEditable);
+
+      if (event.ctrlKey && event.altKey && event.key.toLowerCase() === "n" && !isTextEntry) {
+        event.preventDefault();
+        setQuickNoteOpen(true);
+        setStartOpen(false);
+        return;
+      }
+
       if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") {
         event.preventDefault();
         setStartOpen(true);
@@ -64,6 +79,11 @@ export function Desktop() {
       }
 
       if (event.key === "Escape") {
+        if (quickNoteOpen) {
+          setQuickNoteOpen(false);
+          return;
+        }
+
         setStartOpen(false);
         if (worldMode === "world") {
           setWorldMode("desktop");
@@ -73,7 +93,7 @@ export function Desktop() {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [worldMode]);
+  }, [quickNoteOpen, worldMode]);
 
   function focusWindow(appId: AppId) {
     const nextZ = zCursor + 1;
@@ -271,6 +291,11 @@ export function Desktop() {
             </motion.div>
           ) : null}
         </AnimatePresence>
+        <QuickNote
+          open={quickNoteOpen}
+          onClose={() => setQuickNoteOpen(false)}
+          onOpenNotes={() => runSystemAction(portfolioKernel.actions.openApp("notes"))}
+        />
         <WorldPreview mode={worldMode} onExitWorld={() => setWorldMode("desktop")} />
       </main>
       <Taskbar
