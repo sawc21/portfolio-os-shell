@@ -1,4 +1,4 @@
-import { RadioTower, Send } from "lucide-react";
+import { MapPin, PhoneCall, RadioTower, Send } from "lucide-react";
 import { portfolioKernel } from "../../../os/kernel/kernel";
 import type { OsAppComponentProps } from "./appTypes";
 
@@ -14,8 +14,11 @@ export function ContactApp({ runAction }: OsAppComponentProps) {
       </header>
       <div className="contact-stack">
         {profile.contactLinks.map((link) => (
-          <a key={link.label} href={link.href} rel={link.href.startsWith("http") ? "me" : undefined}>
-            {link.label === "Email" ? <Send aria-hidden="true" size={18} /> : <RadioTower aria-hidden="true" size={18} />}
+          <a key={link.label} href={link.href} rel={link.kind === "link" && link.href.startsWith("http") ? "me" : undefined}>
+            {link.kind === "email" ? <Send aria-hidden="true" size={18} /> : null}
+            {link.kind === "phone" ? <PhoneCall aria-hidden="true" size={18} /> : null}
+            {link.kind === "location" ? <MapPin aria-hidden="true" size={18} /> : null}
+            {!link.kind || link.kind === "link" ? <RadioTower aria-hidden="true" size={18} /> : null}
             <span>{link.label}</span>
             <strong>{link.value}</strong>
           </a>

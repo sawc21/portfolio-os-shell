@@ -71,7 +71,7 @@ public class Program
             xml.AppendLine("""<rss version="2.0">""");
             xml.AppendLine("  <channel>");
             xml.AppendLine("    <title>Sawyer Cawthon Kernel Gallery</title>");
-            xml.AppendLine("    <description>Thinking logs on product design, ASP.NET, C#, and self-hosting experiments.</description>");
+            xml.AppendLine("    <description>Thinking logs on AI, cybersecurity research, ASP.NET Core, C#, backend systems, and portfolio engineering.</description>");
             xml.AppendLine($"    <link>{EscapeXml(new Uri(baseUri, "/blog").ToString())}</link>");
 
             foreach (var post in posts)

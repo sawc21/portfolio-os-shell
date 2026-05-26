@@ -327,8 +327,8 @@
       "category": "Cybersecurity research",
       "sourceContext": "DoD, San Angelo - Funded Research Contributor",
       "status": "Resume-listed publication",
-      "tags": ["Cyber Threat Intelligence", "Semantic chunking", "Consensus filtering", "Knowledge graphs"],
-      "citationNote": "Citation link pending verification; listed from current resume source.",
+      "tags": ["Cyber Threat Intelligence", "LLM-assisted extraction", "Semantic chunking", "Consensus filtering", "Knowledge graphs"],
+      "citationNote": "Co-authors, venue, and year pending verification; current resume source lists placeholders.",
       "citationStatus": "Citation pending verification",
       "venueStatus": "Venue pending",
       "doiStatus": "DOI unavailable",
@@ -339,8 +339,8 @@
       "category": "Cybersecurity research",
       "sourceContext": "DoD, San Angelo - Funded Research Contributor",
       "status": "Resume-listed publication",
-      "tags": ["Cyber Threat Intelligence", "Knowledge graph triples", "Validation", "Repair"],
-      "citationNote": "Citation link pending verification; listed from current resume source.",
+      "tags": ["Cyber Threat Intelligence", "Knowledge graph triples", "Validation", "Repair", "LLM-assisted extraction"],
+      "citationNote": "Co-authors, venue, and year pending verification; current resume source lists placeholders.",
       "citationStatus": "Citation pending verification",
       "venueStatus": "Venue pending",
       "doiStatus": "DOI unavailable",
@@ -352,7 +352,7 @@
       "sourceContext": "NASA/Barrios, The DataMine - Undergraduate Research Assistant",
       "status": "Resume-listed publication",
       "tags": ["NASA", "Artemis Gateway", "Unreal Engine 5", "Simulation"],
-      "citationNote": "Exact venue and citation link pending verification; summarized from current resume source.",
+      "citationNote": "Exact title, venue, and year pending verification; current resume source lists placeholders.",
       "citationStatus": "Citation pending verification",
       "venueStatus": "Venue pending",
       "doiStatus": "DOI unavailable",
@@ -361,23 +361,25 @@
   ],
   "cv": {
     "education": [
-      "Angelo State University - B.S. in Computer Science, expected January 2028, GPA 3.8."
+      "Angelo State University, San Angelo, TX - B.S. in Computer Science, expected January 2028, GPA 3.8.",
+      "Relevant coursework: Data Structures and Algorithms, Systems Programming, Software Engineering, Object-Oriented Programming, Cybersecurity, and Game Development."
     ],
     "researchRoles": [
-      "DoD, San Angelo - Funded Research Contributor focused on Cyber Threat Intelligence knowledge graph extraction.",
-      "NASA/Barrios, The DataMine - Undergraduate Research Assistant building Unreal Engine 5 simulation systems for Artemis Gateway visualization."
+      "Department of Defense (DoD), San Angelo - Funded Research Contributor, June 2025 - January 2026: built LLM-assisted pipelines for CTI triples, semantic chunking, consensus filtering, validation/repair, and graph-based adversary relationship modeling.",
+      "NASA/Barrios, The DataMine - Undergraduate Research Assistant, dates pending in source resume: engineered Unreal Engine 5 and C++ simulation systems for Artemis Gateway visualization and co-authored a resume-listed academic paper."
     ],
     "industryExperience": [
-      "Intellivega - Software Developer working on ASP.NET, C#, SQL/PostgreSQL, REST APIs, CRUD systems, and backend processing."
+      "Intellivega - Software Developer (ASP.NET), October 2025 - Present: builds ASP.NET Core/C# backend web applications, normalized PostgreSQL schemas, optimized SQL queries, RESTful APIs, CRUD services, and backend processing improvements."
     ],
     "technicalStrengths": [
-      "Structured information extraction workflows",
-      "Knowledge graph construction and triple validation",
-      "ASP.NET Core and Razor Pages",
-      "React and TypeScript product interfaces",
-      "QuickBooks API and tool integration",
-      "PostgreSQL schema and query design",
-      "Unreal Engine 5 simulation systems"
+      "Python, C#, C++, JavaScript, and SQL",
+      "ASP.NET Core backend systems and REST APIs",
+      "PostgreSQL schema design, indexing, joins, and normalization",
+      "Knowledge graph construction and triple modeling",
+      "LLM-assisted information extraction and CTI pipeline design",
+      "Graph-based entity resolution",
+      "Unreal Engine 5 simulation systems",
+      "Git, Agile, and backend system design"
     ],
     "honors": [
       "Dean's List",

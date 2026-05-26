@@ -2,7 +2,7 @@
 @model Portfolio.Pages.ContactModel
 @{
     ViewData["Title"] = "Contact | Kernel Gallery";
-    ViewData["Description"] = "Contact Sawyer Cawthon about portfolio projects, ASP.NET work, software development, and collaboration.";
+    ViewData["Description"] = "Contact Sawyer Cawthon about AI, cybersecurity research, ASP.NET Core backend work, software development, and collaboration.";
     ViewData["CanonicalPath"] = "/contact";
 }
 
@@ -18,6 +18,14 @@
     <a href="mailto:@Model.Profile.Email">
         <span>Email</span>
         <strong>@Model.Profile.Email</strong>
+    </a>
+    <a href="@Portfolio.Pages.ContactModel.PhoneHref(Model.Profile.Phone)">
+        <span>Phone</span>
+        <strong>@Model.Profile.Phone</strong>
+    </a>
+    <a href="@Portfolio.Pages.ContactModel.LocationHref(Model.Profile.Location)">
+        <span>Location</span>
+        <strong>@Model.Profile.Location</strong>
     </a>
     <a href="@Model.Profile.Links.GitHub" rel="me">
         <span>GitHub</span>

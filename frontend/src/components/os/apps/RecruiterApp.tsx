@@ -22,6 +22,12 @@ export function RecruiterApp({ runAction }: OsAppComponentProps) {
         <strong>Role positioning</strong>
         <p>{profile.shortPitch}</p>
       </section>
+      <section className="case-note">
+        <strong>Contact baseline</strong>
+        <p>
+          {profile.location} | {profile.contactLinks[0]?.value} | {profile.phone}
+        </p>
+      </section>
       <section className="skill-grid" aria-label="Strongest technical skills">
         <article>
           <h3>Strongest skills</h3>

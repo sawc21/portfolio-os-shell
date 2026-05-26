@@ -17,8 +17,10 @@ public sealed class PortfolioProfileServiceTests : IDisposable
             """
             {
               "name": "Sawyer Cawthon",
-              "headline": "Software developer",
-              "email": "sawyer.cawthon@gmail.com",
+              "headline": "Computer Science undergraduate focused on AI, cybersecurity, and backend systems",
+              "email": "cawthonsawyer@gmail.com",
+              "phone": "(325) 213-4321",
+              "location": "San Angelo, TX",
               "links": {
                 "github": "https://github.com/sawc21",
                 "linkedin": "https://www.linkedin.com/in/sawyer-cawthon-a87560287/",
@@ -40,6 +42,9 @@ public sealed class PortfolioProfileServiceTests : IDisposable
         var profile = service.GetProfile();
 
         Assert.Equal("Sawyer Cawthon", profile.Name);
+        Assert.Equal("cawthonsawyer@gmail.com", profile.Email);
+        Assert.Equal("(325) 213-4321", profile.Phone);
+        Assert.Equal("San Angelo, TX", profile.Location);
         Assert.Equal("https://github.com/sawc21", profile.Links.GitHub);
         Assert.Equal("/files/sawyer-cawthon-resume.pdf", profile.Links.ResumePdf);
         Assert.Contains("Workflow design", profile.SystemCapabilities);

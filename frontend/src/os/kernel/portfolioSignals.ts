@@ -2,33 +2,33 @@ import type { PortfolioSignal } from "../../lib/types";
 
 export const portfolioSignals: PortfolioSignal[] = [
   {
-    title: "Frontend architecture",
+    title: "AI cybersecurity research",
     description:
-      "React and TypeScript components are split into shell, registry, apps, command routing, and provider-backed data.",
-    keywords: ["react", "typescript", "frontend", "architecture", "components"]
+      "DoD-funded CTI work includes LLM-assisted extraction, semantic chunking, consensus filtering, and knowledge graph triple validation.",
+    keywords: ["ai", "cybersecurity", "cti", "llm", "knowledge graph", "dod"]
   },
   {
-    title: "Full-stack foundation",
+    title: "Backend production experience",
     description:
-      "ASP.NET Core keeps public routes, Markdown content, RSS, sitemap, and xUnit route tests stable.",
-    keywords: ["asp.net", "c#", "razor", "testing", "routes", "full-stack"]
+      "Intellivega work centers on ASP.NET Core, C#, REST APIs, CRUD services, SQL optimization, and PostgreSQL-backed application data.",
+    keywords: ["asp.net", "c#", "backend", "rest api", "postgresql", "sql"]
   },
   {
-    title: "Product thinking",
+    title: "Research-to-product portfolio",
     description:
-      "The OS frames projects, scope, habits, and search around recruiter value instead of random demo widgets.",
-    keywords: ["product", "planning", "scope", "recruiter", "internship"]
+      "The OS turns projects, publications, CV sections, resume evidence, and proof placeholders into searchable recruiter-facing app surfaces.",
+    keywords: ["product", "portfolio", "publications", "cv", "recruiter", "internship"]
   },
   {
-    title: "Creative technology",
+    title: "Simulation and systems range",
     description:
-      "The Launch World prototype sets up a practical path toward React Three Fiber without bloating the MVP.",
-    keywords: ["3d", "creative", "three", "react three fiber", "world"]
+      "NASA/Barrios work adds Unreal Engine 5, C++, real-time spatial transitions, orbital simulation, and technical paper experience.",
+    keywords: ["nasa", "unreal engine", "c++", "simulation", "artemis"]
   },
   {
-    title: "API-ready integration thinking",
+    title: "Integration-ready implementation",
     description:
-      "The provider seam keeps future data sources, including QuickBooks-style finance APIs or research/project feeds, separate from OS shell behavior.",
-    keywords: ["api", "provider", "quickbooks", "automation", "integration", "research", "nasa"]
+      "Portfolio projects show API seams, QuickBooks-style integration thinking, shared catalog/profile data, local persistence, and build/test checkpoints.",
+    keywords: ["api", "provider", "quickbooks", "integration", "testing", "profile data"]
   }
 ];

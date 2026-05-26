@@ -13,35 +13,35 @@ import { getCatalogProjectItems } from "./portfolioCatalog";
 export const projects: ProjectItem[] = getCatalogProjectItems();
 
 export const resumeHighlights = [
-  "ASP.NET Core, Razor Pages, C#, and server-rendered web applications.",
-  "Content-backed websites with clear routing, SEO, RSS, and deployment hygiene.",
-  "Self-hosting experiments with VPS, Raspberry Pi, Cloudflare DNS, and tunnels.",
-  "Accessibility, responsive UI, testing, and release flow fundamentals."
+  "Computer Science undergraduate with a 3.8 GPA and DoD-funded CTI knowledge-graph research.",
+  "ASP.NET Core/C# backend web applications, REST APIs, CRUD services, and PostgreSQL schemas at Intellivega.",
+  "LLM-assisted extraction, semantic chunking, consensus filtering, and validation/repair for CTI triples.",
+  "Unreal Engine 5 and C++ NASA Artemis Gateway simulation research through NASA/Barrios and The DataMine."
 ];
 
 export const operatingModes = [
-  "Product designer: shape identity, flows, copy, and visual hierarchy.",
-  "C# developer: build durable server-rendered features with tests.",
-  "Infrastructure learner: use self-hosting as a real operating context.",
-  "Technical writer: document decisions so the work is inspectable."
+  "Backend engineer: ASP.NET Core, C#, REST APIs, PostgreSQL schema design, indexing, joins, and normalization.",
+  "Cybersecurity researcher: CTI extraction workflows, knowledge graph construction, and triple validation.",
+  "AI systems builder: LLM-assisted information extraction with safeguards against hallucinated triples.",
+  "Simulation developer: Unreal Engine 5 and C++ systems for Artemis Gateway visualization."
 ];
 
 export const skillGroups: SkillGroup[] = [
   {
-    title: "Frontend systems",
-    items: ["React", "TypeScript", "Vite", "Motion", "Responsive UI", "Accessibility"]
+    title: "Backend systems",
+    items: ["ASP.NET Core", "C#", "REST APIs", "CRUD services", "PostgreSQL", "SQL optimization"]
   },
   {
-    title: "Backend foundation",
-    items: ["ASP.NET Core", "Razor Pages", "C#", "xUnit", "RSS", "Sitemap generation"]
+    title: "AI and cybersecurity research",
+    items: ["CTI extraction", "Knowledge graphs", "Triple modeling", "LLM-assisted extraction", "Validation and repair"]
   },
   {
-    title: "Creative technology",
-    items: ["Interactive UI", "Window managers", "Animation sequencing", "3D roadmap", "Design systems"]
+    title: "Application and simulation tools",
+    items: ["Python", "C++", "JavaScript", "React", "TypeScript", "Unreal Engine 5"]
   },
   {
     title: "Delivery habits",
-    items: ["Feature branches", "Test checkpoints", "Mock data first", "Documentation", "Case-study writing"]
+    items: ["Git", "Agile", "Data structures", "Algorithmic problem-solving", "Testing", "Documentation"]
   }
 ];
 
@@ -156,8 +156,8 @@ export const fileSystemEntries: FileSystemEntry[] = [
     name: "Skills.app",
     kind: "app",
     directory: "C:\\PortfolioOS\\Desktop",
-    description: "Grouped frontend, backend, tooling, and delivery strengths.",
-    tags: ["skills", "c#", "react", "typescript"],
+    description: "Grouped backend, AI/cybersecurity research, simulation, and delivery strengths.",
+    tags: ["skills", "c#", "python", "postgresql", "knowledge graphs"],
     appId: "skills"
   },
   {

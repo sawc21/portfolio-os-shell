@@ -22,6 +22,8 @@
         <p>@Model.Profile.ShortPitch</p>
         <div class="footer-links">
             <a href="mailto:@Model.Profile.Email">@Model.Profile.Email</a>
+            <a href="@PhoneHref(Model.Profile.Phone)">@Model.Profile.Phone</a>
+            <a href="@LocationHref(Model.Profile.Location)">@Model.Profile.Location</a>
             <a href="@Model.Profile.Links.LinkedIn">LinkedIn</a>
             <a href="@Model.Profile.Links.GitHub">GitHub</a>
             <a class="button button-primary" href="@Model.Profile.Links.ResumePdf" download>Download resume PDF</a>
@@ -94,6 +96,17 @@
             publication.DoiStatus,
             publication.PdfStatus
         }.Where(status => !string.IsNullOrWhiteSpace(status)).ToArray();
+    }
+
+    private static string PhoneHref(string phone)
+    {
+        var digits = new string(phone.Where(char.IsDigit).ToArray());
+        return digits.Length == 10 ? $"tel:+1{digits}" : $"tel:{phone}";
+    }
+
+    private static string LocationHref(string location)
+    {
+        return $"https://www.google.com/maps/search/?api=1&query={Uri.EscapeDataString(location)}";
     }
 
     private static IHtmlContent CvList(string title, IReadOnlyList<string> items)

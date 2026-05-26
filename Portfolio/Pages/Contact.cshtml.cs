@@ -19,4 +19,15 @@ public sealed class ContactModel(IPortfolioProfileService profileService) : Page
             .Replace("http://", string.Empty, StringComparison.OrdinalIgnoreCase)
             .TrimEnd('/');
     }
+
+    public static string PhoneHref(string phone)
+    {
+        var digits = new string(phone.Where(char.IsDigit).ToArray());
+        return digits.Length == 10 ? $"tel:+1{digits}" : $"tel:{phone}";
+    }
+
+    public static string LocationHref(string location)
+    {
+        return $"https://www.google.com/maps/search/?api=1&query={Uri.EscapeDataString(location)}";
+    }
 }

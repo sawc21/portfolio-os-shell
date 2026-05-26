@@ -85,6 +85,9 @@ public sealed class PublicRouteTests : IClassFixture<WebApplicationFactory<Progr
         var cv = await _client.GetStringAsync("/cv");
 
         Assert.Contains("Sawyer Cawthon", cv);
+        Assert.Contains("cawthonsawyer@gmail.com", cv);
+        Assert.Contains("(325) 213-4321", cv);
+        Assert.Contains("San Angelo, TX", cv);
         Assert.Contains("linkedin.com/in/sawyer-cawthon-a87560287", cv);
         Assert.Contains("github.com/sawc21", cv);
         Assert.Contains("Semantic Chunking and Consensus Filtering", cv);
@@ -93,6 +96,20 @@ public sealed class PublicRouteTests : IClassFixture<WebApplicationFactory<Progr
         Assert.Contains("Download resume PDF", cv);
         Assert.Contains("Citation pending verification", cv);
         Assert.Contains("DOI unavailable", cv);
+    }
+
+    [Fact]
+    public async Task ResumePage_IncludesCurrentResumeSourceDetails()
+    {
+        var resume = await _client.GetStringAsync("/resume");
+
+        Assert.Contains("cawthonsawyer@gmail.com", resume);
+        Assert.Contains("(325) 213-4321", resume);
+        Assert.Contains("Department of Defense (DoD)", resume);
+        Assert.Contains("Intellivega", resume);
+        Assert.Contains("NASA / Barrios", resume);
+        Assert.Contains("Semantic Chunking and Consensus Filtering for Structured Extraction of Cyber Threat Intelligence", resume);
+        Assert.Contains("Automated Validation and Repair of Knowledge Graph Triples for Cyber Threat Intelligence", resume);
     }
 
     [Fact]
@@ -106,6 +123,18 @@ public sealed class PublicRouteTests : IClassFixture<WebApplicationFactory<Progr
         Assert.Contains("Portfolio OS Shell", projects);
         Assert.Contains("Needs screenshot", projects);
         Assert.Contains("Needs architecture diagram", projects);
+    }
+
+    [Fact]
+    public async Task ContactPage_UsesCurrentPublicProfileDetails()
+    {
+        var contact = await _client.GetStringAsync("/contact");
+
+        Assert.Contains("cawthonsawyer@gmail.com", contact);
+        Assert.Contains("(325) 213-4321", contact);
+        Assert.Contains("San Angelo, TX", contact);
+        Assert.Contains("github.com/sawc21", contact);
+        Assert.Contains("linkedin.com/in/sawyer-cawthon-a87560287", contact);
     }
 
     [Fact]

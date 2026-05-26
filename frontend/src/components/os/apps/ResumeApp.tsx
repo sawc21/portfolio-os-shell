@@ -12,7 +12,7 @@ export function ResumeApp({ runAction }: OsAppComponentProps) {
     <div className="app-view app-view--resume">
       <header className="app-hero">
         <span className="os-label">system.profile</span>
-        <h2>Technical credibility with product judgment.</h2>
+        <h2>AI, cybersecurity, and backend systems profile.</h2>
         <p>{profile.shortPitch}</p>
       </header>
       <section className="resume-grid">

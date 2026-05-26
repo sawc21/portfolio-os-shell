@@ -5,6 +5,8 @@ public sealed record PortfolioProfile
     public string Name { get; init; } = string.Empty;
     public string Headline { get; init; } = string.Empty;
     public string Email { get; init; } = string.Empty;
+    public string Phone { get; init; } = string.Empty;
+    public string Location { get; init; } = string.Empty;
     public PortfolioProfileLinks Links { get; init; } = new();
     public string[] TargetRoles { get; init; } = [];
     public string ShortPitch { get; init; } = string.Empty;

@@ -8,8 +8,10 @@ import {
 
 const profileConfig = {
   name: "Sawyer Cawthon",
-  headline: "Software developer",
-  email: "sawyer.cawthon@gmail.com",
+  headline: "Computer Science undergraduate focused on AI, cybersecurity, and backend systems",
+  email: "cawthonsawyer@gmail.com",
+  phone: "(325) 213-4321",
+  location: "San Angelo, TX",
   links: {
     github: "https://github.com/sawc21",
     linkedin: "https://www.linkedin.com/in/sawyer-cawthon-a87560287/",
@@ -29,14 +31,22 @@ const profileConfig = {
 describe("portfolio profile adapter", () => {
   test("maps profile links into shared contact links", () => {
     expect(getProfileContactLinks(profileConfig)).toEqual([
-      { label: "Email", value: "sawyer.cawthon@gmail.com", href: "mailto:sawyer.cawthon@gmail.com" },
-      { label: "GitHub", value: "github.com/sawc21", href: "https://github.com/sawc21" },
+      { label: "Email", value: "cawthonsawyer@gmail.com", href: "mailto:cawthonsawyer@gmail.com", kind: "email" },
+      { label: "Phone", value: "(325) 213-4321", href: "tel:+13252134321", kind: "phone" },
+      {
+        label: "Location",
+        value: "San Angelo, TX",
+        href: "https://www.google.com/maps/search/?api=1&query=San%20Angelo%2C%20TX",
+        kind: "location"
+      },
+      { label: "GitHub", value: "github.com/sawc21", href: "https://github.com/sawc21", kind: "link" },
       {
         label: "LinkedIn",
         value: "linkedin.com/in/sawyer-cawthon-a87560287",
-        href: "https://www.linkedin.com/in/sawyer-cawthon-a87560287/"
+        href: "https://www.linkedin.com/in/sawyer-cawthon-a87560287/",
+        kind: "link"
       },
-      { label: "X", value: "x.com/sawyerc_cs", href: "https://x.com/sawyerc_cs" }
+      { label: "X", value: "x.com/sawyerc_cs", href: "https://x.com/sawyerc_cs", kind: "link" }
     ]);
   });
 
@@ -44,8 +54,9 @@ describe("portfolio profile adapter", () => {
     const recruiterProfile = createRecruiterProfileFromConfig(profileConfig);
 
     expect(recruiterProfile.name).toBe("Sawyer Cawthon");
+    expect(recruiterProfile.location).toBe("San Angelo, TX");
     expect(recruiterProfile.resumeLink).toBe("/resume");
-    expect(recruiterProfile.contactLinks[1].href).toBe("https://github.com/sawc21");
+    expect(recruiterProfile.contactLinks[3].href).toBe("https://github.com/sawc21");
     expect(recruiterProfile.skills).toContain("Workflow design");
   });
 
@@ -55,6 +66,7 @@ describe("portfolio profile adapter", () => {
       "LinkedIn",
       "X",
       "Email",
+      "Phone",
       "Resume"
     ]);
 

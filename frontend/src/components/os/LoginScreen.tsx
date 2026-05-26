@@ -1,8 +1,8 @@
 import { useEffect, useId, useRef } from "react";
-import { BriefcaseBusiness, FileText, GitBranch, Mail, X } from "lucide-react";
+import { BriefcaseBusiness, FileText, GitBranch, Mail, PhoneCall, X } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import sawyerLoginPortrait from "../../assets/profile/sawyer-login.webp";
-import { getProfileLoginQuickLinks } from "../../lib/portfolioProfile";
+import { getProfileLoginQuickLinks, type LoginQuickLinkConfig } from "../../lib/portfolioProfile";
 
 export type LoginScreenStatus = "idle" | "error" | "success";
 
@@ -16,17 +16,18 @@ export type LoginScreenProps = {
 };
 
 type LoginQuickLink = {
-  label: string;
+  label: LoginQuickLinkConfig["label"];
   href: string;
   icon: LucideIcon;
   external?: boolean;
 };
 
-const quickLinkIcons: Record<LoginQuickLink["label"], LucideIcon> = {
+const quickLinkIcons: Record<LoginQuickLinkConfig["label"], LucideIcon> = {
   GitHub: GitBranch,
   LinkedIn: BriefcaseBusiness,
   X,
   Email: Mail,
+  Phone: PhoneCall,
   Resume: FileText
 };
 
@@ -76,15 +77,15 @@ export function LoginScreen({
           <h1>Sawyer Cawthon</h1>
           <p>Portfolio Operating System</p>
           <p className="login-screen__about">
-            Software developer building product interfaces, workflow prototypes, React/TypeScript apps,
-            ASP.NET Core systems, structured research workflows, and practical automation.
+            Computer Science undergraduate building AI-assisted cybersecurity research workflows,
+            ASP.NET Core backend systems, PostgreSQL-backed APIs, and React/TypeScript portfolio software.
           </p>
           <div className="login-screen__focus-list" aria-label="Sawyer's core work">
-            <span>Product interfaces</span>
-            <span>Workflow systems</span>
+            <span>Cybersecurity research</span>
+            <span>LLM-assisted extraction</span>
+            <span>PostgreSQL APIs</span>
             <span>React + TypeScript</span>
             <span>ASP.NET Core + C#</span>
-            <span>Research software</span>
           </div>
           <div className="login-screen__phrase-card" aria-label="Required login phrase">
             <span>type exactly</span>

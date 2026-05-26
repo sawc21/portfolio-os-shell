@@ -67,6 +67,10 @@ describe("portfolio kernel contract", () => {
     expect(portfolioKernel.search("Extraction")[0].title).toContain("Extraction");
     expect(portfolioKernel.search("paper")[0].action).toMatchObject({ type: "open-app", appId: "publications" });
     expect(portfolioKernel.search("knowledge graph")[0].action).toMatchObject({ type: "open-app", appId: "publications" });
+    expect(portfolioKernel.search("cybersecurity")[0].action).toMatchObject({ type: "open-app", appId: "publications" });
+    expect(
+      portfolioKernel.search("backend").some((result) => result.action.type === "open-app" && result.action.appId === "resume")
+    ).toBe(true);
     expect(portfolioKernel.search("contact")[0].action).toMatchObject({ type: "open-app", appId: "contact" });
   });
 });

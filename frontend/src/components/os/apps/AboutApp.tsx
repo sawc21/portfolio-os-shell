@@ -8,7 +8,7 @@ export function AboutApp() {
     <div className="app-view app-view--about">
       <header className="app-hero">
         <span className="os-label">profile.boot</span>
-        <h2>{profile.name} builds portfolio software like a product.</h2>
+        <h2>{profile.name} builds backend, AI research, and portfolio systems.</h2>
         <p>{profile.shortPitch}</p>
       </header>
       <div className="signal-grid">

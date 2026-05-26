@@ -5,6 +5,8 @@ export type PortfolioProfileConfig = {
   name: string;
   headline: string;
   email: string;
+  phone: string;
+  location: string;
   links: {
     github: string;
     linkedin: string;
@@ -22,7 +24,7 @@ export type PortfolioProfileConfig = {
 };
 
 export type LoginQuickLinkConfig = {
-  label: "GitHub" | "LinkedIn" | "X" | "Email" | "Resume";
+  label: "GitHub" | "LinkedIn" | "X" | "Email" | "Phone" | "Resume";
   href: string;
   external: boolean;
 };
@@ -31,10 +33,12 @@ export const portfolioProfileConfig = profileConfig as PortfolioProfileConfig;
 
 export function getProfileContactLinks(config: PortfolioProfileConfig = portfolioProfileConfig): ContactLink[] {
   return [
-    { label: "Email", value: config.email, href: `mailto:${config.email}` },
-    { label: "GitHub", value: displayUrl(config.links.github), href: config.links.github },
-    { label: "LinkedIn", value: displayUrl(config.links.linkedin), href: config.links.linkedin },
-    { label: "X", value: displayUrl(config.links.x), href: config.links.x }
+    { label: "Email", value: config.email, href: `mailto:${config.email}`, kind: "email" },
+    { label: "Phone", value: config.phone, href: phoneHref(config.phone), kind: "phone" },
+    { label: "Location", value: config.location, href: locationHref(config.location), kind: "location" },
+    { label: "GitHub", value: displayUrl(config.links.github), href: config.links.github, kind: "link" },
+    { label: "LinkedIn", value: displayUrl(config.links.linkedin), href: config.links.linkedin, kind: "link" },
+    { label: "X", value: displayUrl(config.links.x), href: config.links.x, kind: "link" }
   ];
 }
 
@@ -44,6 +48,7 @@ export function getProfileLoginQuickLinks(config: PortfolioProfileConfig = portf
     { label: "LinkedIn", href: config.links.linkedin, external: true },
     { label: "X", href: config.links.x, external: true },
     { label: "Email", href: `mailto:${config.email}`, external: false },
+    { label: "Phone", href: phoneHref(config.phone), external: false },
     { label: "Resume", href: config.links.resumePage, external: false }
   ];
 }
@@ -61,6 +66,8 @@ export function createRecruiterProfileFromConfig(
 ): RecruiterProfile {
   return {
     name: config.name,
+    phone: config.phone,
+    location: config.location,
     targetRoles: config.targetRoles,
     shortPitch: config.shortPitch,
     valueProposition: config.valueProposition,
@@ -77,4 +84,13 @@ function displayUrl(value: string) {
     .replace(/^https?:\/\//, "")
     .replace(/^www\./, "")
     .replace(/\/$/, "");
+}
+
+function phoneHref(value: string) {
+  const digits = value.replace(/\D/g, "");
+  return digits.length === 10 ? `tel:+1${digits}` : `tel:${value}`;
+}
+
+function locationHref(value: string) {
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(value)}`;
 }

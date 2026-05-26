@@ -1,7 +1,9 @@
 {
   "name": "Sawyer Cawthon",
-  "headline": "Software developer",
-  "email": "sawyer.cawthon@gmail.com",
+  "headline": "Computer Science undergraduate focused on AI, cybersecurity, and backend systems",
+  "email": "cawthonsawyer@gmail.com",
+  "phone": "(325) 213-4321",
+  "location": "San Angelo, TX",
   "links": {
     "github": "https://github.com/sawc21",
     "linkedin": "https://www.linkedin.com/in/sawyer-cawthon-a87560287/",
@@ -10,44 +12,46 @@
     "resumePdf": "/files/sawyer-cawthon-resume.pdf"
   },
   "targetRoles": [
-    "Product engineering internship",
-    "Software development internship",
-    "Frontend engineering internship",
-    "Full-stack engineering internship"
+    "Software engineering internship",
+    "Research internship",
+    "Cybersecurity internship",
+    "AI systems internship",
+    "Backend systems internship"
   ],
-  "shortPitch": "Product-minded developer building a portfolio OS that demonstrates React architecture, ASP.NET fundamentals, workflow-ready UX, automation thinking, and disciplined iteration.",
-  "valueProposition": "Sawyer can contribute to teams that need clean UI implementation, thoughtful product tradeoffs, maintainable TypeScript, workflow-aware systems, and a willingness to learn full-stack systems.",
+  "shortPitch": "Computer Science undergraduate with a 3.8 GPA, DoD-funded CTI knowledge-graph research, two resume-listed publications, ASP.NET Core/C# backend experience, PostgreSQL work, and production-minded portfolio software.",
+  "valueProposition": "Sawyer can contribute to teams building backend systems, cybersecurity tooling, AI-assisted extraction workflows, ASP.NET Core applications, PostgreSQL-backed APIs, and research software that needs clear implementation and verification.",
   "skills": [
-    "Product interface prototyping",
-    "Workflow design",
-    "Workflow UX",
-    "React",
-    "TypeScript",
-    "ASP.NET Core",
+    "Python",
     "C#",
-    "Razor Pages",
-    "Vite",
-    "Testing",
-    "Accessibility",
-    "Interaction design"
+    "C++",
+    "JavaScript",
+    "SQL",
+    "ASP.NET Core",
+    "REST APIs",
+    "PostgreSQL",
+    "Knowledge graphs",
+    "LLM-assisted extraction",
+    "Cyber Threat Intelligence",
+    "Backend system design"
   ],
   "systemCapabilities": [
-    "Workflow design",
-    "Workflow-focused product interfaces",
-    "Automation-ready UX",
-    "Knowledge graph prototypes",
-    "Review and verification states"
+    "Cyber Threat Intelligence extraction workflows",
+    "Knowledge graph construction and triple modeling",
+    "LLM-assisted information extraction",
+    "ASP.NET Core backend systems",
+    "PostgreSQL schema design and query optimization",
+    "Research-to-product portfolio interfaces"
   ],
   "projectHighlights": [
-    "Full-screen Portfolio OS with draggable icons, window management, taskbar state, search, and terminal commands.",
-    "Systems Lab and Workflow Console surfaces designed to show how product apps can connect to workflows, tools, and automation safely.",
-    "ASP.NET Core portfolio foundation with route tests, Markdown content, RSS, sitemap, and SEO fallbacks.",
-    "Creative technology roadmap for a focused React Three Fiber portfolio world."
+    "Full-screen Portfolio OS with login gate, draggable icons, window management, taskbar state, search, terminal commands, Project Notes, Publications & CV, and recruiter-focused proof.",
+    "DoD-funded cybersecurity research portfolio evidence around CTI extraction, semantic chunking, consensus filtering, and knowledge graph validation.",
+    "ASP.NET Core portfolio foundation with route tests, Markdown content, RSS, sitemap, shared profile data, and SEO-readable resume/CV routes.",
+    "Backend and integration project catalog covering QuickBooksToolKit, SmartSelect/Awards Aggregate, NoteTakingApp, Inventory Management, Planner, and research prototypes."
   ],
   "workHighlights": [
-    "System capability framing: translates tool ideas into inspectable UI states, guardrails, workflows, and integration plans.",
-    "Research-oriented documentation practice: architecture notes, tests, and case studies are written for technical reviewers and research-heavy teams such as NASA.",
-    "API-ready portfolio apps: provider interfaces can later support integrations such as QuickBooks-style finance, automation, or project data without rewriting the OS shell.",
-    "Product planning evidence: Sprint Planner, Scope Budget, and Developer Habits show how Sawyer thinks about scope, risk, consistency, and delivery."
+    "Intellivega software developer: builds and maintains ASP.NET Core/C# backend web applications, REST APIs, CRUD services, and PostgreSQL-backed data workflows.",
+    "DoD-funded research contributor: built LLM-assisted CTI pipelines for structured threat-intelligence triples, semantic chunking, consensus filtering, and automated validation/repair.",
+    "NASA/Barrios DataMine undergraduate research assistant: engineered Unreal Engine 5 and C++ simulation systems for Artemis Gateway visualization and co-authored a resume-listed publication.",
+    "Portfolio systems builder: turns resume evidence into searchable OS apps, public routes, downloadable resume assets, and project proof placeholders."
   ]
 }

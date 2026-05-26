@@ -152,10 +152,13 @@ export type ContactLink = {
   label: string;
   value: string;
   href: string;
+  kind?: "email" | "phone" | "location" | "link";
 };
 
 export type RecruiterProfile = {
   name: string;
+  phone: string;
+  location: string;
   targetRoles: string[];
   shortPitch: string;
   valueProposition: string;
