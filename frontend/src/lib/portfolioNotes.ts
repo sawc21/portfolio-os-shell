@@ -1,6 +1,6 @@
 import type { PortfolioNote } from "./types";
 
-export const portfolioNotesStorageKey = "portfolio-os:ai-notes:v1";
+export const portfolioNotesStorageKey = "portfolio-os:project-notes:v1";
 export const portfolioNotesUpdatedEvent = "portfolio-notes-updated";
 
 type StorageLike = Pick<Storage, "getItem" | "setItem" | "removeItem">;
@@ -20,20 +20,20 @@ type QuickCaptureInput = {
 };
 
 export const quickCaptureDefaultTitle = "Quick note";
-export const quickCaptureDefaultTags = ["quick-capture", "ai-notes"];
+export const quickCaptureDefaultTags = ["quick-capture", "project-notes"];
 
 const seedTimestamp = "2026-01-15T15:00:00.000Z";
 
 export const seedPortfolioNotes: PortfolioNote[] = [
   {
-    id: "seed-quickbooks-mcp",
-    title: "QuickBooks MCP Integration Plan",
+    id: "seed-quickbooks-integration",
+    title: "QuickBooks Integration Plan",
     content:
-      "# QuickBooks MCP Integration Plan\n\nMap QuickBooks data into assistant-ready workflows with clear tool boundaries, review states, and audit-friendly outputs.\n\n- Identify safe read-only actions first\n- Keep mutation tools behind confirmation\n- Show generated reports as inspectable artifacts",
-    tags: ["quickbooks", "mcp", "agents", "finance"],
+      "# QuickBooks Integration Plan\n\nMap QuickBooks data into clear operational workflows with safe tool boundaries, review states, and audit-friendly outputs.\n\n- Identify safe read-only actions first\n- Keep write actions behind confirmation\n- Show generated reports as inspectable artifacts",
+    tags: ["quickbooks", "integration", "workflow", "finance"],
     isFavorite: true,
     visibility: "public",
-    slug: "quickbooks-mcp-integration-plan",
+    slug: "quickbooks-integration-plan",
     createdAtUtc: seedTimestamp,
     updatedAtUtc: seedTimestamp
   },
@@ -42,7 +42,7 @@ export const seedPortfolioNotes: PortfolioNote[] = [
     title: "InvoiceFlow Automation Notes",
     content:
       "# InvoiceFlow Automation Notes\n\nPrototype an invoice workflow that extracts structured data, validates totals, and routes exceptions to a human review queue.\n\n- OCR/input parsing\n- Approval states\n- Exportable accounting summary",
-    tags: ["automation", "invoices", "workflow", "ai"],
+    tags: ["automation", "invoices", "workflow", "systems"],
     isFavorite: false,
     visibility: "private",
     createdAtUtc: seedTimestamp,
@@ -61,11 +61,11 @@ export const seedPortfolioNotes: PortfolioNote[] = [
     updatedAtUtc: seedTimestamp
   },
   {
-    id: "seed-agent-workflows",
-    title: "AI Agent Workflow Ideas",
+    id: "seed-workflow-patterns",
+    title: "Workflow Console Ideas",
     content:
-      "# AI Agent Workflow Ideas\n\nDesign agent tools around observable steps: gather context, propose plan, act through typed commands, and verify before claiming completion.\n\n- Context panels\n- Tool call timeline\n- Guardrail checklist",
-    tags: ["ai", "agents", "ux", "guardrails"],
+      "# Workflow Console Ideas\n\nDesign tool workflows around observable steps: gather context, propose a plan, act through typed commands, and verify before completion.\n\n- Context panels\n- Action timeline\n- Guardrail checklist",
+    tags: ["workflow", "tools", "ux", "guardrails"],
     isFavorite: false,
     visibility: "private",
     createdAtUtc: seedTimestamp,

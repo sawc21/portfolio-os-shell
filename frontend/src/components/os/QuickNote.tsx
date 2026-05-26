@@ -92,8 +92,8 @@ export function QuickNote({ open, onClose, onOpenNotes }: QuickNoteProps) {
         <form className="quick-note__body" onSubmit={saveQuickNote}>
           <div>
             <span className="os-label">Ctrl+Alt+N capture</span>
-            <h2 id="quick-note-title">Save one thought to AI Notes.</h2>
-            <p>Use this for a fast idea, task, or project note. Organize it later in the full AI Notes app.</p>
+            <h2 id="quick-note-title">Save one thought to Project Notes.</h2>
+            <p>Use this for a fast idea, task, or project note. Organize it later in the full Project Notes app.</p>
           </div>
           <label>
             Title
@@ -136,17 +136,17 @@ export function QuickNote({ open, onClose, onOpenNotes }: QuickNoteProps) {
             {status === "error"
               ? "Add a title or note before saving."
               : status === "saved"
-                ? "Saved to AI Notes."
-                : "Saved notes are private until you publish them in AI Notes."}
+                ? "Saved to Project Notes."
+                : "Saved notes are private until you publish them in Project Notes."}
           </p>
           <footer className="quick-note__actions">
             <button type="submit" className="app-action">
               <Save aria-hidden="true" size={15} />
-              Save to AI Notes
+              Save to Project Notes
             </button>
             <button type="button" className="inline-action" onClick={openNotes}>
               <FolderOpen aria-hidden="true" size={15} />
-              Open AI Notes
+              Open Project Notes
             </button>
             <button type="button" className="inline-action" onClick={onClose}>
               Cancel

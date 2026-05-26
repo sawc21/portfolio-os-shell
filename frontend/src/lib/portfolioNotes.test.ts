@@ -53,17 +53,17 @@ describe("portfolio notes helpers", () => {
 
   test("creates notes with stable injected id and timestamps", () => {
     const note = createPortfolioNote(
-      { title: "  AI Note  ", content: "Body", tags: "ai, agents, ai", visibility: "public" },
+      { title: "  project note  ", content: "Body", tags: "workflow, tools, workflow", visibility: "public" },
       { id: "note-fixed", now: "2026-02-03T04:05:06.000Z" }
     );
 
     expect(note).toMatchObject({
       id: "note-fixed",
-      title: "AI Note",
+      title: "project note",
       content: "Body",
-      tags: ["ai", "agents"],
+      tags: ["workflow", "tools"],
       visibility: "public",
-      slug: "ai-note",
+      slug: "project-note",
       createdAtUtc: "2026-02-03T04:05:06.000Z",
       updatedAtUtc: "2026-02-03T04:05:06.000Z"
     });
@@ -79,7 +79,7 @@ describe("portfolio notes helpers", () => {
       id: "quick-1",
       title: "Quick browser thought",
       content: "# Quick browser thought\n\nCapture this later.",
-      tags: ["quick-capture", "ai-notes"],
+      tags: ["quick-capture", "project-notes"],
       visibility: "private",
       createdAtUtc: "2026-03-04T05:06:07.000Z",
       updatedAtUtc: "2026-03-04T05:06:07.000Z"
@@ -159,7 +159,7 @@ describe("portfolio notes helpers", () => {
   });
 
   test("parses tags by trimming blanks and removing duplicates", () => {
-    expect(parseNoteTags(" ai, , Agents, ai, backend ")).toEqual(["ai", "Agents", "backend"]);
+    expect(parseNoteTags(" workflow, , Tools, workflow, backend ")).toEqual(["workflow", "Tools", "backend"]);
   });
 
   test("reset removes storage and returns seeded notes", () => {

@@ -3,8 +3,8 @@ import type { AppId } from "../../../lib/types";
 import type { OsAppComponentProps } from "./PortfolioApps";
 import {
   AboutApp,
-  AgentConsoleApp,
-  AiLabApp,
+  WorkflowConsoleApp,
+  SystemsLabApp,
   BudgetApp,
   CaseStudiesApp,
   ContactApp,
@@ -30,8 +30,8 @@ export const appComponents: Record<AppId, ComponentType<OsAppComponentProps>> = 
   projects: ProjectsApp,
   skills: SkillsApp,
   "case-studies": CaseStudiesApp,
-  "ai-lab": AiLabApp,
-  "agent-console": AgentConsoleApp,
+  "systems-lab": SystemsLabApp,
+  "workflow-console": WorkflowConsoleApp,
   publications: PublicationsApp,
   notes: NotesApp,
   resume: ResumeApp,

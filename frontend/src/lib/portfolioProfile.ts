@@ -16,7 +16,7 @@ export type PortfolioProfileConfig = {
   shortPitch: string;
   valueProposition: string;
   skills: string[];
-  aiCapabilities: string[];
+  systemCapabilities: string[];
   projectHighlights: string[];
   workHighlights: string[];
 };

@@ -20,7 +20,7 @@ describe("portfolio catalog", () => {
     expect(slugs).toContain("inventory-management");
     expect(slugs).toContain("planner");
     expect(slugs).toContain("asp-net-todolist");
-    expect(slugs).not.toContain("quickbooks-ai");
+    expect(slugs).not.toContain("quickbooks-systems");
   });
 
   test("keeps project slugs unique and featured projects inside the full catalog", () => {

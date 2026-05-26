@@ -109,9 +109,9 @@ export function NotesApp({ params }: NotesAppProps) {
 
   function createNote() {
     const note = createPortfolioNote({
-      title: "Untitled AI note",
-      content: "# Untitled AI note\n\nCapture the workflow, system decision, or project insight here.",
-      tags: ["ai", "draft"]
+      title: "Untitled project note",
+      content: "# Untitled project note\n\nCapture the workflow, system decision, or project insight here.",
+      tags: ["systems", "draft"]
     });
 
     persist([note, ...notes], note.id);
@@ -143,19 +143,19 @@ export function NotesApp({ params }: NotesAppProps) {
   }
 
   return (
-    <div className="ai-notes-app">
-      <header className="app-hero ai-notes-app__hero">
-        <span className="os-label">ai.notes</span>
-        <h2>Research notebook for AI project thinking.</h2>
+    <div className="project-notes-app">
+      <header className="app-hero project-notes-app__hero">
+        <span className="os-label">project.notes</span>
+        <h2>Research notebook for project thinking.</h2>
         <p>
-          Local-first markdown notes for architecture ideas, agent workflows, migration plans,
+          Local-first markdown notes for architecture ideas, workflow plans, migration plans,
           and portfolio-ready technical writeups.
         </p>
       </header>
 
-      <section className="ai-notes-workspace" aria-label="AI Notes workspace">
-        <aside className="ai-notes-sidebar">
-          <div className="ai-notes-toolbar">
+      <section className="project-notes-workspace" aria-label="Project Notes workspace">
+        <aside className="project-notes-sidebar">
+          <div className="project-notes-toolbar">
             <button type="button" className="app-action" onClick={createNote}>
               <FilePlus2 aria-hidden="true" size={15} />
               New note
@@ -166,17 +166,17 @@ export function NotesApp({ params }: NotesAppProps) {
             </button>
           </div>
 
-          <label className="ai-notes-search">
+          <label className="project-notes-search">
             <Search aria-hidden="true" size={15} />
             <input
               value={query}
               onChange={(event) => setQuery(event.target.value)}
               placeholder="Search notes"
-              aria-label="Search AI notes"
+              aria-label="Search Project Notes"
             />
           </label>
 
-          <div className="ai-notes-filters" aria-label="Note filters">
+          <div className="project-notes-filters" aria-label="Note filters">
             {(["all", "favorites", "public", "private"] as const).map((item) => (
               <button
                 key={item}
@@ -189,7 +189,7 @@ export function NotesApp({ params }: NotesAppProps) {
             ))}
           </div>
 
-          <div className="ai-notes-tags" aria-label="Tag filters">
+          <div className="project-notes-tags" aria-label="Tag filters">
             <button
               type="button"
               className={activeTag === "all" ? "is-active" : undefined}
@@ -209,7 +209,7 @@ export function NotesApp({ params }: NotesAppProps) {
             ))}
           </div>
 
-          <div className="ai-notes-list" aria-label="Notes">
+          <div className="project-notes-list" aria-label="Notes">
             {visibleNotes.length > 0 ? visibleNotes.map((note) => (
               <button
                 key={note.id}
@@ -225,21 +225,21 @@ export function NotesApp({ params }: NotesAppProps) {
                 <small>{note.tags.slice(0, 3).join(" / ") || "untagged"}</small>
               </button>
             )) : (
-              <p className="ai-notes-empty">No notes match this filter.</p>
+              <p className="project-notes-empty">No notes match this filter.</p>
             )}
           </div>
         </aside>
 
-        <main className="ai-notes-editor">
+        <main className="project-notes-editor">
           {activeNote ? (
             <>
-              <div className="ai-notes-editor__top">
+              <div className="project-notes-editor__top">
                 <input
                   value={activeNote.title}
                   onChange={(event) => updateActiveNote({ title: event.target.value })}
                   aria-label="Note title"
                 />
-                <div className="ai-notes-editor__actions">
+                <div className="project-notes-editor__actions">
                   <button
                     type="button"
                     className="inline-action"
@@ -270,17 +270,17 @@ export function NotesApp({ params }: NotesAppProps) {
                 </div>
               </div>
 
-              <label className="ai-notes-tag-input">
+              <label className="project-notes-tag-input">
                 Tags
                 <input
                   value={tagsInput}
                   onChange={(event) => updateActiveNote({ tags: parseNoteTags(event.target.value) })}
                   aria-label="Note tags"
-                  placeholder="ai, workflow, backend"
+                  placeholder="systems, workflow, backend"
                 />
               </label>
 
-              <div className="ai-notes-meta">
+              <div className="project-notes-meta">
                 <span data-visibility={activeNote.visibility}>
                   {activeNote.visibility === "public" ? "public draft" : "private draft"}
                 </span>
@@ -288,7 +288,7 @@ export function NotesApp({ params }: NotesAppProps) {
                 {activeNote.slug ? <code>/notes/{activeNote.slug}</code> : null}
               </div>
 
-              <div className="ai-notes-compose">
+              <div className="project-notes-compose">
                 <label>
                   Markdown
                   <textarea
@@ -297,14 +297,14 @@ export function NotesApp({ params }: NotesAppProps) {
                     aria-label="Note markdown"
                   />
                 </label>
-                <section className="ai-notes-preview" aria-label="Markdown preview">
+                <section className="project-notes-preview" aria-label="Markdown preview">
                   <span className="os-label">preview</span>
                   <div dangerouslySetInnerHTML={{ __html: previewHtml }} />
                 </section>
               </div>
             </>
           ) : (
-            <div className="ai-notes-empty">
+            <div className="project-notes-empty">
               <p>No notes available. Reset seeded notes or create a new draft.</p>
               <button type="button" className="app-action" onClick={createNote}>Create note</button>
             </div>

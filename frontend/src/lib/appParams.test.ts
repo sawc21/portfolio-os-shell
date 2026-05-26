@@ -3,7 +3,7 @@ import { getNotesAppParams, getSearchAppParams, getTerminalAppParams } from "./a
 
 describe("app params helpers", () => {
   test("accepts only valid search params", () => {
-    expect(getSearchAppParams({ query: "agents" })).toEqual({ query: "agents" });
+    expect(getSearchAppParams({ query: "workflows" })).toEqual({ query: "workflows" });
     expect(getSearchAppParams({ command: "help" })).toEqual({});
     expect(getSearchAppParams(null)).toEqual({});
   });

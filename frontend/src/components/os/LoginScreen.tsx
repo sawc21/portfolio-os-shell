@@ -74,17 +74,17 @@ export function LoginScreen({
         <div className="login-screen__content">
           <span className="os-label">kernel.gallery</span>
           <h1>Sawyer Cawthon</h1>
-          <p>AI Portfolio Operating System</p>
+          <p>Portfolio Operating System</p>
           <p className="login-screen__about">
-            AI-focused developer building agent-ready product interfaces, LLM workflow
-            prototypes, React/TypeScript apps, ASP.NET Core systems, and practical automation.
+            Software developer building product interfaces, workflow prototypes, React/TypeScript apps,
+            ASP.NET Core systems, structured research workflows, and practical automation.
           </p>
           <div className="login-screen__focus-list" aria-label="Sawyer's core work">
-            <span>AI prototypes</span>
-            <span>LLM workflows</span>
+            <span>Product interfaces</span>
+            <span>Workflow systems</span>
             <span>React + TypeScript</span>
             <span>ASP.NET Core + C#</span>
-            <span>Tool-ready UX</span>
+            <span>Research software</span>
           </div>
           <div className="login-screen__phrase-card" aria-label="Required login phrase">
             <span>type exactly</span>

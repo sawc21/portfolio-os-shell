@@ -22,12 +22,12 @@ const priorityMatches: Record<string, AppId[]> = {
   internship: ["recruiter", "resume", "projects", "contact"],
   react: ["projects", "skills", "case-studies"],
   typescript: ["projects", "skills", "terminal"],
-  ai: ["ai-lab", "agent-console", "projects", "skills", "recruiter"],
-  llm: ["ai-lab", "agent-console", "skills"],
-  agents: ["agent-console", "ai-lab", "terminal"],
-  automation: ["ai-lab", "notes", "agent-console", "planner"],
-  notes: ["notes", "ai-lab", "case-studies"],
-  notebook: ["notes", "ai-lab", "projects"],
+  systems: ["systems-lab", "workflow-console", "projects", "skills", "recruiter"],
+  workflow: ["systems-lab", "workflow-console", "skills"],
+  workflows: ["workflow-console", "systems-lab", "terminal"],
+  automation: ["systems-lab", "notes", "workflow-console", "planner"],
+  notes: ["notes", "systems-lab", "case-studies"],
+  notebook: ["notes", "systems-lab", "projects"],
   markdown: ["notes", "case-studies", "projects"],
   postgresql: ["notes", "projects", "skills"],
   "asp.net": ["projects", "resume", "case-studies"],
@@ -51,7 +51,7 @@ const priorityMatches: Record<string, AppId[]> = {
   "knowledge graph": ["publications", "projects", "resume", "skills"],
   nasa: ["publications", "case-studies", "projects", "resume", "recruiter"],
   dod: ["publications", "resume", "projects"],
-  mcp: ["projects", "agent-console", "ai-lab"],
+  integration: ["projects", "workflow-console", "systems-lab"],
   inventory: ["projects"],
   extraction: ["projects", "publications"],
   quickbooks: ["projects", "notes", "case-studies", "budget", "skills"]
@@ -296,6 +296,10 @@ function scoreDocument(document: SearchDocument, terms: string[], normalizedQuer
   }
 
   if (document.id === "profile:hire-sawyer" && score > 0) {
+    score += 24;
+  }
+
+  if (normalizedQuery === "integration" && document.id === "catalog-project:quickbooks-toolkit") {
     score += 24;
   }
 

@@ -8,7 +8,7 @@ import {
 
 const profileConfig = {
   name: "Sawyer Cawthon",
-  headline: "AI-focused software developer",
+  headline: "Software developer",
   email: "sawyer.cawthon@gmail.com",
   links: {
     github: "https://github.com/sawc21",
@@ -17,12 +17,12 @@ const profileConfig = {
     resumePage: "/resume",
     resumePdf: "/files/sawyer-cawthon-resume.pdf"
   },
-  targetRoles: ["AI Software Intern", "Full-stack Developer"],
-  shortPitch: "Builds AI-capable product systems.",
-  valueProposition: "Can wire AI projects into useful portfolio software.",
-  skills: ["C#", "ASP.NET Core", "React", "LLM workflows"],
-  aiCapabilities: ["Agent workflow design", "Knowledge graph prototypes"],
-  projectHighlights: ["Portfolio OS", "QuickBooks MCP planning"],
+  targetRoles: ["Software Engineering Intern", "Full-stack Developer"],
+  shortPitch: "Builds product systems.",
+  valueProposition: "Can wire project ideas into useful portfolio software.",
+  skills: ["C#", "ASP.NET Core", "React", "Workflow design"],
+  systemCapabilities: ["Workflow design", "Knowledge graph prototypes"],
+  projectHighlights: ["Portfolio OS", "QuickBooks integration planning"],
   workHighlights: ["NASA/Barrios DataMine research assistant"]
 };
 
@@ -46,7 +46,7 @@ describe("portfolio profile adapter", () => {
     expect(recruiterProfile.name).toBe("Sawyer Cawthon");
     expect(recruiterProfile.resumeLink).toBe("/resume");
     expect(recruiterProfile.contactLinks[1].href).toBe("https://github.com/sawc21");
-    expect(recruiterProfile.skills).toContain("LLM workflows");
+    expect(recruiterProfile.skills).toContain("Workflow design");
   });
 
   test("exposes login quick links and resume download metadata", () => {

@@ -20,13 +20,12 @@ public sealed class PortfolioCatalogServiceTests : IDisposable
                 {
                   "title": "QuickBooksToolKit",
                   "slug": "quickbooks-toolkit",
-                  "summary": "QuickBooks Online automation service with MCP tools.",
+                  "summary": "QuickBooks Online automation service with integration tools.",
                   "phase": "active",
-                  "role": "Backend + agent tooling",
-                  "tags": ["QuickBooks", "MCP"],
-                  "branches": ["OAuth", "MCP"],
+                  "role": "Backend + tool integration",
+                  "tags": ["QuickBooks", "Integration"],
+                  "branches": ["OAuth", "Integration"],
                   "sourceType": "github",
-                  "repoUrl": "https://github.com/Intellivega/QuickBooksToolKitAi",
                   "localPathLabel": "source/repos/QuickBooksToolKit",
                   "featured": true,
                   "archive": false

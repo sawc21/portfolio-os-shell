@@ -3,11 +3,11 @@
     {
       "title": "Portfolio OS Shell",
       "slug": "portfolio-os-shell",
-      "summary": "Interactive React and ASP.NET portfolio operating system with login gate, desktop apps, search, terminal commands, AI Notes, and recruiter-focused proof.",
+      "summary": "Interactive React and ASP.NET portfolio operating system with login gate, desktop apps, search, terminal commands, Project Notes, and recruiter-focused proof.",
       "phase": "active",
       "role": "Product design, frontend architecture, and ASP.NET integration",
       "tags": ["React", "TypeScript", "ASP.NET Core", "Portfolio OS", "Accessibility"],
-      "branches": ["Auth gate", "AI Notes", "Quick Note hotkey", "Shared profile config"],
+      "branches": ["Auth gate", "Project Notes", "Quick Note hotkey", "Shared profile config"],
       "sourceType": "github",
       "repoUrl": "https://github.com/sawc21/portfolio-os-shell",
       "localPathLabel": "C:/Users/SawyerCawthon/PortFolio",
@@ -28,7 +28,7 @@
         },
         {
           "label": "Browser QA evidence",
-          "description": "Replace with a QA capture covering login, app launch, AI Notes, Publications & CV, Projects, and Quick Note flows.",
+          "description": "Replace with a QA capture covering login, app launch, Project Notes, Publications & CV, Projects, and Quick Note flows.",
           "status": "needs-test-evidence"
         }
       ]
@@ -36,20 +36,19 @@
     {
       "title": "QuickBooksToolKit",
       "slug": "quickbooks-toolkit",
-      "summary": ".NET 8 QuickBooks Online automation toolkit with OAuth, protected token storage, REST diagnostics, and a local-first MCP server surface for AI hosts.",
+      "summary": ".NET 8 QuickBooks Online automation toolkit with OAuth, protected token storage, REST diagnostics, and local-first integration surfaces.",
       "phase": "active",
-      "role": "Backend architecture and agent-tool integration",
-      "tags": ["C#", ".NET 8", "QuickBooks", "MCP", "OAuth", "Agent tools"],
-      "branches": ["QuickBooks API", "MCP tool contracts", "DPAPI token storage", "Read/write guardrails"],
+      "role": "Backend architecture and tool integration",
+      "tags": ["C#", ".NET 8", "QuickBooks", "OAuth", "Integration tools"],
+      "branches": ["QuickBooks API", "integration tool contracts", "DPAPI token storage", "Read/write guardrails"],
       "sourceType": "local-git",
-      "repoUrl": "https://github.com/Intellivega/QuickBooksToolKitAi",
       "localPathLabel": "C:/Users/SawyerCawthon/source/repos/QuickBooksToolKit",
       "featured": true,
       "archive": false,
       "visualProof": {
         "kind": "placeholder",
-        "label": "MCP workflow capture",
-        "alt": "Placeholder for QuickBooks MCP workflow demo capture",
+        "label": "integration workflow capture",
+        "alt": "Placeholder for QuickBooks integration workflow demo capture",
         "status": "needs-demo-capture"
       },
       "proofSlots": [
@@ -60,19 +59,19 @@
         },
         {
           "label": "Command demo",
-          "description": "Replace with a short terminal or app-host capture showing MCP tools returning QuickBooks data safely.",
+          "description": "Replace with a short terminal or app-host capture showing integration tools returning QuickBooks data safely.",
           "status": "needs-demo-capture"
         }
       ]
     },
     {
-      "title": "NoteTakingApp / AI Notes",
+      "title": "NoteTakingApp / Project Notes",
       "slug": "note-taking-app",
-      "summary": "ASP.NET note-taking system used as the source concept for the Portfolio OS AI Notes app, including markdown preview, tags, favorites, public flags, and future sync ideas.",
+      "summary": "ASP.NET note-taking system used as the source concept for the Portfolio OS Project Notes app, including markdown preview, tags, favorites, public flags, and future sync ideas.",
       "phase": "migration source",
       "role": "Full-stack ASP.NET and product integration",
       "tags": ["ASP.NET", "C#", "Markdown", "Notes", "Portfolio OS"],
-      "branches": ["Markdown preview", "Tags", "Public/private notes", "OS-native AI Notes migration"],
+      "branches": ["Markdown preview", "Tags", "Public/private notes", "OS-native Project Notes migration"],
       "sourceType": "github",
       "repoUrl": "https://github.com/sawc21/NoteTakingApp",
       "localPathLabel": "C:/Users/SawyerCawthon/source/repos/NoteTakingApp",
@@ -80,8 +79,8 @@
       "archive": false,
       "visualProof": {
         "kind": "placeholder",
-        "label": "AI Notes editor screenshot",
-        "alt": "Placeholder for AI Notes editor and markdown preview screenshot",
+        "label": "Project Notes editor screenshot",
+        "alt": "Placeholder for Project Notes editor and markdown preview screenshot",
         "status": "needs-screenshot"
       },
       "proofSlots": [
@@ -92,7 +91,7 @@
         },
         {
           "label": "Quick Note capture",
-          "description": "Replace with a capture showing Ctrl+Alt+N saving a focused note into AI Notes.",
+          "description": "Replace with a capture showing Ctrl+Alt+N saving a focused note into Project Notes.",
           "status": "needs-demo-capture"
         }
       ]
@@ -100,11 +99,11 @@
     {
       "title": "Extraction",
       "slug": "extraction",
-      "summary": "Python research prototype for local LLM-assisted extraction workflows around Cyber Threat Intelligence and MALOnt-style ontology data.",
+      "summary": "Python research prototype for structured extraction workflows around Cyber Threat Intelligence and MALOnt-style ontology data.",
       "phase": "research prototype",
-      "role": "AI research pipeline prototyping",
-      "tags": ["Python", "LLM", "Cyber Threat Intelligence", "Knowledge Graphs", "Ollama"],
-      "branches": ["Local Mistral setup", "CTI extraction", "Ontology data", "Research automation"],
+      "role": "Research pipeline prototyping",
+      "tags": ["Python", "Cyber Threat Intelligence", "Knowledge Graphs", "Structured extraction"],
+      "branches": ["CTI extraction", "Ontology data", "Research automation"],
       "sourceType": "github",
       "repoUrl": "https://github.com/sawc21/Extraction",
       "localPathLabel": "GitHub public repository",
@@ -284,7 +283,7 @@
     {
       "title": "NoteTaking",
       "slug": "note-taking",
-      "summary": "Earlier local note-taking application used as a stepping stone toward the fuller NoteTakingApp and Portfolio OS AI Notes direction.",
+      "summary": "Earlier local note-taking application used as a stepping stone toward the fuller NoteTakingApp and Portfolio OS Project Notes direction.",
       "phase": "early local prototype",
       "role": "ASP.NET learner",
       "tags": ["C#", "ASP.NET", "Notes"],
@@ -365,18 +364,18 @@
       "Angelo State University - B.S. in Computer Science, expected January 2028, GPA 3.8."
     ],
     "researchRoles": [
-      "DoD, San Angelo - Funded Research Contributor focused on LLM-assisted Cyber Threat Intelligence knowledge graph extraction.",
+      "DoD, San Angelo - Funded Research Contributor focused on Cyber Threat Intelligence knowledge graph extraction.",
       "NASA/Barrios, The DataMine - Undergraduate Research Assistant building Unreal Engine 5 simulation systems for Artemis Gateway visualization."
     ],
     "industryExperience": [
       "Intellivega - Software Developer working on ASP.NET, C#, SQL/PostgreSQL, REST APIs, CRUD systems, and backend processing."
     ],
     "technicalStrengths": [
-      "LLM-assisted extraction workflows",
+      "Structured information extraction workflows",
       "Knowledge graph construction and triple validation",
       "ASP.NET Core and Razor Pages",
       "React and TypeScript product interfaces",
-      "QuickBooks API and MCP tool integration",
+      "QuickBooks API and tool integration",
       "PostgreSQL schema and query design",
       "Unreal Engine 5 simulation systems"
     ],

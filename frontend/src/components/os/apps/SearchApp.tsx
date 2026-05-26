@@ -36,7 +36,7 @@ export function SearchApp({ runAction, params }: OsAppComponentProps) {
           value={query}
           onChange={(event) => setQuery(event.target.value)}
           aria-label="Search the Portfolio OS"
-          placeholder="try ai, agents, hire sawyer, react"
+          placeholder="try systems, workflows, hire sawyer, react"
         />
       </label>
       <div className="search-results">

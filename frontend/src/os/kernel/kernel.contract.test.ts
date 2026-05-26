@@ -62,7 +62,7 @@ describe("portfolio kernel contract", () => {
 
     expect(portfolioKernel.search("NASA").length).toBeGreaterThan(0);
     expect(portfolioKernel.search("QuickBooks").length).toBeGreaterThan(0);
-    expect(portfolioKernel.search("MCP")[0].title).toContain("QuickBooks");
+    expect(portfolioKernel.search("integration")[0].title).toContain("QuickBooks");
     expect(portfolioKernel.search("Inventory")[0].title).toContain("Inventory");
     expect(portfolioKernel.search("Extraction")[0].title).toContain("Extraction");
     expect(portfolioKernel.search("paper")[0].action).toMatchObject({ type: "open-app", appId: "publications" });

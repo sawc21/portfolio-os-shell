@@ -1,13 +1,13 @@
 ---
 title: Resume
 slug: resume
-summary: AI-focused software developer resume with cybersecurity research, ASP.NET, backend, and simulation experience.
+summary: Software developer resume with cybersecurity research, ASP.NET, backend, and simulation experience.
 date: 2026-05-25
-tags: AI, LLM, Cybersecurity, Knowledge Graphs, ASP.NET, C#, Python, Full-stack
+tags: Software Development, Workflow, Cybersecurity, Knowledge Graphs, ASP.NET, C#, Python, Full-stack
 ---
 # Sawyer Cawthon
 
-AI-focused software developer with experience in LLM-assisted cybersecurity research, ASP.NET backend development, knowledge graph construction, and immersive simulation systems.
+Software developer with experience in cybersecurity research, ASP.NET backend development, knowledge graph construction, and immersive simulation systems.
 
 ## Professional Links
 
@@ -22,9 +22,9 @@ AI-focused software developer with experience in LLM-assisted cybersecurity rese
 
 June 2025 - January 2026
 
-- Conducted AI-driven cybersecurity research focused on automated knowledge graph construction from Cyber Threat Intelligence reports.
-- Built LLM-assisted pipelines to extract structured threat intelligence triples from unstructured CTI data.
-- Implemented semantic chunking and consensus filtering to improve extraction precision and reduce hallucinations.
+- Conducted cybersecurity research focused on automated knowledge graph construction from Cyber Threat Intelligence reports.
+- Built structured extraction pipelines for threat intelligence triples from unstructured CTI data.
+- Implemented semantic chunking and consensus filtering to improve extraction precision and reduce extraction errors.
 - Developed automated validation and repair mechanisms for noisy knowledge graph triples.
 - Modeled adversary relationships linking threat actors, techniques, and infrastructure using graph-based reasoning.
 
@@ -67,7 +67,7 @@ PostgreSQL and SQL, including schema design, joins, indexing, and normalization.
 
 - Data structures and algorithms.
 - Knowledge graph construction and triple modeling.
-- LLM-assisted information extraction.
+- Structured information extraction.
 - Graph-based entity resolution.
 - REST API development.
 - Backend system design.

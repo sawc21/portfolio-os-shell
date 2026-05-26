@@ -143,12 +143,12 @@ export const fileSystemEntries: FileSystemEntry[] = [
     appId: "publications"
   },
   {
-    id: "desktop-ai-notes",
-    name: "AI Notes.app",
+    id: "desktop-project-notes",
+    name: "Project Notes.app",
     kind: "app",
     directory: "C:\\PortfolioOS\\Desktop",
-    description: "Local AI project notebook with markdown drafts, tags, favorites, and public/private note state.",
-    tags: ["ai notes", "notebook", "markdown", "agents", "postgresql", "quickbooks"],
+    description: "Local project notebook with markdown drafts, tags, favorites, and public/private note state.",
+    tags: ["project notes", "notebook", "markdown", "workflows", "postgresql", "quickbooks"],
     appId: "notes"
   },
   {

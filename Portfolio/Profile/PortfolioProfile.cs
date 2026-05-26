@@ -10,7 +10,7 @@ public sealed record PortfolioProfile
     public string ShortPitch { get; init; } = string.Empty;
     public string ValueProposition { get; init; } = string.Empty;
     public string[] Skills { get; init; } = [];
-    public string[] AiCapabilities { get; init; } = [];
+    public string[] SystemCapabilities { get; init; } = [];
     public string[] ProjectHighlights { get; init; } = [];
     public string[] WorkHighlights { get; init; } = [];
 }

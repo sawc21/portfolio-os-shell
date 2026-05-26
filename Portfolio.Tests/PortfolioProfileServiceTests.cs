@@ -17,7 +17,7 @@ public sealed class PortfolioProfileServiceTests : IDisposable
             """
             {
               "name": "Sawyer Cawthon",
-              "headline": "AI-focused software developer",
+              "headline": "Software developer",
               "email": "sawyer.cawthon@gmail.com",
               "links": {
                 "github": "https://github.com/sawc21",
@@ -26,11 +26,11 @@ public sealed class PortfolioProfileServiceTests : IDisposable
                 "resumePage": "/resume",
                 "resumePdf": "/files/sawyer-cawthon-resume.pdf"
               },
-              "targetRoles": ["AI Software Intern"],
-              "shortPitch": "Builds AI-capable product systems.",
-              "valueProposition": "Can wire AI projects into useful portfolio software.",
+              "targetRoles": ["Software Engineering Intern"],
+              "shortPitch": "Builds product systems.",
+              "valueProposition": "Can wire project ideas into useful portfolio software.",
               "skills": ["C#", "ASP.NET Core", "React"],
-              "aiCapabilities": ["Agent workflow design"],
+              "systemCapabilities": ["Workflow design"],
               "projectHighlights": ["Portfolio OS"],
               "workHighlights": ["NASA/Barrios DataMine research assistant"]
             }
@@ -42,7 +42,7 @@ public sealed class PortfolioProfileServiceTests : IDisposable
         Assert.Equal("Sawyer Cawthon", profile.Name);
         Assert.Equal("https://github.com/sawc21", profile.Links.GitHub);
         Assert.Equal("/files/sawyer-cawthon-resume.pdf", profile.Links.ResumePdf);
-        Assert.Contains("Agent workflow design", profile.AiCapabilities);
+        Assert.Contains("Workflow design", profile.SystemCapabilities);
     }
 
     public void Dispose()
